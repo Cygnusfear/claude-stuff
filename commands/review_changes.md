@@ -1,0 +1,1 @@
+Review all current changes in the working copy- ideally compare to plan file related to those changes- do a thorough code review and find where things are badly engineered, over engineered, or whether the solution is just not the best way to do things.

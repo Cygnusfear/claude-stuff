@@ -1,0 +1,1 @@
+make a full inventory of all the features present in this screenshot with every detail- be rigorous, think hard, do multiple passes and refine your work

@@ -1,0 +1,1 @@
+Split this work up into distinct plan files that can be worked on in parallel- make sure that the tasks overlap minimally so multiple engineers can work on them simultaneously. Isolate the engineering work in the plan to reduce the risk of conflicts.
