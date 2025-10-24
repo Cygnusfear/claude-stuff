@@ -1,0 +1,19 @@
+{
+  "name": "commit-clear",
+  "version": "1.0.0",
+  "description": "AI-powered commit message generator with Elements of Style - creates clear, concise conventional commit messages",
+  "author": {
+    "name": "Alexander Mangel"
+  },
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "commit",
+    "conventional-commits",
+    "ai",
+    "automation",
+    "productivity",
+    "elements-of-style",
+    "writing"
+  ]
+}

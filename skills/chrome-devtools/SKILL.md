@@ -14,6 +14,8 @@ Control Chrome browser programmatically via chrome-devtools-mcp.
 - ❌ **OLD WAY:** Multiple attempts, manual cleanup, 5-10 commands → ~60-90 seconds
 - ✅ **NEW WAY:** One optimized command → ~5-10 seconds
 
+**📚 See also:** [MCP CLI Guide](../../.docs/mcp-cli.md) for general MCP CLI patterns and best practices
+
 ## Setup
 
 ```bash

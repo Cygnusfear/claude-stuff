@@ -17,6 +17,22 @@ This document defines the standards for commit messages and PR descriptions.
   - `fix: 🌙🔍 Resolve authentication edge cases` (Night investigation = finding hidden bugs)
   - `refactor: 🏛️⚡ Restructure database connections` (Ancient architecture gets lightning speed)
 - When you think you're imaginative? BE MORE IMAGINATIVE! GO WILD!
+- If you are lost, pick a format:
+  - 'a short story of what happened in this PR'
+  - 'a description of the final result'
+  - greek mythology
+  - art history
+
+## Title Guidelines
+
+- **Keep it short** - Less than 50 characters
+- **Treat it like a book title** - Should describe the whole PR in a few words
+- **No technobabble** - Describe the goal over the changes, give the goal a name
+
+### Title Examples
+- `feat: 🐋🎣 Implement large balance support`
+- `fix: 🌙🔍 Resolve authentication edge cases`
+- `refactor: 🏛️⚡ Restructure database connections`
 
 ### Commit Types
 - `feat:` - New features
