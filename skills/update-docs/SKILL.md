@@ -5,9 +5,90 @@ description: Update all documentation in .plans, CLAUDE.md files, docs, and .tas
 
 # Update Documentation
 
+## CRITICAL: Oracle-First Protocol
+
+**BEFORE making ANY changes to documentation, you MUST consult the Oracle to understand what exists and what must be preserved.**
+
+Documentation often contains hard-won knowledge, historical context, and decisions that aren't obvious from code alone. Blindly updating docs risks losing this irreplaceable information.
+
+### Mandatory Pre-Update Oracle Consultation
+
+For EACH significant document (especially CLAUDE.md, architecture docs, decision records):
+
+```
+Task(
+  subagent_type: "general-purpose",
+  model: "opus",
+  prompt: """
+  You are The Oracle - analyze this documentation before it gets updated.
+
+  DOCUMENT PATH: [path]
+  DOCUMENT CONTENT:
+  [full content]
+
+  ANALYSIS REQUIRED:
+
+  1. **Critical Knowledge Inventory**
+     - What unique insights/decisions does this document contain?
+     - What historical context would be lost if overwritten?
+     - What hard-won lessons or gotchas are documented?
+     - What non-obvious information exists that code doesn't reveal?
+
+  2. **Preservation Requirements**
+     - List specific sections/paragraphs that MUST be preserved
+     - Identify any warnings, caveats, or "don't do X" guidance
+     - Note any project-specific conventions explained here
+     - Flag any links to external resources or related docs
+
+  3. **Safe to Update**
+     - What sections are purely factual and safe to update from code?
+     - What sections are demonstrably outdated based on codebase?
+     - What can be verified objectively vs. requires human judgment?
+
+  4. **Update Recommendations**
+     - Specific guidance for updating this document safely
+     - Sections to leave untouched without human approval
+     - Suggested merge strategy (preserve + add vs. replace)
+
+  Be thorough. Assume any knowledge lost here is lost forever.
+  """
+)
+```
+
+### When Oracle Consultation is MANDATORY
+
+- **ALWAYS** for: CLAUDE.md files, architecture docs, decision records, onboarding guides
+- **ALWAYS** for: Any doc >200 lines or last modified >30 days ago
+- **ALWAYS** for: Docs with sections titled "Why", "History", "Decisions", "Gotchas", "Warnings"
+- **RECOMMENDED** for: All other significant documentation
+
+### When You Can Skip Oracle (rare)
+
+- Trivial typo fixes
+- Adding new sections (not modifying existing)
+- Updating version numbers or dates
+- Fixing broken links to known-good targets
+
 ## Instructions
 
 Systematically review and update all project documentation to ensure accuracy, completeness, and alignment with current codebase state.
+
+### Phase 0: Oracle Pre-Analysis (NEW - MANDATORY)
+
+**Before touching ANY documentation:**
+
+1. **Identify high-value documents** - CLAUDE.md, architecture docs, decision records
+2. **Run Oracle analysis** on each high-value document
+3. **Create preservation checklist** from Oracle findings
+4. **Add preservation requirements to TodoWrite** - these are non-negotiable
+
+**Example TodoWrite entries from Oracle:**
+```
+- [ ] PRESERVE: Authentication decision rationale in CLAUDE.md (lines 45-67)
+- [ ] PRESERVE: Database migration warnings in architecture.md
+- [ ] PRESERVE: "Why we don't use X" section in conventions.md
+- [ ] SAFE TO UPDATE: API endpoint list (verify against code)
+```
 
 ### Phase 1: Discovery & Analysis
 
@@ -24,6 +105,7 @@ Systematically review and update all project documentation to ensure accuracy, c
    - Use `git log` to understand what changed
 
 3. **Create comprehensive todo list** - One item per document to review
+   - **Include Oracle preservation requirements** from Phase 0
 
 ### Phase 2: Systematic Document Review
 
@@ -33,6 +115,7 @@ For EACH document in the todo list:
 - Fully read the document
 - Understand its purpose and scope
 - Note any references to code, features, or architecture
+- **Check Oracle preservation list for this document**
 
 #### Step 2: Validate Against Codebase
 Audit the codebase to check if documentation is:
@@ -41,6 +124,8 @@ Audit the codebase to check if documentation is:
 - **Wrong**: Contains factual errors about implementation
 - **Missing**: Lacks important information about current state
 - **Redundant**: Duplicates information found elsewhere
+
+**CRITICAL**: Cross-reference with Oracle preservation list. If something seems outdated but Oracle flagged it as "preserve", DO NOT modify without explicit confirmation.
 
 #### Step 3: Check Compliance
 Verify document follows guidelines in `CLAUDE.md`:
@@ -70,15 +155,29 @@ Plans in `.plans/` require careful status tracking:
 
 **CRITICAL**: NEVER mark a plan as done until you have 100% confirmation through code audit that EVERY item is implemented.
 
-#### Step 5: Update Document
-- Fix misleading/outdated/wrong information
-- Add missing information
-- Remove redundant content
-- Ensure compliance with CLAUDE.md guidelines
-- For plans: update status markers and rename if needed
+#### Step 5: Update Document (WITH PRESERVATION PROTOCOL)
+
+**Before ANY edit, verify:**
+- [ ] Oracle preservation requirements are honored
+- [ ] No "Why", "History", or "Decision" sections are being removed
+- [ ] Warnings and gotchas are being kept
+- [ ] You're ADDING to existing knowledge, not replacing it
+
+**Safe update patterns:**
+- Fix factual errors (wrong file paths, outdated API signatures)
+- Add new information alongside existing
+- Update status markers and dates
+- Fix broken links
+
+**Dangerous patterns (require confirmation):**
+- Deleting any paragraph >2 sentences
+- Rewriting explanatory sections
+- Removing "deprecated" or "don't use" warnings
+- Changing architectural guidance
 
 #### Step 6: Validate Changes
 - Ensure changes are accurate
+- **Verify Oracle preservation requirements were followed**
 - Verify no information was lost
 - Check that references/links still work
 
@@ -87,6 +186,7 @@ Add to running change log:
 - File: [path]
 - Changes made: [description]
 - Reason: [why it was updated]
+- **Preserved sections: [what was kept per Oracle guidance]**
 
 #### Step 8: Mark Complete
 Update todo list to mark this document as completed
@@ -116,6 +216,11 @@ After reviewing all individual documents:
 ```markdown
 # Documentation Update Summary - [Date]
 
+## Oracle Consultation
+- Documents analyzed: X
+- Critical sections preserved: Y
+- Preservation requirements followed: ✅/❌
+
 ## Files Updated: X
 ## Changes Made:
 
@@ -129,6 +234,7 @@ After reviewing all individual documents:
   - Fixed: [what was wrong]
   - Added: [what was missing]
   - Removed: [what was redundant]
+  - **Preserved**: [what was kept per Oracle]
 
 ### Coverage Gaps
 - [Undocumented features]
@@ -146,9 +252,12 @@ After reviewing all individual documents:
 1. **Build check** - Ensure any doc-related code samples build correctly
 2. **Link check** - Verify all internal references work
 3. **Completeness check** - Confirm all todos were addressed
+4. **Preservation check** - Verify Oracle requirements were honored
 
 ## Critical Principles
 
+- **ORACLE FIRST** - Always consult Oracle before modifying significant docs
+- **PRESERVE OVER REPLACE** - Add new info, don't delete old wisdom
 - **100% VERIFICATION REQUIRED** - Never mark plans as done without complete code audit
 - **NEVER SKIP DOCUMENTS** - Review every file in the todo list
 - **BE CONSERVATIVE** - When in doubt about plan status, keep as todo
@@ -157,6 +266,22 @@ After reviewing all individual documents:
 - **TRACK CHANGES** - Document what was changed and why
 - **COMPLIANCE FIRST** - ALWAYS follow CLAUDE.md guidelines
 - **NO ASSUMPTIONS** - Verify everything against actual code
+
+## The Documentation Preservation Hierarchy
+
+**NEVER delete without explicit approval:**
+1. Architectural decisions and their rationale
+2. "Why we did X" explanations
+3. Warnings, gotchas, and "don't do this" guidance
+4. Historical context and migration notes
+5. Non-obvious conventions and their reasons
+
+**Safe to update freely:**
+1. Code examples (verify against actual code)
+2. File paths and line numbers
+3. Version numbers and dates
+4. Status markers and checkboxes
+5. Broken links (to known-good targets)
 
 ## Plan Status Decision Tree
 
@@ -175,9 +300,10 @@ Is EVERY item in the plan implemented?
 
 ## Supporting Tools Integration
 
+- Use **Task (Oracle)** to analyze docs before modification
 - Use **Grep** to search for TODOs or implementation evidence
 - Use **Glob** to find related files
 - Use **Bash** for git operations
 - Use **Read** to examine code thoroughly
 - Use **Edit** to update documentation
-- Use **TodoWrite** to track review progress
+- Use **TodoWrite** to track review progress AND preservation requirements
