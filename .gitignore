@@ -1,1 +1,8 @@
 .DS_*
+
+.oracle/**
+.oracle
+.reviews/**
+.reviews
+.review/**
+.review
