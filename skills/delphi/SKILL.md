@@ -17,6 +17,8 @@ Delphi launches multiple oracle agents in parallel with the **same prompt** to d
 
 ## Process
 
+⚠️ **ARE YOU A COORDINATOR??** - Delphi is ran WITHIN **a single (docker)agent**- not as across several agents unless explicitly instructed.
+
 ### Step 1: Determine Oracle Count
 
 - If the user specifies a number, use that number
