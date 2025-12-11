@@ -42,19 +42,19 @@ The task description MUST include:
 - Clear action to perform
 - Context (issue numbers, file paths, errors)
 - Success criteria
-- Instruction to self-review using `Skill(code-review)` when done
+- Instruction to self-review using `Skill(code-reviewer)` and POST to GitHub when done
 
 **Example delegation:**
-> "Fix the authentication bug in `src/auth.ts`. The session token expires incorrectly (see Issue #45). Success: tests pass, bug no longer reproducible. When complete, run `Skill(code-review)` on your changes and report the results."
+> "Fix the authentication bug in `src/auth.ts`. The session token expires incorrectly (see Issue #45). Success: tests pass, bug no longer reproducible. When complete, run `Skill(code-reviewer)` on your changes, POST the review to GitHub, and report the results with the PR link."
 
 **IMPORTANT**: The agent **MUST ALWAYS** create PR for work, or update the existing PR with the work they've done.
 
-## Step 2: Agent Performs REVIEW
+## Step 2: Agent Performs REVIEW (MUST POST TO GITHUB)
 
-The dockeragent MUST invoke the code-review skill on their own work:
+The dockeragent MUST invoke the code-reviewer skill on their own work:
 
 ```
-Skill(code-review)
+Skill(code-reviewer)
 ```
 
 This triggers the 6-pass ultra-critical methodology:
@@ -65,7 +65,24 @@ This triggers the 6-pass ultra-critical methodology:
 5. **Verification** - Run build, tests, linting - actual commands
 6. **Synthesis** - Overall assessment with suggestion counts
 
-The agent reports back with their review results.
+### CRITICAL: Review MUST Be Posted to GitHub
+
+**The review is NOT complete until it is posted to GitHub as a PR review/comment.**
+
+The code-reviewer skill will:
+- Analyze the PR changes
+- Generate the ultra-critical review
+- **POST the review to GitHub using `mcp__github__create_pull_request_review`**
+
+The human needs to see the review on the PR page. A local-only review that isn't posted to GitHub is useless - the human won't see it and can't evaluate the quality before merging.
+
+**Delegation must include:**
+> "After reviewing, POST your review to GitHub. The human must be able to see your review on the PR page."
+
+The agent reports back with:
+- Their review results
+- **Confirmation that the review was posted to GitHub**
+- Link to the PR where the review can be seen
 
 **IMPORTANT**: The agent **MUST ALWAYS** post the Review as comment on the PR.
 
@@ -87,7 +104,7 @@ A **10/10** review means ALL of the following:
 Send the agent back to fix:
 
 ```
-send_message_to_agent(agent_id, "Review shows X suggestions. Fix all of them, then re-review with Skill(code-review).")
+send_message_to_agent(agent_id, "Review shows X suggestions. Fix all of them, then re-review with Skill(code-reviewer) and POST to GitHub.")
 ```
 
 **→ Loop back to Step 1**
@@ -138,22 +155,22 @@ Never write bare `PR #42` or `Issue #100`. **ALWAYS include the full clickable U
 | Accepting "mostly done" | Not 10/10 = not done. Send back. |
 | Skipping PR before review | We need a PR BEFORE review. |
 | Skipping review step | Every task gets reviewed. No exceptions. |
-| Review not posted | A review that is not on a PR does not exist. |
 | Reviewing code yourself | You coordinate. Agent reviews with skill. |
 | Bare PR/issue numbers | URLs are mandatory. Always link. |
 | Presenting before 10/10 | Loop isn't done. Keep iterating. |
+| Review not posted to GitHub | Human can't see local-only reviews. Must be on PR page. |
 
 ---
 
 ## Quick Reference
 
 ```
-1. DELEGATE  → assign_task with review instruction
-2. WAIT      → Agent fixes + runs Skill(code-review)
-3. CHECK     → Is report 10/10 with ZERO suggestions?
+1. DELEGATE  → assign_task with review + GitHub posting instruction
+2. WAIT      → Agent fixes + runs Skill(code-reviewer) + POSTS to GitHub
+3. CHECK     → Is report 10/10 with ZERO suggestions? Is review on PR page?
                NO  → send_message_to_agent, go to 2
                YES → go to 4
-4. PRESENT   → Tell human + LINK the PR URL
+4. PRESENT   → Tell human + LINK the PR URL (review already visible on PR)
 ```
 
 **Remember: You don't implement. You orchestrate the loop until 10/10.**
