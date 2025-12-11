@@ -29,6 +29,7 @@ A coordinator workflow for orchestrating dockeragents. You delegate, they implem
 └─────────────────────────────────────────────────────┘
 ```
 
+
 ## Step 1: Delegate FIX to Agent
 
 Assign the implementation task to a dockeragent:
@@ -45,6 +46,8 @@ The task description MUST include:
 
 **Example delegation:**
 > "Fix the authentication bug in `src/auth.ts`. The session token expires incorrectly (see Issue #45). Success: tests pass, bug no longer reproducible. When complete, run `Skill(code-review)` on your changes and report the results."
+
+**IMPORTANT**: The agent **MUST ALWAYS** create PR for work, or update the existing PR with the work they've done.
 
 ## Step 2: Agent Performs REVIEW
 
@@ -64,7 +67,9 @@ This triggers the 6-pass ultra-critical methodology:
 
 The agent reports back with their review results.
 
-## Step 3: You CHECK - Is it 10/10?
+**IMPORTANT**: The agent **MUST ALWAYS** post the Review as comment on the PR.
+
+## Step 3: You CHECK - Is the review 10/10?
 
 When the agent reports back, evaluate: **Is the review 10/10?**
 
@@ -72,8 +77,10 @@ A **10/10** review means ALL of the following:
 - ZERO items in "Suggest Fixing" section
 - ZERO items in "Possible Simplifications" section
 - ZERO items in "Consider Asking User" section
+- ZERO further notes
 - All verification commands executed and passing
 - Task requirements fully met
+- DO NOT ACCEPT POTENTIAL WORK IN REVIEW FOR A LATER PR (this is still a suggestion)
 
 ### If NOT 10/10 (any suggestions exist):
 
@@ -129,7 +136,9 @@ Never write bare `PR #42` or `Issue #100`. **ALWAYS include the full clickable U
 | Anti-Pattern | Why It's Wrong |
 |--------------|----------------|
 | Accepting "mostly done" | Not 10/10 = not done. Send back. |
+| Skipping PR before review | We need a PR BEFORE review. |
 | Skipping review step | Every task gets reviewed. No exceptions. |
+| Review not posted | A review that is not on a PR does not exist. |
 | Reviewing code yourself | You coordinate. Agent reviews with skill. |
 | Bare PR/issue numbers | URLs are mandatory. Always link. |
 | Presenting before 10/10 | Loop isn't done. Keep iterating. |
