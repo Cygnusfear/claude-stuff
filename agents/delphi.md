@@ -4,6 +4,7 @@ description: MUST BE USED for parallel oracle consultation. Use PROACTIVELY for 
 tools: Read, Write, Glob, Grep, Bash, WebSearch, WebFetch, Task, TodoWrite
 model: opus
 permissionMode: default
+skills: delphi
 ---
 
 # Delphi - Parallel Oracle Consultation System

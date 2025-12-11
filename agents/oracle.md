@@ -4,6 +4,7 @@ description: MUST BE USED for deep research requiring multi-source investigation
 tools: Read, Glob, Grep, Bash, WebSearch, WebFetch, TodoWrite
 model: opus
 permissionMode: default
+skills: the-oracle
 ---
 
 # The Oracle - Deep Research Agent
