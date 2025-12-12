@@ -173,6 +173,89 @@ Never write bare `PR #42` or `Issue #100`. **ALWAYS include the full clickable U
 
 ---
 
+## ❌ Antipattern Examples: What NOT To Do
+
+> **EXECUTIVE SUMMARY: ANY SCORE BELOW 10/10 → DO NOT APPROVE, DO NOT PRESENT**
+
+### Antipattern 1: "CI Passes, Ready to Merge"
+
+```
+❌ WRONG:
+"CI is green and all tests pass. Ready to merge!"
+"Build successful, linting passed. Good to go!"
+
+✅ CORRECT:
+"CI passes. Now awaiting 10/10 review with all suggestions fixed before presenting to human."
+```
+
+**Why this is wrong:** CI passing is necessary but NOT sufficient. The loop requires a 10/10 review with ZERO suggestions. CI green + review suggestions = NOT DONE.
+
+### Antipattern 2: "Review 82/100 APPROVED"
+
+```
+❌ WRONG:
+"Review: 82/100. Overall solid implementation. APPROVED."
+"Review score: 9/10. Verdict: Ready to merge."
+"Great work! 95/100, approved with minor notes."
+
+✅ CORRECT:
+"Review: 82/100. NOT APPROVED. Agent must fix all 18 points before re-review."
+"Review: 9/10. NOT APPROVED. Loop back to Step 1 until 10/10."
+```
+
+**Why this is wrong:** ANY score below 10/10 means there are issues. Issues mean NOT DONE. Send the agent back. The loop continues until ZERO suggestions remain.
+
+### Antipattern 3: "Agent Needs Push Access / Cherry Pick"
+
+```
+❌ WRONG:
+"Agent completed the work but needs push access to main."
+"Changes ready, please cherry-pick commit abc123 to main."
+"Work done locally, someone needs to push it."
+
+✅ CORRECT:
+"Agent creates branch → Agent creates PR → Review posted as PR comment → 10/10 achieved → Present PR link to human"
+```
+
+**Why this is wrong:** Agents ALWAYS create a new branch and open a PR. The review goes ON the PR as a comment. No cherry-picking, no manual pushes, no special access needed. The PR IS the deliverable.
+
+### Antipattern 4: "Good News, Everything Done!" (No Links)
+
+```
+❌ WRONG:
+"Good news! Everything is already done! See PR #243 and #244."
+"Fixed in PR #100, related to issue #50."
+"All tasks complete - check PRs #10, #11, #12."
+
+✅ CORRECT:
+"All tasks complete:
+- [PR #243](https://github.com/owner/repo/pull/243) - Auth fix
+- [PR #244](https://github.com/owner/repo/pull/244) - Test coverage
+Related: [Issue #50](https://github.com/owner/repo/issues/50)"
+```
+
+**Why this is wrong:** Bare numbers are not clickable. The human must be able to click directly to the PR. ALWAYS format as `[PR #N](full-url)`.
+
+### Antipattern 5: "Open Items" Without Links
+
+```
+❌ WRONG:
+"Open items:
+- #535 Nix CI implementation (orphan spacetime branch)
+- #102 Database migration pending
+- Issue #88 still needs review"
+
+✅ CORRECT:
+"Open items:
+- [#535](https://github.com/owner/repo/issues/535) - Nix CI implementation (orphan spacetime branch)
+- [#102](https://github.com/owner/repo/issues/102) - Database migration pending
+- [Issue #88](https://github.com/owner/repo/issues/88) - Still needs review"
+```
+
+**Why this is wrong:** Every reference to a PR or issue MUST be a clickable link. No exceptions. The human should never have to manually construct a URL.
+
+---
+
 ## Quick Reference
 
 ```
