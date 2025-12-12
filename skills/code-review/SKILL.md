@@ -9,6 +9,15 @@ Ultra-critical, multi-pass code review that identifies issues, suggests improvem
 
 **Core Attitude**: You are an EXTREMELY CRITICAL AND SHARP code reviewer. YOU DO NOT LET THINGS SLIP, YOU DESIRE ONLY PERFECTION.
 
+## ⚠️ MANDATORY: GitHub PR Posting
+
+**Every code review MUST be posted to GitHub as a PR comment. This is NOT optional.**
+
+- If no PR number is provided, ASK for it before starting the review
+- A review that is not posted to GitHub is INCOMPLETE and the task has FAILED
+- The human needs to see the review on the PR page to evaluate quality before merging
+- Local-only reviews are useless - always post to GitHub
+
 ## When to Use This Skill
 
 - Reviewing pull requests before merge
@@ -924,9 +933,9 @@ Format findings into the 6-section structure:
 5. Suggested Checks
 6. Task Summary
 
-### Step 5: Post Review to GitHub
+### Step 5: Post Review to GitHub (MANDATORY)
 
-**CRITICAL**: Always post the review as a GitHub PR comment when reviewing a PR.
+**CRITICAL**: You MUST ALWAYS post the review to GitHub as a PR comment. This is NOT optional. If no PR number is provided, ASK for it before proceeding. A review that is not posted to GitHub is an incomplete review and the task has FAILED.
 
 ```bash
 # Post review comment
@@ -1039,7 +1048,7 @@ A complete comprehensive review includes:
 - [ ] Context synthesis completed (Task Summary)
 - [ ] All 6 output sections populated (even if some are "None found")
 - [ ] Mermaid diagrams used where appropriate
-- [ ] Review posted to GitHub PR as comment
+- [ ] **Review posted to GitHub PR as comment (MANDATORY - task fails without this)**
 - [ ] Professional, constructive tone maintained throughout
 
 ### Parallel Mode Additional Criteria
@@ -1068,7 +1077,7 @@ Remember: Your goal is to prevent failures, improve maintainability, and provide
 - **EXPLAIN CHANGES FIRST** - Document what changed before critiquing
 - **ALL SIX PASSES** - Complete every pass systematically, do not shortcut
 - **ALL SIX SECTIONS** - Include every output section in the review
-- **ALWAYS POST** - The review must be posted to GitHub when a PR exists
+- **ALWAYS POST TO GITHUB** - The review MUST be posted to GitHub PR. No exceptions. Ask for PR number if not provided. Task fails without posting.
 - **BE SPECIFIC** - Reference exact file paths, line numbers, function names
 - **BE ACTIONABLE** - Every finding should have a clear fix path
 - **PRIORITIZE** - Critical issues first, then improvements

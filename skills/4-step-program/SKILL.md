@@ -7,6 +7,15 @@ description: Coordinator workflow for orchestrating dockeragents through fix-rev
 
 A coordinator workflow for orchestrating dockeragents. You delegate, they implement. You enforce the loop until quality is achieved.
 
+## ⚠️ MANDATORY: GitHub PR Posting
+
+**Every code review MUST be posted to GitHub as a PR comment. This is NOT optional.**
+
+- The code-reviewer agent MUST post their review to the PR
+- A review that is not posted to GitHub means the task has FAILED
+- The human needs to see the review on the PR page to evaluate quality before merging
+- If the agent reports completion without posting to GitHub, send them back to post it
+
 ## The Loop
 
 ```
@@ -98,6 +107,7 @@ A **10/10** review means ALL of the following:
 - All verification commands executed and passing
 - Task requirements fully met
 - DO NOT ACCEPT POTENTIAL WORK IN REVIEW FOR A LATER PR (this is still a suggestion)
+- **Review MUST be posted to GitHub PR** - if not posted, task is incomplete
 
 ### If NOT 10/10 (any suggestions exist):
 
@@ -158,7 +168,8 @@ Never write bare `PR #42` or `Issue #100`. **ALWAYS include the full clickable U
 | Reviewing code yourself | You coordinate. Agent reviews with skill. |
 | Bare PR/issue numbers | URLs are mandatory. Always link. |
 | Presenting before 10/10 | Loop isn't done. Keep iterating. |
-| Review not posted to GitHub | Human can't see local-only reviews. Must be on PR page. |
+| Review not posted to GitHub | **TASK FAILS.** Human can't see local-only reviews. Must be on PR page. |
+| Accepting completion without GitHub post | **Send agent back.** Review isn't done until posted. |
 
 ---
 
