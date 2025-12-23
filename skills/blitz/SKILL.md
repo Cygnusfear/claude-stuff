@@ -160,6 +160,45 @@ Fix these issues and re-review.
 - Code follows project conventions
 - Documentation updated if needed
 
+### Phase 4.5: FINAL COVERAGE GATE (Before Merge)
+
+**MANDATORY**: Before merging ANY PR, perform one final 100% coverage check.
+
+For EACH PR ready to merge:
+
+```bash
+# 1. Re-read original issue
+gh issue view <issue-number>
+
+# 2. List ALL requirements from issue
+# 3. Verify EACH requirement exists in PR changes
+gh pr diff <pr-number>
+
+# 4. Calculate: Implemented / Total = Coverage %
+```
+
+**FINAL GATE DECISION:**
+
+| Coverage | Action |
+|----------|--------|
+| **100%** | ✅ Proceed to Phase 5 (Merge) |
+| **< 100%** | ❌ **DO NOT MERGE** - Resume agent to implement missing requirements |
+
+**If Final Coverage < 100%:**
+```
+Resume agent: "FINAL COVERAGE GATE FAILED for PR #<NUMBER>.
+
+Issue #X has Y requirements. Your implementation covers Z (W%).
+
+MISSING:
+- [Requirement A]: Not implemented
+- [Requirement B]: Partially implemented
+
+Complete ALL missing requirements. Do not return until 100% coverage."
+```
+
+**→ Loop back to Phase 4 (Review Iteration)**
+
 ### Phase 5: Sequential Squash-Merge + Rebase
 
 Merge PRs one at a time. Order by dependency (infrastructure first).
@@ -229,5 +268,6 @@ See `references/pitfalls.md` for common issues and solutions.
 3. [ ] Create worktrees for each fixable issue
 4. [ ] Launch parallel agents with 4-step-program **including complete requirement lists**
 5. [ ] Monitor and iterate until all PRs hit **100% issue coverage AND 10/10**
-6. [ ] Sequential squash-merge with rebase between
-7. [ ] Cleanup worktrees and branches
+6. [ ] **FINAL COVERAGE GATE**: Re-verify 100% coverage before each merge
+7. [ ] Sequential squash-merge with rebase between (only after gate passes)
+8. [ ] Cleanup worktrees and branches

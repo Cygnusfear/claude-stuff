@@ -160,12 +160,59 @@ send_message_to_agent(agent_id, "Review shows X suggestions. Fix all of them, th
 
 ### If YES 10/10 (zero suggestions):
 
+**→ Proceed to Final Coverage Gate**
+
+---
+
+## Step 3.5: FINAL COVERAGE GATE (Before Presenting)
+
+**MANDATORY**: Before presenting to human, perform one final 100% coverage verification.
+
+### Final Coverage Check Process
+
+```
+1. Re-read the original issue: `gh issue view <number>`
+2. List EVERY requirement from the issue
+3. For EACH requirement, verify implementation exists in the PR
+4. Calculate: Implemented / Total = Coverage %
+```
+
+### Coverage Decision
+
+| Coverage | Action |
+|----------|--------|
+| **100%** | ✅ Proceed to Step 4 (Present) |
+| **< 100%** | ❌ **DO NOT PRESENT** - Loop back to Step 1 |
+
+### If Coverage < 100%:
+
+```
+send_message_to_agent(agent_id, "FINAL COVERAGE CHECK FAILED.
+
+Issue #X has Y requirements. Implementation covers Z (W%).
+
+MISSING REQUIREMENTS:
+- [Requirement A]: Not implemented
+- [Requirement B]: Partially implemented - [what's missing]
+
+Implement ALL missing requirements, then re-review with Skill(code-reviewer) and POST to GitHub.
+
+Do not return until 100% coverage achieved.")
+```
+
+**→ Loop back to Step 1**
+
+### If Coverage = 100%:
+
 **→ Proceed to Step 4**
+
+---
 
 ## Step 4: PRESENT to Human
 
 Report to the human with:
 - Summary of what was done
+- **Confirmation of 100% issue coverage** (list all requirements met)
 - PR number with **FULL URL link**
 - Related issue links
 
@@ -325,15 +372,18 @@ Related: [Issue #50](https://github.com/owner/repo/issues/50)"
 ## Quick Reference
 
 ```
-1. DELEGATE  → assign_task with ALL issue requirements + review + GitHub posting instruction
-2. WAIT      → Agent fixes + runs Skill(code-reviewer) + POSTS to GitHub
-3. CHECK     → TWO gates must pass:
-               GATE 1: Is 100% of issue/task requirements implemented?
-                       NO  → send_message_to_agent with missing requirements, go to 2
-               GATE 2: Is report 10/10 with ZERO suggestions? Is review on PR page?
-                       NO  → send_message_to_agent, go to 2
-                       YES → go to 4
-4. PRESENT   → Tell human + LINK the PR URL (review already visible on PR)
+1. DELEGATE   → assign_task with ALL issue requirements + review + GitHub posting instruction
+2. WAIT       → Agent fixes + runs Skill(code-reviewer) + POSTS to GitHub
+3. CHECK      → TWO gates must pass:
+                GATE 1: Is 100% of issue/task requirements implemented?
+                        NO  → send_message_to_agent with missing requirements, go to 2
+                GATE 2: Is report 10/10 with ZERO suggestions? Is review on PR page?
+                        NO  → send_message_to_agent, go to 2
+                        YES → go to 3.5
+3.5 FINAL GATE → Re-verify 100% coverage one last time before presenting
+                 NO (< 100%)  → send_message_to_agent, go to 1
+                 YES (100%)   → go to 4
+4. PRESENT    → Tell human + CONFIRM 100% coverage + LINK the PR URL
 ```
 
-**Remember: You don't implement. You orchestrate the loop until 100% coverage AND 10/10.**
+**Remember: You don't implement. You orchestrate the loop until 100% coverage AND 10/10. Final gate catches any missed requirements.**

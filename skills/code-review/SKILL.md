@@ -1112,12 +1112,62 @@ Note questions in the "Consider Asking User" section for issues requiring develo
 
 ---
 
+## Final Coverage Gate (Before Approval)
+
+**MANDATORY**: Before approving ANY PR, perform a final 100% coverage verification.
+
+### Final Gate Process
+
+```
+1. Re-read original issue: `gh issue view <number>`
+2. Extract EVERY requirement (functional, edge cases, acceptance criteria)
+3. Verify EACH requirement has corresponding implementation
+4. Calculate final coverage: Implemented / Total
+```
+
+### Final Gate Decision
+
+| Coverage | Verdict |
+|----------|---------|
+| **100%** | ✅ May approve (if also 10/10 quality) |
+| **< 100%** | ❌ **MUST REQUEST CHANGES** - send back to implementation |
+
+### If Final Coverage < 100%:
+
+**DO NOT APPROVE. Post review requesting changes:**
+
+```markdown
+## ❌ FINAL COVERAGE CHECK FAILED
+
+**Issue**: #X
+**Requirements**: Y total
+**Implemented**: Z
+**Coverage**: W% (MUST BE 100%)
+
+### Missing Requirements
+
+| # | Requirement | Status |
+|---|-------------|--------|
+| 1 | [requirement text] | ❌ NOT IMPLEMENTED |
+| 2 | [requirement text] | ⚠️ PARTIAL - [what's missing] |
+
+### Action Required
+
+Implementation MUST address ALL missing requirements before approval.
+Return to implementation loop and fix these gaps.
+```
+
+**Use `gh pr review --request-changes`** - this is blocking, not a comment.
+
+---
+
 ## Success Criteria
 
 A complete comprehensive review includes:
 
 - [ ] **Issue/task requirements identified and listed (100% coverage check)**
 - [ ] **All requirements verified as implemented (100% coverage required)**
+- [ ] **FINAL COVERAGE GATE passed (100% verified before approval)**
 - [ ] All context gathered (PR details, changed files, related info)
 - [ ] Change Explanation section completed with Mermaid diagrams
 - [ ] All 6 passes executed systematically

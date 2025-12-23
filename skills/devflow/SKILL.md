@@ -66,9 +66,25 @@ After CI passes, run 6-pass review:
 
 **Continue through:** workstream setup, agent dispatch, CI fixes, review feedback.
 
+## Phase 4.5: FINAL COVERAGE GATE
+
+**MANDATORY**: Before any merge, perform final 100% coverage verification.
+
+```
+1. Re-read original issue: `gh issue view <number>`
+2. Verify EVERY requirement is implemented
+3. Coverage < 100% → Send back to Phase 2, do NOT merge
+4. Coverage = 100% → Proceed to Phase 5
+```
+
+| Coverage | Action |
+|----------|--------|
+| **100%** | ✅ Proceed to merge |
+| **< 100%** | ❌ Return to implementation loop |
+
 ## Phase 5: Merge & Continue
 
-Merge PRs in dependency order. Proceed to next phase.
+Merge PRs in dependency order. **Only after Final Coverage Gate passes.** Proceed to next phase.
 
 ---
 
