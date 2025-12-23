@@ -534,6 +534,86 @@ graph TD
 
 ---
 
+## Pass 0.5: Issue/Task Coverage Verification (MANDATORY)
+
+**CRITICAL**: Before analyzing code quality, verify that 100% of the original issue/task/ticket requirements are implemented.
+
+### Step 1: Identify the Source Requirements
+
+Locate the original requirements from:
+- GitHub issue (use `gh issue view <number>`)
+- PR description referencing issues
+- Task ticket or spec document
+- Plan file in `.plans/`
+- Commit messages describing the work
+
+### Step 2: Extract All Requirements
+
+Create exhaustive checklist of EVERY requirement:
+- Functional requirements (what it should do)
+- Acceptance criteria (how to verify it works)
+- Edge cases mentioned
+- Error handling requirements
+- UI/UX requirements
+- Performance requirements
+- Documentation requirements
+
+### Step 3: Verify Each Requirement
+
+For EACH requirement extracted:
+- ✅ **IMPLEMENTED**: Code exists that fulfills this requirement
+- ❌ **NOT IMPLEMENTED**: Requirement is missing from implementation
+- ⚠️ **PARTIALLY IMPLEMENTED**: Requirement only partially addressed
+
+### Step 4: Calculate Coverage
+
+```
+Requirements Coverage = (Implemented / Total Requirements) × 100%
+```
+
+**Anything less than 100% = AUTOMATIC REQUEST CHANGES**
+
+### Output Format
+
+```markdown
+## Issue/Task Coverage Analysis
+
+**Source**: [Issue #X / PR description / Plan file]
+**Total Requirements**: X
+**Implemented**: Y
+**Coverage**: Z%
+
+### Requirements Checklist
+
+| # | Requirement | Status | Evidence |
+|---|-------------|--------|----------|
+| 1 | [requirement text] | ✅ Implemented | `file.ts:45` |
+| 2 | [requirement text] | ❌ NOT IMPLEMENTED | Missing |
+| 3 | [requirement text] | ⚠️ Partial | `file.ts:80` - missing error case |
+
+### Coverage Verdict
+
+- [ ] 100% of requirements implemented
+- **If NO**: REQUESTING CHANGES - implementation is incomplete
+```
+
+### Coverage Antipatterns
+
+```
+❌ WRONG:
+"Most requirements are implemented. Approved with note to finish the rest."
+"Core functionality works, edge cases can be added later."
+"8 of 10 requirements done - good enough for now."
+
+✅ CORRECT:
+"REQUESTING CHANGES. 2 of 10 requirements not implemented:
+- Requirement X: [specific missing functionality]
+- Requirement Y: [specific missing functionality]
+Implementation cannot be approved until 100% complete."
+```
+
+---
+
 ## Pass 1: Technical Issue Identification
 
 Scan for issues that will cause runtime or compile-time failures.
@@ -1036,6 +1116,8 @@ Note questions in the "Consider Asking User" section for issues requiring develo
 
 A complete comprehensive review includes:
 
+- [ ] **Issue/task requirements identified and listed (100% coverage check)**
+- [ ] **All requirements verified as implemented (100% coverage required)**
 - [ ] All context gathered (PR details, changed files, related info)
 - [ ] Change Explanation section completed with Mermaid diagrams
 - [ ] All 6 passes executed systematically
@@ -1070,8 +1152,31 @@ Remember: Your goal is to prevent failures, improve maintainability, and provide
 ## ❌ Antipatterns: What NOT To Do
 
 > **EXECUTIVE SUMMARY: ANY SCORE BELOW 10/10 → DO NOT APPROVE**
+> **EXECUTIVE SUMMARY: ANY COVERAGE BELOW 100% → DO NOT APPROVE**
 
 These patterns represent review FAILURES. If you catch yourself doing any of these, STOP and correct course.
+
+### Antipattern 0: Incomplete Issue/Task Coverage
+
+```
+❌ WRONG:
+"The main functionality is implemented. Approved."
+"8 of 10 acceptance criteria met. Close enough!"
+"Core feature works, edge cases can be a follow-up."
+"Most of the issue requirements are addressed."
+[APPROVED]
+
+✅ CORRECT:
+"REQUESTING CHANGES. Issue coverage is 80% (8 of 10 requirements).
+Missing requirements:
+1. [Requirement X]: Not implemented - no code handles this case
+2. [Requirement Y]: Partially implemented - missing error handling path
+
+Implementation MUST address ALL requirements before approval.
+This is non-negotiable - 100% coverage required."
+```
+
+**Why this is wrong:** Approving incomplete implementations means the issue is NOT actually fixed. The user opened the issue for ALL the requirements, not just some of them. Partial implementations leave bugs unfixed and features incomplete.
 
 ### Antipattern 1: "9.5/10" Soft Approvals
 

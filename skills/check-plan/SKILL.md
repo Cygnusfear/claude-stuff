@@ -134,6 +134,50 @@ For each item in REMOVAL SPEC:
 - List what actually was removed
 - **Flag any items not removed as HIGH PRIORITY tasks**
 
+### Phase 3.5: Original Issue/Task Coverage Verification (MANDATORY)
+
+**CRITICAL**: Verify that the implementation covers 100% of the ORIGINAL issue/task requirements, not just the plan steps.
+
+#### Step 1: Locate Original Issue/Task
+
+Find the source requirement:
+- GitHub issue that triggered this plan: `gh issue view <number>`
+- Original task description or ticket
+- User request that initiated the work
+
+#### Step 2: Extract ALL Original Requirements
+
+From the original issue/task, extract:
+- Every functional requirement
+- Every acceptance criterion
+- Every edge case mentioned
+- Every error handling requirement
+- Any implicit requirements
+
+#### Step 3: Map Requirements to Implementation
+
+| # | Original Requirement | Plan Step | Implementation Status |
+|---|---------------------|-----------|----------------------|
+| 1 | [from issue] | Step X | ✅/❌/⚠️ |
+| 2 | [from issue] | Step Y | ✅/❌/⚠️ |
+| 3 | [from issue] | N/A (missing from plan!) | ❌ |
+
+#### Step 4: Identify Coverage Gaps
+
+**Two types of gaps:**
+1. **Plan gaps**: Requirements from issue that weren't captured in plan
+2. **Implementation gaps**: Plan steps that weren't fully implemented
+
+Both count toward incomplete coverage.
+
+#### Step 5: Coverage Assessment
+
+```
+Issue Coverage = (Implemented Original Requirements / Total Original Requirements) × 100%
+```
+
+**Anything less than 100% = PLAN NOT COMPLETE**
+
 ### Phase 4: Gap Analysis
 
 #### Step 1: Identify Scope Creep
@@ -147,6 +191,12 @@ Plan items without corresponding implementation:
 - Which steps haven't been started?
 - Which steps are partially complete?
 - What's blocking completion?
+
+#### Step 3: Identify Issue Coverage Gaps (HIGH PRIORITY)
+Requirements from original issue not in implementation:
+- Which issue requirements are missing?
+- Were they missed in planning or implementation?
+- These are **HIGHER PRIORITY** than plan step completion
 
 ### Phase 5: Build Progress Report
 
@@ -411,14 +461,17 @@ Provide concise summary:
 
 A plan can be marked as `.done.md` ONLY when:
 
-1. ✅ **All plan steps implemented** (100% completion)
-2. ✅ **All REMOVAL SPEC items removed** (old code gone)
-3. ✅ **TypeScript passes** (`tsc --noEmit` succeeds)
-4. ✅ **Linting passes** (no errors)
-5. ✅ **Build succeeds** (if applicable)
-6. ✅ **No `any` types added** (strict typing maintained)
-7. ✅ **CLAUDE.md compliance** (all guidelines followed)
-8. ✅ **Quality verified** (implementations match plan specs)
+1. ✅ **100% of ORIGINAL ISSUE/TASK requirements implemented** (not just plan steps!)
+2. ✅ **All plan steps implemented** (100% completion)
+3. ✅ **All REMOVAL SPEC items removed** (old code gone)
+4. ✅ **TypeScript passes** (`tsc --noEmit` succeeds)
+5. ✅ **Linting passes** (no errors)
+6. ✅ **Build succeeds** (if applicable)
+7. ✅ **No `any` types added** (strict typing maintained)
+8. ✅ **CLAUDE.md compliance** (all guidelines followed)
+9. ✅ **Quality verified** (implementations match plan specs)
+
+**CRITICAL**: Criterion #1 is the MOST IMPORTANT. A plan that completes all its steps but doesn't fulfill the original issue requirements is STILL INCOMPLETE.
 
 **Anything less = plan stays as `.todo.md`**
 

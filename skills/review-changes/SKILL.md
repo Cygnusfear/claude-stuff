@@ -143,6 +143,54 @@ Severity: [CRITICAL|HIGH|MEDIUM|LOW]
 #### Step 7: Update Todo
 Mark file as reviewed in todo list.
 
+### Phase 2.5: Issue/Task Coverage Verification (MANDATORY)
+
+**CRITICAL**: Before completing the review, verify that 100% of the original issue/task requirements are implemented.
+
+#### Step 1: Identify Source Requirements
+
+Locate the original requirements from:
+- GitHub issue (`gh issue view <number>`)
+- PR description referencing issues
+- Task ticket or plan file in `.plans/`
+- Commit messages describing the work
+
+#### Step 2: Extract ALL Requirements
+
+Create exhaustive checklist:
+- Functional requirements (what it should do)
+- Acceptance criteria (how to verify)
+- Edge cases mentioned
+- Error handling requirements
+
+#### Step 3: Verify Each Requirement
+
+| # | Requirement | Status | Evidence |
+|---|-------------|--------|----------|
+| 1 | [requirement] | ✅/❌/⚠️ | file:line or "Missing" |
+
+#### Step 4: Coverage Assessment
+
+```
+Requirements Coverage = (Implemented / Total) × 100%
+```
+
+**Anything less than 100% = REQUEST CHANGES immediately**
+
+Add to report:
+```markdown
+## Issue/Task Coverage
+
+**Source**: [Issue #X / Plan file]
+**Coverage**: X% (Y of Z requirements)
+
+### Missing Requirements
+- ❌ [Requirement X]: Not implemented
+- ❌ [Requirement Y]: Partially implemented - [what's missing]
+
+**VERDICT**: Coverage incomplete. Cannot approve until 100% implemented.
+```
+
 ### Phase 3: Cross-File Analysis
 
 After reviewing all files:
@@ -441,6 +489,7 @@ Provide concise summary:
 ## Success Criteria
 
 A complete code review includes:
+- **100% of issue/task requirements verified as implemented**
 - All changed files reviewed
 - Plan compliance verified (if plan exists)
 - All engineering issues identified and categorized
@@ -449,3 +498,5 @@ A complete code review includes:
 - Alternative approaches suggested
 - Overall assessment provided
 - Structured report generated
+
+**CRITICAL**: If issue/task coverage is less than 100%, the review MUST request changes regardless of code quality.

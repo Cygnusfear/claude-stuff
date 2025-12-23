@@ -5,7 +5,16 @@ description: This skill should be used when parallelizing multi-issue sprints us
 
 # The Blitz: Parallel Worktree + Agent Workflow
 
-Parallelizes multi-issue sprints by running independent Claude agents in isolated git worktrees. Each agent creates a PR, self-reviews to 10/10, then PRs are sequentially merged to avoid conflicts. Herding 🐲.
+Parallelizes multi-issue sprints by running independent Claude agents in isolated git worktrees. Each agent creates a PR, self-reviews to 10/10 with 100% issue coverage, then PRs are sequentially merged to avoid conflicts. Herding 🐲.
+
+## ⚠️ MANDATORY: 100% Issue Coverage Per Agent
+
+**Every agent MUST implement 100% of their assigned issue's requirements before their PR can be merged.**
+
+- Each agent receives COMPLETE issue requirements (extracted from GitHub issue)
+- Review must verify ALL requirements are implemented
+- Coverage < 100% = agent sent back to complete the work
+- No PR merges until all requirements from the issue are addressed
 
 ## Prerequisites
 
@@ -71,21 +80,34 @@ Spawn agents using the Task tool with structured prompts. Each agent needs:
 
 1. **Working directory** (absolute path to worktree)
 2. **Issue context** (number, description, acceptance criteria)
-3. **Explicit instruction to use 4-step-program skill**
+3. **COMPLETE list of ALL requirements from the issue** (extracted via `gh issue view`)
+4. **Explicit instruction to use 4-step-program skill**
+
+**CRITICAL: Before delegating, extract ALL requirements from each issue:**
+```bash
+gh issue view <number>
+```
+List EVERY requirement, acceptance criterion, and edge case in the agent prompt.
 
 **Agent Prompt Template:**
 ```
 Working directory: /absolute/path/to/.worktrees/<slug>
 Issue: #<number> - <title>
 
+**ALL REQUIREMENTS FROM ISSUE (100% must be implemented):**
+1. [Requirement 1 from issue]
+2. [Requirement 2 from issue]
+3. [Requirement 3 from issue]
+... (list ALL of them)
+
 Use the 4-step-program skill to:
-1. Implement the fix
+1. Implement ALL the above requirements (100% coverage required)
 2. Run tests, verify passing
 3. Create PR with `gh pr create`
-4. Self-review using code-reviewer skill
+4. Self-review using code-reviewer skill (which will verify 100% coverage)
 5. POST review to GitHub with `gh api`
 
-Do not return until you achieve 10/10 review score.
+Do not return until you achieve 10/10 review score WITH 100% of issue requirements implemented.
 ```
 
 **CRITICAL:** Agents must POST reviews to GitHub, not just print them:
@@ -104,17 +126,35 @@ Monitor each PR's review status:
 gh pr view <NUMBER> --json reviews --jq '.reviews[-1].body'
 ```
 
-**If score < 10/10:** Resume the agent with specific feedback:
+**TWO gates must pass for each PR:**
+
+**GATE 1: 100% Issue Coverage**
+- Verify ALL requirements from original issue are implemented
+- If ANY requirement is missing → Resume agent with missing requirements
+
+**GATE 2: 10/10 Review Quality**
+- Zero suggestions in review
+- All verification commands pass
+
+**If coverage < 100%:** Resume the agent with specific missing requirements:
 ```
-PR #<NUMBER> scored 8/10. Issues:
+PR #<NUMBER> coverage: 80% (4 of 5 requirements).
+Missing requirement: [Requirement 5 from issue - specific text]
+Implement this requirement and re-review.
+```
+
+**If score < 10/10 (but coverage 100%):** Resume the agent with specific feedback:
+```
+PR #<NUMBER> has 100% coverage but scored 8/10. Issues:
 - <specific issue 1>
 - <specific issue 2>
 
 Fix these issues and re-review.
 ```
 
-**10/10 Criteria:**
-- All functionality implemented
+**10/10 + 100% Coverage Criteria:**
+- **ALL requirements from original issue implemented**
+- All functionality working
 - Tests pass
 - No obvious bugs or security issues
 - Code follows project conventions
@@ -185,8 +225,9 @@ See `references/pitfalls.md` for common issues and solutions.
 ## Checklist Summary
 
 1. [ ] Triage issues (use `delphi` if ambiguous)
-2. [ ] Create worktrees for each fixable issue
-3. [ ] Launch parallel agents with 4-step-program
-4. [ ] Monitor and iterate until all PRs hit 10/10
-5. [ ] Sequential squash-merge with rebase between
-6. [ ] Cleanup worktrees and branches
+2. [ ] **Extract ALL requirements from each issue** (`gh issue view`)
+3. [ ] Create worktrees for each fixable issue
+4. [ ] Launch parallel agents with 4-step-program **including complete requirement lists**
+5. [ ] Monitor and iterate until all PRs hit **100% issue coverage AND 10/10**
+6. [ ] Sequential squash-merge with rebase between
+7. [ ] Cleanup worktrees and branches

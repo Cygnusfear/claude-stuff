@@ -11,8 +11,27 @@ Create a detailed, high-quality implementation plan in `.plans/` directory that 
 
 ### Phase 1: Understanding & Validation
 
+#### Step 0: Extract Original Issue/Task Requirements (MANDATORY)
+
+**CRITICAL**: Before creating any plan, extract ALL requirements from the original issue/task.
+
+```bash
+# If triggered by a GitHub issue
+gh issue view <number>
+```
+
+Create exhaustive requirements list:
+- Every functional requirement stated
+- Every acceptance criterion listed
+- Every edge case mentioned
+- Every error handling requirement
+- Any implicit requirements (derive from context)
+
+**Store this list - the plan MUST cover 100% of these requirements.**
+
 #### Step 1: Understand the Request
 - Review the report or analysis that triggered this plan
+- **Map each requirement from Step 0 to plan items**
 - Identify the type of plan needed:
   - **Feature**: New functionality
   - **Refactor**: Code restructuring
@@ -80,7 +99,7 @@ Rules:
 
 Create plan document with ALL of the following sections:
 
-#### 1. Overview
+#### 1. Overview & Issue Coverage
 ```markdown
 # [Plan Title]
 
@@ -89,6 +108,21 @@ Create plan document with ALL of the following sections:
 
 ## Type
 [Feature | Refactor | Fix | Enhancement]
+
+## Source Issue/Task
+[Link to GitHub issue or task description]
+
+## Original Requirements (100% Coverage Required)
+
+**ALL requirements from source issue/task that this plan MUST address:**
+
+| # | Requirement | Plan Step(s) |
+|---|-------------|--------------|
+| 1 | [Requirement from issue] | Step X |
+| 2 | [Requirement from issue] | Step Y, Z |
+| 3 | [Requirement from issue] | Step W |
+
+**Coverage Check**: X of X requirements mapped to plan steps (must be 100%)
 
 ## Status
 Todo (will be renamed to .done.md when complete)
@@ -269,12 +303,14 @@ Each step should be:
 
 #### Step 2: Validate Plan Completeness
 Checklist:
-- [ ] Overview section complete
+- [ ] **100% of original issue/task requirements mapped to plan steps**
+- [ ] Overview section complete with requirements table
 - [ ] Context & motivation clear
 - [ ] CLAUDE.md compliance documented
 - [ ] Existing types analyzed
 - [ ] Impact analysis thorough
 - [ ] Implementation steps detailed and ordered
+- [ ] **Every requirement from issue appears in at least one step**
 - [ ] REMOVAL SPECIFICATION complete
 - [ ] Anti-patterns section included
 - [ ] Validation criteria defined
@@ -334,11 +370,13 @@ Review the plan and begin implementation when ready.
 
 ## Critical Principles
 
+- **100% ISSUE COVERAGE** - Plan MUST address every requirement from original issue
 - **NEVER RUSH** - Thorough planning prevents bad implementations
 - **NEVER SKIP AUDIT** - Always understand the codebase first
 - **NEVER CREATE MIGRATIONS** - Replace completely, not gradually
 - **NEVER USE TEMPORARY NAMES** - Use final, proper names from the start
 - **NEVER SKIP REMOVAL SPEC** - Track what must be deleted
+- **NEVER SKIP REQUIREMENT** - Every issue requirement MUST have a plan step
 - **ALWAYS USE EXISTING TYPES** - Create new types only when necessary
 - **ALWAYS FOLLOW CLAUDE.MD** - Read and apply all guidelines
 - **ALWAYS BE SPECIFIC** - Vague steps lead to bad implementations

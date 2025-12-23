@@ -50,11 +50,30 @@ assign_task(agent_id, task_description)
 The task description MUST include:
 - Clear action to perform
 - Context (issue numbers, file paths, errors)
+- **ALL requirements from the issue/task (100% must be implemented)**
 - Success criteria
 - Instruction to self-review using `Skill(code-reviewer)` and POST to GitHub when done
 
+**CRITICAL: 100% Issue Coverage Requirement**
+
+When delegating, you MUST:
+1. Read the full issue: `gh issue view <number>`
+2. Extract EVERY requirement, acceptance criterion, and edge case
+3. Include ALL of them in the delegation prompt
+4. Make it clear that 100% of requirements must be implemented
+
 **Example delegation:**
-> "Fix the authentication bug in `src/auth.ts`. The session token expires incorrectly (see Issue #45). Success: tests pass, bug no longer reproducible. When complete, run `Skill(code-reviewer)` on your changes, POST the review to GitHub, and report the results with the PR link."
+> "Fix the authentication bug in `src/auth.ts` (Issue #45).
+>
+> **Requirements from issue (ALL must be implemented):**
+> 1. Session token expires correctly after 24 hours
+> 2. Refresh token works when session token expires
+> 3. Error message shown when both tokens expire
+> 4. User redirected to login page on auth failure
+>
+> Success: ALL 4 requirements implemented, tests pass, bug no longer reproducible.
+>
+> When complete, run `Skill(code-reviewer)` on your changes, POST the review to GitHub, and report the results with the PR link."
 
 **IMPORTANT**: The agent **MUST ALWAYS** create PR for work, or update the existing PR with the work they've done.
 
@@ -95,17 +114,37 @@ The agent reports back with:
 
 **IMPORTANT**: The agent **MUST ALWAYS** post the Review as comment on the PR.
 
-## Step 3: You CHECK - Is the review 10/10?
+## Step 3: You CHECK - Is the review 10/10 AND 100% Issue Coverage?
 
-When the agent reports back, evaluate: **Is the review 10/10?**
+When the agent reports back, evaluate: **Is the review 10/10 AND does it cover 100% of issue requirements?**
+
+### 100% Issue Coverage Check (MANDATORY)
+
+**BEFORE checking review quality, verify the implementation covers ALL requirements from the original issue/task:**
+
+1. **Identify ALL requirements** from the original issue:
+   - Read the issue: `gh issue view <number>`
+   - Extract every acceptance criterion
+   - Note every edge case mentioned
+   - List every functional requirement
+
+2. **Verify each requirement is implemented**:
+   - ✅ Implemented: Code exists that fulfills this requirement
+   - ❌ NOT Implemented: Requirement missing from implementation
+
+3. **Coverage must be 100%**:
+   - If ANY requirement is missing → Send agent back immediately
+   - Do NOT proceed to review quality check until coverage is 100%
+
+### 10/10 Review Quality Check
 
 A **10/10** review means ALL of the following:
+- **100% of issue/task requirements implemented** (verified above)
 - ZERO items in "Suggest Fixing" section
 - ZERO items in "Possible Simplifications" section
 - ZERO items in "Consider Asking User" section
 - ZERO further notes
 - All verification commands executed and passing
-- Task requirements fully met
 - DO NOT ACCEPT POTENTIAL WORK IN REVIEW FOR A LATER PR (this is still a suggestion)
 - **Review MUST be posted to GitHub PR** - if not posted, task is incomplete
 
@@ -162,6 +201,7 @@ Never write bare `PR #42` or `Issue #100`. **ALWAYS include the full clickable U
 
 | Anti-Pattern | Why It's Wrong |
 |--------------|----------------|
+| **Accepting incomplete issue coverage** | **Issue had 10 requirements, only 8 implemented = NOT DONE. Send back.** |
 | Accepting "mostly done" | Not 10/10 = not done. Send back. |
 | Skipping PR before review | We need a PR BEFORE review. |
 | Skipping review step | Every task gets reviewed. No exceptions. |
@@ -176,6 +216,32 @@ Never write bare `PR #42` or `Issue #100`. **ALWAYS include the full clickable U
 ## ❌ Antipattern Examples: What NOT To Do
 
 > **EXECUTIVE SUMMARY: ANY SCORE BELOW 10/10 → DO NOT APPROVE, DO NOT PRESENT**
+> **EXECUTIVE SUMMARY: ANY COVERAGE BELOW 100% → DO NOT APPROVE, DO NOT PRESENT**
+
+### Antipattern 0: Incomplete Issue Coverage
+
+```
+❌ WRONG:
+"Issue #45 requested 5 features. Agent implemented 4 of them.
+Review is 10/10. Ready to present!"
+
+"The main bug is fixed. The edge case mentioned in the issue
+can be handled in a follow-up. Presenting to human."
+
+"Agent addressed the core requirements. Minor items from the
+issue can be done later."
+
+✅ CORRECT:
+"Issue #45 has 5 requirements. Agent implemented 4.
+Missing: Requirement 5 (handle timeout errors).
+Sending agent back: 'Implement requirement 5 from issue #45 -
+handle timeout errors as specified in the acceptance criteria.'"
+
+"Review shows 10/10 quality BUT issue coverage is only 80%.
+NOT presenting until 100% of issue requirements are implemented."
+```
+
+**Why this is wrong:** The issue exists because the user needs ALL the requirements. Presenting partial work means the issue is still not fixed. The user will have to open another issue for the missing requirements.
 
 ### Antipattern 1: "CI Passes, Ready to Merge"
 
@@ -259,12 +325,15 @@ Related: [Issue #50](https://github.com/owner/repo/issues/50)"
 ## Quick Reference
 
 ```
-1. DELEGATE  → assign_task with review + GitHub posting instruction
+1. DELEGATE  → assign_task with ALL issue requirements + review + GitHub posting instruction
 2. WAIT      → Agent fixes + runs Skill(code-reviewer) + POSTS to GitHub
-3. CHECK     → Is report 10/10 with ZERO suggestions? Is review on PR page?
-               NO  → send_message_to_agent, go to 2
-               YES → go to 4
+3. CHECK     → TWO gates must pass:
+               GATE 1: Is 100% of issue/task requirements implemented?
+                       NO  → send_message_to_agent with missing requirements, go to 2
+               GATE 2: Is report 10/10 with ZERO suggestions? Is review on PR page?
+                       NO  → send_message_to_agent, go to 2
+                       YES → go to 4
 4. PRESENT   → Tell human + LINK the PR URL (review already visible on PR)
 ```
 
-**Remember: You don't implement. You orchestrate the loop until 10/10.**
+**Remember: You don't implement. You orchestrate the loop until 100% coverage AND 10/10.**
