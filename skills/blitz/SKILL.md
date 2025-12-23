@@ -162,19 +162,43 @@ Fix these issues and re-review.
 
 ### Phase 4.5: FINAL COVERAGE GATE (Before Merge)
 
-**MANDATORY**: Before merging ANY PR, perform one final 100% coverage check.
+**MANDATORY**: Before merging ANY PR, perform LINE-BY-LINE requirement verification.
 
 For EACH PR ready to merge:
 
+#### Step 1: Extract ALL Requirements
+
 ```bash
-# 1. Re-read original issue
+# Get ALL checklist items from issue
+gh issue view <issue-number> --json body --jq '.body' | grep -E "^\- \["
+
+# Also get full issue for prose requirements
 gh issue view <issue-number>
+```
 
-# 2. List ALL requirements from issue
-# 3. Verify EACH requirement exists in PR changes
-gh pr diff <pr-number>
+#### Step 2: Create Line-by-Line Table
 
-# 4. Calculate: Implemented / Total = Coverage %
+**MANDATORY** for each PR:
+
+```markdown
+## Issue #X - Full Requirements Check
+
+| Requirement | PR Status | Evidence |
+|-------------|-----------|----------|
+| [exact text from issue] | ✅ | `file.cs:line` - [implementation] |
+| [exact text from issue] | ❌ MISSING | Not found in PR |
+| [exact text from issue] | ⚠️ PARTIAL | `file.cs:line` - [what's missing] |
+| [exact text from issue] | ⚠️ MANUAL | Requires Unity Editor |
+```
+
+#### Step 3: Honest Assessment
+
+```markdown
+**Honest Assessment**:
+- Coverage: X% (Y of Z requirements fully implemented)
+- Missing: [list specific items]
+- Partial: [list items and what's missing]
+- Manual: [list items needing editor/runtime]
 ```
 
 **FINAL GATE DECISION:**
@@ -182,19 +206,29 @@ gh pr diff <pr-number>
 | Coverage | Action |
 |----------|--------|
 | **100%** | ✅ Proceed to Phase 5 (Merge) |
-| **< 100%** | ❌ **DO NOT MERGE** - Resume agent to implement missing requirements |
+| **< 100%** | ❌ **DO NOT MERGE** - Resume agent |
 
 **If Final Coverage < 100%:**
 ```
 Resume agent: "FINAL COVERAGE GATE FAILED for PR #<NUMBER>.
 
-Issue #X has Y requirements. Your implementation covers Z (W%).
+Issue #X - Full Requirements Check:
 
-MISSING:
-- [Requirement A]: Not implemented
-- [Requirement B]: Partially implemented
+| Requirement | Status | Evidence |
+|-------------|--------|----------|
+| MeshDeformer component created | ✅ | MeshDeformer.cs |
+| Create scene GameObject | ❌ MISSING | No scene modification |
+| Cache hit rate >90% | ⚠️ MANUAL | Requires runtime profiler |
 
-Complete ALL missing requirements. Do not return until 100% coverage."
+Honest Assessment:
+- Coverage: 85% (11 of 13 requirements)
+- Missing: scene GameObject creation
+- Partial: none
+- Manual: cache hit rate verification
+
+Implement ALL items marked ❌. Items marked ⚠️ MANUAL that CAN be automated via mcp-unity MUST be automated.
+
+Do not return until 100% coverage."
 ```
 
 **→ Loop back to Phase 4 (Review Iteration)**

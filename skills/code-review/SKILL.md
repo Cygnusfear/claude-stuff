@@ -1114,15 +1114,64 @@ Note questions in the "Consider Asking User" section for issues requiring develo
 
 ## Final Coverage Gate (Before Approval)
 
-**MANDATORY**: Before approving ANY PR, perform a final 100% coverage verification.
+**MANDATORY**: Before approving ANY PR, perform a final 100% coverage verification using LINE-BY-LINE requirement checking.
 
 ### Final Gate Process
 
+#### Step 1: Extract ALL Requirements from Issue
+
+```bash
+# Get ALL checklist items from issue
+gh issue view <number> --json body --jq '.body' | grep -E "^\- \["
+
+# Also check for requirements in prose (not just checkboxes)
+gh issue view <number>
 ```
-1. Re-read original issue: `gh issue view <number>`
-2. Extract EVERY requirement (functional, edge cases, acceptance criteria)
-3. Verify EACH requirement has corresponding implementation
-4. Calculate final coverage: Implemented / Total
+
+Extract EVERY requirement - don't rely on memory, actually parse the issue.
+
+#### Step 2: Create Line-by-Line Verification Table
+
+**MANDATORY FORMAT** - You MUST create this exact table structure:
+
+```markdown
+## Issue #X - Full Requirements Check
+
+| Requirement | PR Status | Evidence |
+|-------------|-----------|----------|
+| [exact text from issue] | ✅ | `file.ts:line` - [what implements it] |
+| [exact text from issue] | ❌ MISSING | Not found in PR |
+| [exact text from issue] | ⚠️ PARTIAL | `file.ts:line` - [what's missing] |
+| [exact text from issue] | ⚠️ MANUAL | Requires [runtime/editor/external tool] |
+```
+
+Status meanings:
+- ✅ = Fully implemented, can cite exact code
+- ❌ MISSING = Not implemented at all
+- ⚠️ PARTIAL = Partially implemented, specify what's missing
+- ⚠️ MANUAL = Requires manual verification (runtime, editor, external)
+- ⚠️ OPTIONAL = Explicitly marked optional in issue
+
+#### Step 3: Calculate Honest Coverage
+
+```
+Implemented (✅ only) / Total Requirements = Coverage %
+```
+
+**Be honest**:
+- ⚠️ PARTIAL counts as NOT implemented
+- ⚠️ MANUAL items that can be automated MUST be automated
+- Only truly optional items (marked in issue) can be excluded
+
+#### Step 4: State Your Confidence
+
+After the table, explicitly state:
+```markdown
+**Honest Assessment**:
+- Coverage: X% (Y of Z requirements fully implemented)
+- Missing: [list specific missing items]
+- Partial: [list partial items and what's missing]
+- Manual verification needed: [list items requiring runtime/editor]
 ```
 
 ### Final Gate Decision
@@ -1134,26 +1183,32 @@ Note questions in the "Consider Asking User" section for issues requiring develo
 
 ### If Final Coverage < 100%:
 
-**DO NOT APPROVE. Post review requesting changes:**
+**DO NOT APPROVE. Post review requesting changes with the full table:**
 
 ```markdown
 ## ❌ FINAL COVERAGE CHECK FAILED
 
 **Issue**: #X
 **Requirements**: Y total
-**Implemented**: Z
+**Fully Implemented**: Z
 **Coverage**: W% (MUST BE 100%)
 
-### Missing Requirements
+### Line-by-Line Verification
 
-| # | Requirement | Status |
-|---|-------------|--------|
-| 1 | [requirement text] | ❌ NOT IMPLEMENTED |
-| 2 | [requirement text] | ⚠️ PARTIAL - [what's missing] |
+| Requirement | Status | Evidence |
+|-------------|--------|----------|
+| [requirement 1] | ✅ | `file.ts:45` |
+| [requirement 2] | ❌ MISSING | Not in PR |
+| [requirement 3] | ⚠️ PARTIAL | Missing error handling |
+
+### Missing/Incomplete Items
+
+1. **[Requirement X]**: Not implemented - [specific gap]
+2. **[Requirement Y]**: Partially implemented - [what's missing]
 
 ### Action Required
 
-Implementation MUST address ALL missing requirements before approval.
+Implementation MUST address ALL items marked ❌ or ⚠️ before approval.
 Return to implementation loop and fix these gaps.
 ```
 

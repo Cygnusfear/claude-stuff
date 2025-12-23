@@ -166,15 +166,62 @@ send_message_to_agent(agent_id, "Review shows X suggestions. Fix all of them, th
 
 ## Step 3.5: FINAL COVERAGE GATE (Before Presenting)
 
-**MANDATORY**: Before presenting to human, perform one final 100% coverage verification.
+**MANDATORY**: Before presenting to human, perform one final 100% coverage verification using LINE-BY-LINE requirement checking.
 
 ### Final Coverage Check Process
 
+#### Step 1: Extract ALL Requirements from Issue
+
+```bash
+# Get ALL checklist items from issue
+gh issue view <number> --json body --jq '.body' | grep -E "^\- \["
+
+# Also check for requirements in prose (not just checkboxes)
+gh issue view <number>
 ```
-1. Re-read the original issue: `gh issue view <number>`
-2. List EVERY requirement from the issue
-3. For EACH requirement, verify implementation exists in the PR
-4. Calculate: Implemented / Total = Coverage %
+
+**Don't rely on memory** - actually parse the issue text.
+
+#### Step 2: Create Line-by-Line Verification Table
+
+**MANDATORY** - You MUST create this exact table:
+
+```markdown
+## Issue #X - Full Requirements Check
+
+| Requirement | PR Status | Evidence |
+|-------------|-----------|----------|
+| [exact text from issue] | ✅ | `file.ts:line` - [implementation] |
+| [exact text from issue] | ❌ MISSING | Not found in PR |
+| [exact text from issue] | ⚠️ PARTIAL | `file.ts:line` - [what's missing] |
+| [exact text from issue] | ⚠️ MANUAL | Requires [runtime/editor] |
+```
+
+Status meanings:
+- ✅ = Fully implemented, can cite exact code
+- ❌ MISSING = Not implemented at all
+- ⚠️ PARTIAL = Partially implemented (counts as NOT done)
+- ⚠️ MANUAL = Requires manual verification
+
+#### Step 3: Calculate Honest Coverage
+
+```
+Implemented (✅ only) / Total Requirements = Coverage %
+```
+
+**Be brutally honest**:
+- ⚠️ PARTIAL = NOT implemented
+- ⚠️ MANUAL items that CAN be automated MUST be
+- State your confidence explicitly
+
+#### Step 4: Honest Assessment
+
+```markdown
+**Honest Assessment**:
+- Coverage: X% (Y of Z requirements fully implemented)
+- Missing: [list]
+- Partial: [list with gaps]
+- Manual: [list items needing runtime/editor]
 ```
 
 ### Coverage Decision
@@ -189,13 +236,20 @@ send_message_to_agent(agent_id, "Review shows X suggestions. Fix all of them, th
 ```
 send_message_to_agent(agent_id, "FINAL COVERAGE CHECK FAILED.
 
-Issue #X has Y requirements. Implementation covers Z (W%).
+Issue #X - Full Requirements Check:
 
-MISSING REQUIREMENTS:
-- [Requirement A]: Not implemented
-- [Requirement B]: Partially implemented - [what's missing]
+| Requirement | Status | Evidence |
+|-------------|--------|----------|
+| [requirement 1] | ✅ | file.ts:45 |
+| [requirement 2] | ❌ MISSING | Not in PR |
+| [requirement 3] | ⚠️ PARTIAL | Missing X |
 
-Implement ALL missing requirements, then re-review with Skill(code-reviewer) and POST to GitHub.
+Honest Assessment:
+- Coverage: W% (Z of Y requirements)
+- Missing: [requirement 2]
+- Partial: [requirement 3] - needs X
+
+Implement ALL items marked ❌ or ⚠️, then re-review with Skill(code-reviewer) and POST to GitHub.
 
 Do not return until 100% coverage achieved.")
 ```
