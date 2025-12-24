@@ -1,0 +1,901 @@
+{
+  "$schema": "pass-4-components",
+  "$source": {
+    "screenshot": "/Users/alexander/Downloads/New_space_with_name.png",
+    "pass1": "/Users/alexander/Node/claude-stuff/.design-specs/new-space-modal/pass-1-layout.json",
+    "pass2": "/Users/alexander/Node/claude-stuff/.design-specs/new-space-modal/pass-2-colors.json",
+    "pass3": "/Users/alexander/Node/claude-stuff/.design-specs/new-space-modal/pass-3-typography.json",
+    "analysisDate": "2025-12-15",
+    "confidence": 0.92,
+    "notes": "Complete component detection and classification using Atomic Design methodology. All components identified with hierarchical relationships and reusable patterns."
+  },
+  "componentTree": {
+    "id": "modal-root",
+    "type": "Modal",
+    "atomicLevel": "template",
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 540,
+      "height": 500
+    },
+    "props": {
+      "borderRadius": "12px",
+      "border": "1px solid #000000",
+      "backgroundColor": "#FFFFFF",
+      "padding": "40px 40px 20px 40px"
+    },
+    "children": [
+      {
+        "id": "modal-header",
+        "type": "ModalHeader",
+        "atomicLevel": "organism",
+        "bounds": {
+          "x": 40,
+          "y": 40,
+          "width": 460,
+          "height": 70
+        },
+        "props": {
+          "hasDivider": true,
+          "dividerColor": "#E0E0E0",
+          "dividerThickness": "1px"
+        },
+        "children": [
+          {
+            "id": "title-text",
+            "type": "Heading",
+            "atomicLevel": "atom",
+            "bounds": {
+              "x": 83,
+              "y": 50,
+              "width": 265,
+              "height": 36
+            },
+            "props": {
+              "level": "h1",
+              "text": "Create a new Space",
+              "fontSize": "28px",
+              "fontWeight": 700,
+              "color": "#000000",
+              "textAlign": "left"
+            }
+          },
+          {
+            "id": "title-divider",
+            "type": "Divider",
+            "atomicLevel": "atom",
+            "bounds": {
+              "x": 40,
+              "y": 109,
+              "width": 460,
+              "height": 1
+            },
+            "props": {
+              "orientation": "horizontal",
+              "color": "#E0E0E0",
+              "thickness": "1px"
+            }
+          }
+        ]
+      },
+      {
+        "id": "form-body",
+        "type": "FormBody",
+        "atomicLevel": "organism",
+        "bounds": {
+          "x": 40,
+          "y": 130,
+          "width": 460,
+          "height": 290
+        },
+        "props": {
+          "layout": "vertical",
+          "gap": "10px"
+        },
+        "children": [
+          {
+            "id": "avatar-name-row",
+            "type": "FormRow",
+            "atomicLevel": "molecule",
+            "bounds": {
+              "x": 40,
+              "y": 130,
+              "width": 460,
+              "height": 60
+            },
+            "props": {
+              "layout": "horizontal",
+              "gap": "15px",
+              "alignment": "center"
+            },
+            "children": [
+              {
+                "id": "avatar-container",
+                "type": "AvatarEditable",
+                "atomicLevel": "molecule",
+                "bounds": {
+                  "x": 85,
+                  "y": 147,
+                  "width": 60,
+                  "height": 60
+                },
+                "props": {
+                  "size": "60px",
+                  "editable": true
+                },
+                "children": [
+                  {
+                    "id": "avatar-circle",
+                    "type": "Avatar",
+                    "atomicLevel": "atom",
+                    "bounds": {
+                      "x": 85,
+                      "y": 147,
+                      "width": 60,
+                      "height": 60
+                    },
+                    "props": {
+                      "variant": "circle",
+                      "size": "60px",
+                      "backgroundColor": "#43A047",
+                      "borderRadius": "50%",
+                      "initials": "BK",
+                      "textColor": "#FFFFFF",
+                      "fontSize": "18px",
+                      "fontWeight": 600,
+                      "textTransform": "uppercase"
+                    }
+                  },
+                  {
+                    "id": "edit-icon-badge",
+                    "type": "IconBadge",
+                    "atomicLevel": "atom",
+                    "bounds": {
+                      "x": 118,
+                      "y": 180,
+                      "width": 20,
+                      "height": 20
+                    },
+                    "props": {
+                      "icon": "edit",
+                      "size": "20px",
+                      "backgroundColor": "#2E7D32",
+                      "iconColor": "#FFFFFF",
+                      "borderRadius": "50%",
+                      "position": "bottom-right"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "name-input",
+                "type": "TextInput",
+                "atomicLevel": "atom",
+                "bounds": {
+                  "x": 155,
+                  "y": 130,
+                  "width": 345,
+                  "height": 60
+                },
+                "props": {
+                  "variant": "default",
+                  "value": "Brighton Knitters",
+                  "placeholder": "",
+                  "backgroundColor": "#FFFFFF",
+                  "border": "1px solid #E0E0E0",
+                  "borderRadius": "4px",
+                  "padding": "12px 16px",
+                  "fontSize": "16px",
+                  "fontWeight": 400,
+                  "color": "#000000",
+                  "state": "filled"
+                }
+              }
+            ]
+          },
+          {
+            "id": "description-field",
+            "type": "FormField",
+            "atomicLevel": "molecule",
+            "bounds": {
+              "x": 149,
+              "y": 200,
+              "width": 351,
+              "height": 130
+            },
+            "props": {
+              "layout": "vertical",
+              "gap": "8px"
+            },
+            "children": [
+              {
+                "id": "description-label",
+                "type": "Label",
+                "atomicLevel": "atom",
+                "bounds": {
+                  "x": 149,
+                  "y": 201,
+                  "width": 130,
+                  "height": 16
+                },
+                "props": {
+                  "text": "Description (optional)",
+                  "htmlFor": "textarea-description",
+                  "fontSize": "13px",
+                  "fontWeight": 400,
+                  "color": "#757575"
+                }
+              },
+              {
+                "id": "textarea-description",
+                "type": "Textarea",
+                "atomicLevel": "atom",
+                "bounds": {
+                  "x": 149,
+                  "y": 225,
+                  "width": 351,
+                  "height": 105
+                },
+                "props": {
+                  "value": "The Brighton Knitters meet once a month to knit together, exchange patterns, and talk shop!",
+                  "placeholder": "",
+                  "rows": 4,
+                  "backgroundColor": "#F5F5F5",
+                  "border": "1px solid #E0E0E0",
+                  "borderRadius": "4px",
+                  "padding": "12px 16px",
+                  "fontSize": "14px",
+                  "fontWeight": 400,
+                  "lineHeight": 1.6,
+                  "color": "#000000",
+                  "resize": "vertical",
+                  "state": "filled"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "modal-footer",
+        "type": "ModalFooter",
+        "atomicLevel": "organism",
+        "bounds": {
+          "x": 0,
+          "y": 440,
+          "width": 540,
+          "height": 60
+        },
+        "props": {
+          "alignment": "right",
+          "padding": "0 40px 20px 40px"
+        },
+        "children": [
+          {
+            "id": "button-group",
+            "type": "ButtonGroup",
+            "atomicLevel": "molecule",
+            "bounds": {
+              "x": 323,
+              "y": 440,
+              "width": 177,
+              "height": 40
+            },
+            "props": {
+              "layout": "horizontal",
+              "gap": "10px",
+              "alignment": "center"
+            },
+            "children": [
+              {
+                "id": "btn-back",
+                "type": "Button",
+                "atomicLevel": "atom",
+                "bounds": {
+                  "x": 323,
+                  "y": 440,
+                  "width": 80,
+                  "height": 40
+                },
+                "props": {
+                  "variant": "secondary",
+                  "text": "Back",
+                  "backgroundColor": "#FFFFFF",
+                  "border": "1px solid #E0E0E0",
+                  "borderRadius": "4px",
+                  "padding": "11px 24px",
+                  "fontSize": "14px",
+                  "fontWeight": 500,
+                  "color": "#000000",
+                  "state": "default"
+                }
+              },
+              {
+                "id": "btn-save",
+                "type": "Button",
+                "atomicLevel": "atom",
+                "bounds": {
+                  "x": 413,
+                  "y": 440,
+                  "width": 87,
+                  "height": 40
+                },
+                "props": {
+                  "variant": "primary",
+                  "text": "Save",
+                  "backgroundColor": "#000000",
+                  "border": "1px solid #000000",
+                  "borderRadius": "4px",
+                  "padding": "11px 24px",
+                  "fontSize": "14px",
+                  "fontWeight": 500,
+                  "color": "#FFFFFF",
+                  "state": "default"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "componentCatalog": {
+    "Button": {
+      "type": "Button",
+      "atomicLevel": "atom",
+      "description": "Interactive button component with primary and secondary variants",
+      "variants": [
+        {
+          "name": "primary",
+          "props": {
+            "backgroundColor": "#000000",
+            "border": "1px solid #000000",
+            "borderRadius": "4px",
+            "color": "#FFFFFF",
+            "fontSize": "14px",
+            "fontWeight": 500,
+            "padding": "11px 24px",
+            "cursor": "pointer"
+          }
+        },
+        {
+          "name": "secondary",
+          "props": {
+            "backgroundColor": "#FFFFFF",
+            "border": "1px solid #E0E0E0",
+            "borderRadius": "4px",
+            "color": "#000000",
+            "fontSize": "14px",
+            "fontWeight": 500,
+            "padding": "11px 24px",
+            "cursor": "pointer"
+          }
+        }
+      ],
+      "states": ["default", "hover", "active", "disabled", "focus"],
+      "props": ["text", "icon", "disabled", "onClick", "type"],
+      "instances": ["btn-back", "btn-save"]
+    },
+    "TextInput": {
+      "type": "TextInput",
+      "atomicLevel": "atom",
+      "description": "Single-line text input field for form data",
+      "variants": [
+        {
+          "name": "default",
+          "props": {
+            "backgroundColor": "#FFFFFF",
+            "border": "1px solid #E0E0E0",
+            "borderRadius": "4px",
+            "color": "#000000",
+            "fontSize": "16px",
+            "fontWeight": 400,
+            "padding": "12px 16px"
+          }
+        }
+      ],
+      "states": ["default", "filled", "focus", "error", "disabled"],
+      "props": ["value", "placeholder", "onChange", "onFocus", "onBlur", "disabled", "required"],
+      "instances": ["name-input"]
+    },
+    "Textarea": {
+      "type": "Textarea",
+      "atomicLevel": "atom",
+      "description": "Multi-line text input field for longer content",
+      "variants": [
+        {
+          "name": "default",
+          "props": {
+            "backgroundColor": "#F5F5F5",
+            "border": "1px solid #E0E0E0",
+            "borderRadius": "4px",
+            "color": "#000000",
+            "fontSize": "14px",
+            "fontWeight": 400,
+            "lineHeight": 1.6,
+            "padding": "12px 16px",
+            "resize": "vertical"
+          }
+        }
+      ],
+      "states": ["default", "filled", "focus", "error", "disabled"],
+      "props": ["value", "placeholder", "rows", "onChange", "onFocus", "onBlur", "disabled", "required"],
+      "instances": ["textarea-description"]
+    },
+    "Avatar": {
+      "type": "Avatar",
+      "atomicLevel": "atom",
+      "description": "Circular avatar displaying user initials or image",
+      "variants": [
+        {
+          "name": "circle",
+          "props": {
+            "backgroundColor": "#43A047",
+            "borderRadius": "50%",
+            "color": "#FFFFFF",
+            "fontSize": "18px",
+            "fontWeight": 600,
+            "textTransform": "uppercase",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center"
+          }
+        }
+      ],
+      "states": ["default"],
+      "props": ["initials", "image", "size", "backgroundColor", "alt"],
+      "instances": ["avatar-circle"]
+    },
+    "IconBadge": {
+      "type": "IconBadge",
+      "atomicLevel": "atom",
+      "description": "Small circular badge with icon, typically positioned on another element",
+      "variants": [
+        {
+          "name": "default",
+          "props": {
+            "backgroundColor": "#2E7D32",
+            "borderRadius": "50%",
+            "iconColor": "#FFFFFF",
+            "size": "20px",
+            "cursor": "pointer"
+          }
+        }
+      ],
+      "states": ["default", "hover"],
+      "props": ["icon", "size", "onClick", "position"],
+      "instances": ["edit-icon-badge"]
+    },
+    "Label": {
+      "type": "Label",
+      "atomicLevel": "atom",
+      "description": "Text label for form fields",
+      "variants": [
+        {
+          "name": "default",
+          "props": {
+            "color": "#757575",
+            "fontSize": "13px",
+            "fontWeight": 400,
+            "lineHeight": 1.5
+          }
+        }
+      ],
+      "states": ["default"],
+      "props": ["text", "htmlFor", "required"],
+      "instances": ["description-label"]
+    },
+    "Heading": {
+      "type": "Heading",
+      "atomicLevel": "atom",
+      "description": "Heading text component with multiple levels",
+      "variants": [
+        {
+          "name": "h1",
+          "props": {
+            "color": "#000000",
+            "fontSize": "28px",
+            "fontWeight": 700,
+            "lineHeight": 1.2,
+            "letterSpacing": "-0.01em"
+          }
+        }
+      ],
+      "states": ["default"],
+      "props": ["text", "level", "textAlign"],
+      "instances": ["title-text"]
+    },
+    "Divider": {
+      "type": "Divider",
+      "atomicLevel": "atom",
+      "description": "Horizontal or vertical line separator",
+      "variants": [
+        {
+          "name": "horizontal",
+          "props": {
+            "backgroundColor": "#E0E0E0",
+            "height": "1px",
+            "width": "100%"
+          }
+        }
+      ],
+      "states": ["default"],
+      "props": ["orientation", "color", "thickness"],
+      "instances": ["title-divider"]
+    },
+    "AvatarEditable": {
+      "type": "AvatarEditable",
+      "atomicLevel": "molecule",
+      "description": "Avatar with edit functionality via icon badge overlay",
+      "composition": ["Avatar", "IconBadge"],
+      "props": {
+        "size": "60px",
+        "editable": true,
+        "position": "relative"
+      },
+      "states": ["default", "hover"],
+      "instances": ["avatar-container"]
+    },
+    "FormField": {
+      "type": "FormField",
+      "atomicLevel": "molecule",
+      "description": "Form field combining label and input/textarea",
+      "composition": ["Label", "TextInput|Textarea"],
+      "props": {
+        "layout": "vertical",
+        "gap": "8px"
+      },
+      "states": ["default"],
+      "instances": ["description-field"]
+    },
+    "FormRow": {
+      "type": "FormRow",
+      "atomicLevel": "molecule",
+      "description": "Horizontal row layout for form elements",
+      "composition": ["AvatarEditable", "TextInput"],
+      "props": {
+        "layout": "horizontal",
+        "gap": "15px",
+        "alignment": "center"
+      },
+      "states": ["default"],
+      "instances": ["avatar-name-row"]
+    },
+    "ButtonGroup": {
+      "type": "ButtonGroup",
+      "atomicLevel": "molecule",
+      "description": "Group of buttons with consistent spacing",
+      "composition": ["Button", "Button"],
+      "props": {
+        "layout": "horizontal",
+        "gap": "10px",
+        "alignment": "center"
+      },
+      "states": ["default"],
+      "instances": ["button-group"]
+    },
+    "ModalHeader": {
+      "type": "ModalHeader",
+      "atomicLevel": "organism",
+      "description": "Modal header section with title and optional divider",
+      "composition": ["Heading", "Divider"],
+      "props": {
+        "hasDivider": true,
+        "dividerColor": "#E0E0E0"
+      },
+      "states": ["default"],
+      "instances": ["modal-header"]
+    },
+    "FormBody": {
+      "type": "FormBody",
+      "atomicLevel": "organism",
+      "description": "Main form content area with multiple fields",
+      "composition": ["FormRow", "FormField"],
+      "props": {
+        "layout": "vertical",
+        "gap": "10px"
+      },
+      "states": ["default"],
+      "instances": ["form-body"]
+    },
+    "ModalFooter": {
+      "type": "ModalFooter",
+      "atomicLevel": "organism",
+      "description": "Modal footer with action buttons",
+      "composition": ["ButtonGroup"],
+      "props": {
+        "alignment": "right",
+        "padding": "0 40px 20px 40px"
+      },
+      "states": ["default"],
+      "instances": ["modal-footer"]
+    },
+    "Modal": {
+      "type": "Modal",
+      "atomicLevel": "template",
+      "description": "Complete modal dialog template with header, body, and footer",
+      "composition": ["ModalHeader", "FormBody", "ModalFooter"],
+      "props": {
+        "width": "540px",
+        "height": "500px",
+        "borderRadius": "12px",
+        "border": "1px solid #000000",
+        "backgroundColor": "#FFFFFF",
+        "padding": "40px 40px 20px 40px"
+      },
+      "states": ["open", "closed"],
+      "instances": ["modal-root"]
+    }
+  },
+  "componentCount": {
+    "atoms": 8,
+    "molecules": 5,
+    "organisms": 3,
+    "templates": 1,
+    "total": 17
+  },
+  "componentsByType": {
+    "atoms": [
+      "Button (2 instances)",
+      "TextInput (1 instance)",
+      "Textarea (1 instance)",
+      "Avatar (1 instance)",
+      "IconBadge (1 instance)",
+      "Label (1 instance)",
+      "Heading (1 instance)",
+      "Divider (1 instance)"
+    ],
+    "molecules": [
+      "AvatarEditable (1 instance)",
+      "FormField (1 instance)",
+      "FormRow (1 instance)",
+      "ButtonGroup (1 instance)"
+    ],
+    "organisms": [
+      "ModalHeader (1 instance)",
+      "FormBody (1 instance)",
+      "ModalFooter (1 instance)"
+    ],
+    "templates": [
+      "Modal (1 instance)"
+    ]
+  },
+  "designPatterns": {
+    "patterns": [
+      {
+        "name": "Modal Dialog",
+        "type": "structural",
+        "description": "Standard modal dialog pattern with header, body, and footer sections",
+        "components": ["Modal", "ModalHeader", "FormBody", "ModalFooter"]
+      },
+      {
+        "name": "Form Layout",
+        "type": "compositional",
+        "description": "Vertical form with mixed horizontal and vertical field layouts",
+        "components": ["FormBody", "FormRow", "FormField"]
+      },
+      {
+        "name": "Primary/Secondary Actions",
+        "type": "interactive",
+        "description": "Button pair with primary (Save) and secondary (Back) actions, right-aligned",
+        "components": ["ButtonGroup", "Button"]
+      },
+      {
+        "name": "Editable Avatar",
+        "type": "interactive",
+        "description": "Avatar with edit icon badge overlay for inline editing",
+        "components": ["AvatarEditable", "Avatar", "IconBadge"]
+      },
+      {
+        "name": "Labeled Input",
+        "type": "compositional",
+        "description": "Input field with associated label, vertically stacked",
+        "components": ["FormField", "Label", "Textarea"]
+      }
+    ]
+  },
+  "stateVariations": {
+    "Button": {
+      "default": "Shown in screenshot - both buttons in default state",
+      "hover": "Not shown - expected darker background or border emphasis",
+      "active": "Not shown - expected depressed appearance",
+      "focus": "Not shown - expected focus ring or outline",
+      "disabled": "Not shown - expected reduced opacity or grayed out"
+    },
+    "TextInput": {
+      "default": "Empty state not shown",
+      "filled": "Shown in screenshot - 'Brighton Knitters' value",
+      "focus": "Not shown - expected border color change or glow",
+      "error": "Not shown - expected red border and error message",
+      "disabled": "Not shown - expected grayed out appearance"
+    },
+    "Textarea": {
+      "default": "Empty state not shown",
+      "filled": "Shown in screenshot - description text entered",
+      "focus": "Not shown - expected border color change",
+      "error": "Not shown - expected validation styling",
+      "disabled": "Not shown - expected grayed out appearance"
+    }
+  },
+  "interactionPatterns": {
+    "editAvatar": {
+      "trigger": "Click on edit icon badge",
+      "action": "Opens image upload dialog or avatar customization",
+      "components": ["edit-icon-badge"]
+    },
+    "submitForm": {
+      "trigger": "Click Save button",
+      "action": "Validates and submits form data, closes modal on success",
+      "components": ["btn-save"]
+    },
+    "cancelForm": {
+      "trigger": "Click Back button",
+      "action": "Closes modal without saving, may prompt if unsaved changes",
+      "components": ["btn-back"]
+    },
+    "inputValidation": {
+      "trigger": "Field blur or form submit",
+      "action": "Validates field value, shows error state if invalid",
+      "components": ["name-input", "textarea-description"]
+    }
+  },
+  "accessibilityComponents": {
+    "notes": [
+      "Modal requires focus trap to prevent keyboard navigation outside modal",
+      "Modal requires ESC key handler to close dialog",
+      "Heading provides semantic structure (h1 level)",
+      "Label properly associated with textarea via htmlFor",
+      "Buttons require proper aria-label or text content",
+      "Avatar edit icon requires aria-label for screen readers",
+      "Modal requires aria-modal and role='dialog' attributes",
+      "Close/cancel action should be clearly announced to screen readers"
+    ],
+    "recommendations": [
+      "Add aria-labelledby pointing to modal title",
+      "Add aria-describedby if modal has description text",
+      "Ensure first focusable element receives focus on modal open",
+      "Return focus to trigger element on modal close",
+      "Add aria-required='true' if fields are mandatory",
+      "Add aria-invalid and aria-errormessage for validation errors",
+      "Icon badge needs aria-label='Edit avatar' or similar",
+      "Consider adding aria-live region for dynamic form feedback"
+    ]
+  },
+  "responsiveConsiderations": {
+    "currentBreakpoint": "desktop",
+    "modalSize": "540x500px - fixed size",
+    "recommendations": [
+      "Modal should scale down on smaller screens (max-width: 100vw - margin)",
+      "Consider full-screen modal on mobile devices",
+      "Avatar and name input may need to stack vertically on small screens",
+      "Button group may need to stack or go full-width on mobile",
+      "Font sizes may need to scale up slightly on mobile for touch targets",
+      "Touch targets should be minimum 44x44px for mobile"
+    ]
+  },
+  "componentDependencies": {
+    "Modal": {
+      "requires": ["ModalHeader", "FormBody", "ModalFooter"],
+      "optional": []
+    },
+    "ModalHeader": {
+      "requires": ["Heading"],
+      "optional": ["Divider"]
+    },
+    "FormBody": {
+      "requires": ["FormRow", "FormField"],
+      "optional": []
+    },
+    "FormRow": {
+      "requires": ["AvatarEditable", "TextInput"],
+      "optional": []
+    },
+    "FormField": {
+      "requires": ["Label", "Textarea"],
+      "optional": []
+    },
+    "AvatarEditable": {
+      "requires": ["Avatar", "IconBadge"],
+      "optional": []
+    },
+    "ButtonGroup": {
+      "requires": ["Button"],
+      "optional": []
+    }
+  },
+  "reusabilityScore": {
+    "Button": {
+      "score": 10,
+      "reason": "Highly reusable, clear variants, used multiple times already"
+    },
+    "TextInput": {
+      "score": 10,
+      "reason": "Standard form element, universally reusable"
+    },
+    "Textarea": {
+      "score": 10,
+      "reason": "Standard form element, universally reusable"
+    },
+    "Avatar": {
+      "score": 9,
+      "reason": "Highly reusable for user representations throughout app"
+    },
+    "IconBadge": {
+      "score": 8,
+      "reason": "Reusable for notifications, status indicators, edit actions"
+    },
+    "Label": {
+      "score": 10,
+      "reason": "Essential form component, universally reusable"
+    },
+    "Heading": {
+      "score": 10,
+      "reason": "Basic typography component, universally reusable"
+    },
+    "Divider": {
+      "score": 10,
+      "reason": "Common layout element, universally reusable"
+    },
+    "AvatarEditable": {
+      "score": 7,
+      "reason": "Specific composition but reusable in profile contexts"
+    },
+    "FormField": {
+      "score": 9,
+      "reason": "Standard form pattern, highly reusable"
+    },
+    "FormRow": {
+      "score": 6,
+      "reason": "Specific to this form layout but pattern is reusable"
+    },
+    "ButtonGroup": {
+      "score": 9,
+      "reason": "Common pattern for action groups, highly reusable"
+    },
+    "ModalHeader": {
+      "score": 9,
+      "reason": "Standard modal pattern, reusable across all modals"
+    },
+    "FormBody": {
+      "score": 7,
+      "reason": "General form container, adaptable to different forms"
+    },
+    "ModalFooter": {
+      "score": 9,
+      "reason": "Standard modal pattern, reusable across all modals"
+    },
+    "Modal": {
+      "score": 8,
+      "reason": "Template provides structure, content varies by use case"
+    }
+  },
+  "implementationNotes": {
+    "buildOrder": [
+      "1. Atoms: Build all atomic components first (Button, TextInput, Textarea, Avatar, IconBadge, Label, Heading, Divider)",
+      "2. Molecules: Compose molecules from atoms (AvatarEditable, FormField, FormRow, ButtonGroup)",
+      "3. Organisms: Build organisms from molecules (ModalHeader, FormBody, ModalFooter)",
+      "4. Template: Assemble final Modal template from organisms"
+    ],
+    "testingStrategy": [
+      "Test atoms in isolation with all variants and states",
+      "Test molecules with different atom combinations",
+      "Test organisms with different content and layouts",
+      "Test template with full user interaction flows",
+      "Test keyboard navigation and screen reader compatibility",
+      "Test responsive behavior at different viewport sizes",
+      "Test form validation and error states",
+      "Test modal open/close animations and focus management"
+    ],
+    "technicalConsiderations": [
+      "Modal requires portal/overlay rendering to appear above page content",
+      "Focus trap implementation needed to constrain keyboard navigation",
+      "Form state management for controlled inputs",
+      "File upload handling for avatar edit functionality",
+      "Validation logic for form fields",
+      "Animation/transition system for modal entrance/exit",
+      "Z-index management for modal overlay",
+      "Scroll lock on body when modal is open"
+    ]
+  }
+}

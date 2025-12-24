@@ -1,0 +1,253 @@
+{
+  "$schema": "pass-1-layout",
+  "$source": {
+    "type": "mockup",
+    "dimensions": {
+      "width": 540,
+      "height": 500,
+      "aspectRatio": "27:25",
+      "deviceClass": "modal-overlay"
+    },
+    "confidence": 0.95,
+    "notes": "Clean mockup/wireframe of a modal dialog with no visible design tool artifacts"
+  },
+  "layout": {
+    "type": "single-column",
+    "regions": [
+      {
+        "name": "header",
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 540,
+          "height": 110
+        },
+        "sticky": false,
+        "contains": "modal-title"
+      },
+      {
+        "name": "navigation",
+        "type": "none",
+        "bounds": null
+      },
+      {
+        "name": "main",
+        "bounds": {
+          "x": 0,
+          "y": 110,
+          "width": 540,
+          "height": 330
+        },
+        "contains": "form-content"
+      },
+      {
+        "name": "footer",
+        "bounds": {
+          "x": 0,
+          "y": 440,
+          "width": 540,
+          "height": 60
+        },
+        "present": true,
+        "contains": "action-buttons"
+      }
+    ],
+    "gridSystem": {
+      "columns": 1,
+      "gutter": "0px",
+      "margin": "40px",
+      "maxWidth": "540px",
+      "notes": "Modal uses single-column layout with consistent horizontal padding"
+    }
+  },
+  "containers": [
+    {
+      "id": "container-1",
+      "name": "modal-wrapper",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 500
+      },
+      "layout": "flex",
+      "parent": null,
+      "childCount": 3,
+      "notes": "Root modal container with rounded corners and border"
+    },
+    {
+      "id": "container-2",
+      "name": "title-section",
+      "bounds": {
+        "x": 40,
+        "y": 40,
+        "width": 460,
+        "height": 70
+      },
+      "layout": "block",
+      "parent": "container-1",
+      "childCount": 1,
+      "notes": "Contains main heading with bottom border"
+    },
+    {
+      "id": "container-3",
+      "name": "form-content",
+      "bounds": {
+        "x": 40,
+        "y": 130,
+        "width": 460,
+        "height": 290
+      },
+      "layout": "flex",
+      "parent": "container-1",
+      "childCount": 3,
+      "notes": "Main form area with avatar, name input, and description textarea"
+    },
+    {
+      "id": "container-4",
+      "name": "avatar-name-row",
+      "bounds": {
+        "x": 40,
+        "y": 130,
+        "width": 460,
+        "height": 60
+      },
+      "layout": "flex",
+      "parent": "container-3",
+      "childCount": 2,
+      "notes": "Horizontal flex container with avatar and name input"
+    },
+    {
+      "id": "container-5",
+      "name": "description-section",
+      "bounds": {
+        "x": 40,
+        "y": 200,
+        "width": 460,
+        "height": 130
+      },
+      "layout": "block",
+      "parent": "container-3",
+      "childCount": 2,
+      "notes": "Contains description label and textarea"
+    },
+    {
+      "id": "container-6",
+      "name": "button-group",
+      "bounds": {
+        "x": 323,
+        "y": 440,
+        "width": 177,
+        "height": 40
+      },
+      "layout": "flex",
+      "parent": "container-1",
+      "childCount": 2,
+      "notes": "Right-aligned horizontal button group"
+    }
+  ],
+  "sections": [
+    {
+      "id": "section-1",
+      "purpose": "modal-header",
+      "bounds": {
+        "x": 40,
+        "y": 40,
+        "width": 460,
+        "height": 70
+      },
+      "elements": [
+        "heading"
+      ]
+    },
+    {
+      "id": "section-2",
+      "purpose": "form-input-avatar",
+      "bounds": {
+        "x": 40,
+        "y": 130,
+        "width": 90,
+        "height": 60
+      },
+      "elements": [
+        "avatar-circle-with-initials-and-edit-icon"
+      ]
+    },
+    {
+      "id": "section-3",
+      "purpose": "form-input-name",
+      "bounds": {
+        "x": 155,
+        "y": 130,
+        "width": 345,
+        "height": 60
+      },
+      "elements": [
+        "text-input-field"
+      ]
+    },
+    {
+      "id": "section-4",
+      "purpose": "form-input-description",
+      "bounds": {
+        "x": 149,
+        "y": 200,
+        "width": 351,
+        "height": 130
+      },
+      "elements": [
+        "label",
+        "textarea"
+      ]
+    },
+    {
+      "id": "section-5",
+      "purpose": "cta-actions",
+      "bounds": {
+        "x": 323,
+        "y": 440,
+        "width": 177,
+        "height": 40
+      },
+      "elements": [
+        "back-button",
+        "save-button"
+      ]
+    }
+  ],
+  "visualStructure": {
+    "modalFrame": {
+      "borderRadius": "12px",
+      "border": "1px solid #000000",
+      "backgroundColor": "#FFFFFF"
+    },
+    "verticalFlow": [
+      "Title with divider",
+      "Avatar + Name input (horizontal pair)",
+      "Description textarea",
+      "Spacer",
+      "Action buttons (right-aligned)"
+    ],
+    "alignmentGrid": {
+      "leftEdge": 40,
+      "rightEdge": 500,
+      "contentWidth": 460,
+      "buttonAlignment": "right"
+    }
+  },
+  "spacing": {
+    "modalPadding": {
+      "top": 40,
+      "right": 40,
+      "bottom": 20,
+      "left": 40
+    },
+    "elementGaps": {
+      "titleToContent": 20,
+      "avatarToNameInput": 15,
+      "nameToDescription": 10,
+      "descriptionToButtons": 110,
+      "betweenButtons": 10
+    }
+  }
+}

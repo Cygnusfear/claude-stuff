@@ -1,0 +1,375 @@
+{
+  "$schema": "pass-3-typography",
+  "$source": {
+    "screenshot": "/Users/alexander/Downloads/New_space_with_name.png",
+    "pass1": "/Users/alexander/Node/claude-stuff/.design-specs/new-space-modal/pass-1-layout.json",
+    "pass2": "/Users/alexander/Node/claude-stuff/.design-specs/new-space-modal/pass-2-colors.json",
+    "analysisDate": "2025-12-15",
+    "confidence": 0.85,
+    "notes": "Typography extracted from screenshot analysis. Font family identified as modern sans-serif, likely system font stack or Inter/similar. Measurements are pixel-based estimates from visual inspection."
+  },
+  "fontFamilies": {
+    "primary": {
+      "$value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+      "$type": "fontFamily",
+      "confidence": 0.75,
+      "notes": "Clean sans-serif font, appears to be system font stack. Could also be Inter, SF Pro, or similar modern sans-serif."
+    }
+  },
+  "fontWeights": {
+    "regular": {
+      "$value": 400,
+      "$type": "fontWeight",
+      "notes": "Used for body text, input values, descriptions, and labels"
+    },
+    "medium": {
+      "$value": 500,
+      "$type": "fontWeight",
+      "notes": "Used for button text, provides subtle emphasis"
+    },
+    "semibold": {
+      "$value": 600,
+      "$type": "fontWeight",
+      "notes": "Potentially used for modal title, though could be bold"
+    },
+    "bold": {
+      "$value": 700,
+      "$type": "fontWeight",
+      "notes": "Used for modal heading 'Create a new Space'"
+    }
+  },
+  "fontSizes": {
+    "xs": {
+      "$value": "11px",
+      "$type": "dimension",
+      "notes": "Smallest text size, potentially for helper text or captions"
+    },
+    "sm": {
+      "$value": "13px",
+      "$type": "dimension",
+      "notes": "Used for labels like 'Description (optional)'"
+    },
+    "base": {
+      "$value": "14px",
+      "$type": "dimension",
+      "notes": "Base body text size, used in description textarea and button text"
+    },
+    "md": {
+      "$value": "16px",
+      "$type": "dimension",
+      "notes": "Used for input text like 'Brighton Knitters'"
+    },
+    "lg": {
+      "$value": "18px",
+      "$type": "dimension",
+      "notes": "Larger text for emphasis or avatar initials"
+    },
+    "xl": {
+      "$value": "20px",
+      "$type": "dimension",
+      "notes": "Large heading size"
+    },
+    "2xl": {
+      "$value": "24px",
+      "$type": "dimension",
+      "notes": "Extra large heading"
+    },
+    "3xl": {
+      "$value": "28px",
+      "$type": "dimension",
+      "notes": "Modal title 'Create a new Space' - primary heading size"
+    }
+  },
+  "lineHeights": {
+    "tight": {
+      "$value": 1.2,
+      "$type": "number",
+      "notes": "Used for headings and buttons to keep them compact"
+    },
+    "normal": {
+      "$value": 1.5,
+      "$type": "number",
+      "notes": "Standard line height for single-line inputs and labels"
+    },
+    "relaxed": {
+      "$value": 1.6,
+      "$type": "number",
+      "notes": "Used for multi-line text like description textarea for better readability"
+    }
+  },
+  "letterSpacing": {
+    "tight": {
+      "$value": "-0.01em",
+      "$type": "dimension",
+      "notes": "Slight tightening for large headings"
+    },
+    "normal": {
+      "$value": "0em",
+      "$type": "dimension",
+      "notes": "Default letter spacing for most text"
+    },
+    "wide": {
+      "$value": "0.01em",
+      "$type": "dimension",
+      "notes": "Slight widening if needed for small text"
+    }
+  },
+  "textStyles": {
+    "modalTitle": {
+      "fontFamily": "{fontFamilies.primary}",
+      "fontSize": "{fontSizes.3xl}",
+      "fontWeight": "{fontWeights.bold}",
+      "lineHeight": "{lineHeights.tight}",
+      "letterSpacing": "{letterSpacing.tight}",
+      "color": "{colors.text.primary}",
+      "textTransform": "none",
+      "confidence": 0.9,
+      "usage": ["modal-heading", "dialog-title", "primary-heading"],
+      "notes": "Large, bold heading that establishes visual hierarchy. Appears to be ~28px with bold weight."
+    },
+    "inputText": {
+      "fontFamily": "{fontFamilies.primary}",
+      "fontSize": "{fontSizes.md}",
+      "fontWeight": "{fontWeights.regular}",
+      "lineHeight": "{lineHeights.normal}",
+      "letterSpacing": "{letterSpacing.normal}",
+      "color": "{colors.text.body}",
+      "textTransform": "none",
+      "confidence": 0.85,
+      "usage": ["text-input-value", "form-field-value"],
+      "notes": "User-entered text in name field. Approximately 16px, regular weight."
+    },
+    "label": {
+      "fontFamily": "{fontFamilies.primary}",
+      "fontSize": "{fontSizes.sm}",
+      "fontWeight": "{fontWeights.regular}",
+      "lineHeight": "{lineHeights.normal}",
+      "letterSpacing": "{letterSpacing.normal}",
+      "color": "{colors.text.label}",
+      "textTransform": "none",
+      "confidence": 0.85,
+      "usage": ["form-label", "field-label", "helper-text"],
+      "notes": "Small, gray label text. 'Description (optional)' is approximately 13px with gray color (#757575)."
+    },
+    "buttonText": {
+      "fontFamily": "{fontFamilies.primary}",
+      "fontSize": "{fontSizes.base}",
+      "fontWeight": "{fontWeights.medium}",
+      "lineHeight": "{lineHeights.tight}",
+      "letterSpacing": "{letterSpacing.normal}",
+      "textTransform": "none",
+      "confidence": 0.9,
+      "usage": ["button-label", "cta-text"],
+      "notes": "Button text with medium weight for subtle emphasis. Approximately 14px. Color varies by button type (white on primary, black on secondary)."
+    },
+    "bodyText": {
+      "fontFamily": "{fontFamilies.primary}",
+      "fontSize": "{fontSizes.base}",
+      "fontWeight": "{fontWeights.regular}",
+      "lineHeight": "{lineHeights.relaxed}",
+      "letterSpacing": "{letterSpacing.normal}",
+      "color": "{colors.text.body}",
+      "textTransform": "none",
+      "confidence": 0.85,
+      "usage": ["textarea-content", "paragraph", "description-text"],
+      "notes": "Multi-line body text in description textarea. Approximately 14px with comfortable line height (~1.6) for readability."
+    },
+    "avatarText": {
+      "fontFamily": "{fontFamilies.primary}",
+      "fontSize": "{fontSizes.lg}",
+      "fontWeight": "{fontWeights.semibold}",
+      "lineHeight": "1",
+      "letterSpacing": "{letterSpacing.normal}",
+      "color": "{colors.text.onAvatar}",
+      "textTransform": "uppercase",
+      "confidence": 0.8,
+      "usage": ["avatar-initials", "badge-text"],
+      "notes": "Initials 'BK' on avatar. White text on green background, approximately 18px, semibold or bold weight, uppercase."
+    }
+  },
+  "textInstances": [
+    {
+      "text": "Create a new Space",
+      "style": "modalTitle",
+      "bounds": {
+        "x": 83,
+        "y": 50,
+        "width": 265,
+        "height": 36
+      },
+      "alignment": "left",
+      "color": "#000000",
+      "notes": "Main modal heading, bold and prominent at top of modal"
+    },
+    {
+      "text": "BK",
+      "style": "avatarText",
+      "bounds": {
+        "x": 85,
+        "y": 147,
+        "width": 40,
+        "height": 40
+      },
+      "alignment": "center",
+      "color": "#FFFFFF",
+      "notes": "Avatar initials, centered in circular green avatar badge"
+    },
+    {
+      "text": "Brighton Knitters",
+      "style": "inputText",
+      "bounds": {
+        "x": 165,
+        "y": 148,
+        "width": 162,
+        "height": 24
+      },
+      "alignment": "left",
+      "color": "#000000",
+      "notes": "User input in name field, regular weight black text"
+    },
+    {
+      "text": "Description (optional)",
+      "style": "label",
+      "bounds": {
+        "x": 149,
+        "y": 201,
+        "width": 130,
+        "height": 16
+      },
+      "alignment": "left",
+      "color": "#757575",
+      "notes": "Form label above textarea, small gray text"
+    },
+    {
+      "text": "The Brighton Knitters meet once a month to knit together, exchange patterns, and talk shop!",
+      "style": "bodyText",
+      "bounds": {
+        "x": 157,
+        "y": 229,
+        "width": 236,
+        "height": 72
+      },
+      "alignment": "left",
+      "color": "#000000",
+      "notes": "Multi-line description text in textarea, comfortable line spacing for readability"
+    },
+    {
+      "text": "Back",
+      "style": "buttonText",
+      "bounds": {
+        "x": 339,
+        "y": 412,
+        "width": 36,
+        "height": 18
+      },
+      "alignment": "center",
+      "color": "#000000",
+      "notes": "Secondary button text, medium weight black on white background"
+    },
+    {
+      "text": "Save",
+      "style": "buttonText",
+      "bounds": {
+        "x": 411,
+        "y": 412,
+        "width": 34,
+        "height": 18
+      },
+      "alignment": "center",
+      "color": "#FFFFFF",
+      "notes": "Primary button text, medium weight white on black background"
+    }
+  ],
+  "textHierarchy": {
+    "levels": [
+      {
+        "level": 1,
+        "style": "modalTitle",
+        "purpose": "Primary heading",
+        "size": "28px",
+        "weight": 700,
+        "color": "#000000",
+        "examples": ["Create a new Space"]
+      },
+      {
+        "level": 2,
+        "style": "inputText",
+        "purpose": "User input values",
+        "size": "16px",
+        "weight": 400,
+        "color": "#000000",
+        "examples": ["Brighton Knitters"]
+      },
+      {
+        "level": 3,
+        "style": "bodyText",
+        "purpose": "Body content, descriptions",
+        "size": "14px",
+        "weight": 400,
+        "color": "#000000",
+        "examples": ["The Brighton Knitters meet once a month..."]
+      },
+      {
+        "level": 4,
+        "style": "buttonText",
+        "purpose": "Interactive elements",
+        "size": "14px",
+        "weight": 500,
+        "color": "varies",
+        "examples": ["Back", "Save"]
+      },
+      {
+        "level": 5,
+        "style": "label",
+        "purpose": "Field labels and metadata",
+        "size": "13px",
+        "weight": 400,
+        "color": "#757575",
+        "examples": ["Description (optional)"]
+      }
+    ],
+    "notes": "Clear hierarchy with large heading (28px), medium inputs (16px), standard body (14px), and small labels (13px). Weight variation adds emphasis without requiring color changes."
+  },
+  "typographySystem": {
+    "scale": "minor-third",
+    "baseSize": "14px",
+    "scalingRatio": 1.2,
+    "notes": "Appears to use a modest type scale with ~1.2 ratio between sizes. Base size around 14px with steps up to 28px for heading."
+  },
+  "accessibilityNotes": {
+    "contrast": {
+      "modalTitle": "High - Black (#000000) on white (#FFFFFF) = 21:1",
+      "inputText": "High - Black (#000000) on white (#FFFFFF) = 21:1",
+      "label": "Medium-High - Gray (#757575) on white (#FFFFFF) = ~4.5:1",
+      "buttonPrimary": "High - White (#FFFFFF) on black (#000000) = 21:1",
+      "buttonSecondary": "High - Black (#000000) on white (#FFFFFF) = 21:1",
+      "bodyText": "High - Black (#000000) on light gray (#F5F5F5) = ~19:1"
+    },
+    "readability": {
+      "minFontSize": "13px",
+      "minContrast": "~4.5:1",
+      "lineHeightAdequate": true,
+      "notes": "All text meets WCAG AA standards. Label text at 13px with ~4.5:1 contrast is at minimum threshold. Multi-line text has comfortable line spacing."
+    }
+  },
+  "responsiveConsiderations": {
+    "scalingStrategy": "likely-fixed",
+    "breakpoints": "unknown",
+    "notes": "Modal appears to be fixed-size desktop interface. Text sizes are probably static rather than responsive. Consider scaling up font sizes on smaller screens or adding mobile-specific overrides."
+  },
+  "designSystemRecommendations": {
+    "tokenNaming": [
+      "Use semantic names: heading-1, body-default, label-small, button-medium",
+      "Consider weight as separate token: weight-regular, weight-medium, weight-bold",
+      "Establish clear size scale: xs(11), sm(13), base(14), md(16), lg(18), xl(20), 2xl(24), 3xl(28)"
+    ],
+    "implementationNotes": [
+      "Font stack should prioritize system fonts for performance",
+      "Consider loading Inter or similar if brand consistency required",
+      "Line heights should be unitless for better scaling",
+      "Letter spacing is minimal - modern sans-serifs don't need much tracking adjustment",
+      "Text transform only used on avatar initials (uppercase)",
+      "All text is left-aligned except button text and avatar (centered)"
+    ]
+  }
+}

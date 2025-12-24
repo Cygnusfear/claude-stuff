@@ -1,0 +1,550 @@
+{
+  "$schema": "pass-6-states",
+  "metadata": {
+    "pass": 6,
+    "focus": "States and Accessibility",
+    "timestamp": "2025-12-15",
+    "source": "Create a new Space modal"
+  },
+  "states": {
+    "button": {
+      "primary": {
+        "description": "Save button - filled black style",
+        "default": {
+          "background": "#000000",
+          "color": "#FFFFFF",
+          "border": "none",
+          "cursor": "pointer"
+        },
+        "hover": {
+          "background": "#1A1A1A",
+          "color": "#FFFFFF",
+          "transform": "none",
+          "cursor": "pointer"
+        },
+        "focus": {
+          "background": "#000000",
+          "color": "#FFFFFF",
+          "outline": "2px solid #000000",
+          "outlineOffset": "2px"
+        },
+        "active": {
+          "background": "#0A0A0A",
+          "color": "#FFFFFF",
+          "transform": "scale(0.98)"
+        },
+        "disabled": {
+          "background": "#E0E0E0",
+          "color": "#A0A0A0",
+          "cursor": "not-allowed",
+          "opacity": 0.6
+        }
+      },
+      "secondary": {
+        "description": "Back button - outlined white/black style",
+        "default": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #000000",
+          "cursor": "pointer"
+        },
+        "hover": {
+          "background": "#F5F5F5",
+          "color": "#000000",
+          "border": "1px solid #000000",
+          "cursor": "pointer"
+        },
+        "focus": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #000000",
+          "outline": "2px solid #000000",
+          "outlineOffset": "2px"
+        },
+        "active": {
+          "background": "#E8E8E8",
+          "color": "#000000",
+          "border": "1px solid #000000",
+          "transform": "scale(0.98)"
+        },
+        "disabled": {
+          "background": "#FFFFFF",
+          "color": "#A0A0A0",
+          "border": "1px solid #E0E0E0",
+          "cursor": "not-allowed",
+          "opacity": 0.6
+        }
+      },
+      "icon": {
+        "description": "Avatar edit badge button",
+        "default": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #E0E0E0",
+          "cursor": "pointer",
+          "boxShadow": "0 1px 3px rgba(0,0,0,0.1)"
+        },
+        "hover": {
+          "background": "#F5F5F5",
+          "color": "#000000",
+          "border": "1px solid #D0D0D0",
+          "boxShadow": "0 2px 4px rgba(0,0,0,0.15)"
+        },
+        "focus": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "outline": "2px solid #000000",
+          "outlineOffset": "2px"
+        },
+        "active": {
+          "background": "#E8E8E8",
+          "color": "#000000",
+          "transform": "scale(0.95)"
+        }
+      }
+    },
+    "input": {
+      "text": {
+        "description": "Space Name input field",
+        "default": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #D0D0D0",
+          "placeholder": "#737373"
+        },
+        "hover": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #A0A0A0"
+        },
+        "focus": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "2px solid #000000",
+          "outline": "none",
+          "boxShadow": "0 0 0 3px rgba(0,0,0,0.1)"
+        },
+        "filled": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #D0D0D0"
+        },
+        "error": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "2px solid #DC2626",
+          "boxShadow": "0 0 0 3px rgba(220,38,38,0.1)"
+        },
+        "disabled": {
+          "background": "#F5F5F5",
+          "color": "#A0A0A0",
+          "border": "1px solid #E0E0E0",
+          "cursor": "not-allowed"
+        }
+      }
+    },
+    "textarea": {
+      "default": {
+        "description": "Space Description textarea field",
+        "default": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #D0D0D0",
+          "placeholder": "#737373",
+          "resize": "vertical"
+        },
+        "hover": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #A0A0A0"
+        },
+        "focus": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "2px solid #000000",
+          "outline": "none",
+          "boxShadow": "0 0 0 3px rgba(0,0,0,0.1)"
+        },
+        "filled": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "1px solid #D0D0D0"
+        },
+        "error": {
+          "background": "#FFFFFF",
+          "color": "#000000",
+          "border": "2px solid #DC2626",
+          "boxShadow": "0 0 0 3px rgba(220,38,38,0.1)"
+        },
+        "disabled": {
+          "background": "#F5F5F5",
+          "color": "#A0A0A0",
+          "border": "1px solid #E0E0E0",
+          "cursor": "not-allowed"
+        }
+      }
+    },
+    "modal": {
+      "overlay": {
+        "default": {
+          "background": "rgba(0,0,0,0.5)",
+          "cursor": "default"
+        },
+        "animated": {
+          "background": "rgba(0,0,0,0) -> rgba(0,0,0,0.5)",
+          "duration": "200ms"
+        }
+      },
+      "container": {
+        "default": {
+          "background": "#FFFFFF",
+          "boxShadow": "0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)"
+        },
+        "animated": {
+          "transform": "scale(0.95) -> scale(1)",
+          "opacity": "0 -> 1",
+          "duration": "200ms"
+        }
+      }
+    },
+    "avatar": {
+      "default": {
+        "background": "#1e5631",
+        "color": "#FFFFFF",
+        "border": "none"
+      },
+      "withBadge": {
+        "background": "#1e5631",
+        "color": "#FFFFFF",
+        "position": "relative",
+        "badgePosition": "bottom-right"
+      }
+    }
+  },
+  "transitions": {
+    "default": {
+      "duration": "150ms",
+      "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "properties": ["background-color", "border-color", "color", "box-shadow"]
+    },
+    "button": {
+      "duration": "150ms",
+      "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "properties": ["background-color", "border-color", "transform"]
+    },
+    "input": {
+      "duration": "150ms",
+      "timingFunction": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "properties": ["border-color", "box-shadow"]
+    },
+    "modal": {
+      "enter": {
+        "duration": "200ms",
+        "timingFunction": "cubic-bezier(0, 0, 0.2, 1)",
+        "properties": ["opacity", "transform"]
+      },
+      "exit": {
+        "duration": "150ms",
+        "timingFunction": "cubic-bezier(0.4, 0, 1, 1)",
+        "properties": ["opacity", "transform"]
+      }
+    }
+  },
+  "accessibility": {
+    "contrastIssues": [
+      {
+        "element": "Secondary text / Labels",
+        "foreground": "#737373",
+        "background": "#FFFFFF",
+        "ratio": 4.69,
+        "standard": "AA",
+        "size": "normal",
+        "status": "PASS",
+        "note": "Meets WCAG AA for normal text (4.5:1 required)"
+      },
+      {
+        "element": "Primary text / Title & Body",
+        "foreground": "#000000",
+        "background": "#FFFFFF",
+        "ratio": 21,
+        "standard": "AAA",
+        "size": "any",
+        "status": "PASS",
+        "note": "Exceeds WCAG AAA for all text sizes"
+      },
+      {
+        "element": "Primary button text",
+        "foreground": "#FFFFFF",
+        "background": "#000000",
+        "ratio": 21,
+        "standard": "AAA",
+        "size": "any",
+        "status": "PASS",
+        "note": "Exceeds WCAG AAA for all text sizes"
+      },
+      {
+        "element": "Secondary button text",
+        "foreground": "#000000",
+        "background": "#FFFFFF",
+        "ratio": 21,
+        "standard": "AAA",
+        "size": "any",
+        "status": "PASS",
+        "note": "Exceeds WCAG AAA for all text sizes"
+      },
+      {
+        "element": "Avatar text",
+        "foreground": "#FFFFFF",
+        "background": "#1e5631",
+        "ratio": 8.02,
+        "standard": "AAA",
+        "size": "any",
+        "status": "PASS",
+        "note": "Exceeds WCAG AAA for all text sizes"
+      },
+      {
+        "element": "Disabled button text (potential)",
+        "foreground": "#A0A0A0",
+        "background": "#E0E0E0",
+        "ratio": 2.16,
+        "standard": "AA",
+        "size": "normal",
+        "status": "FAIL",
+        "note": "Does not meet WCAG AA (4.5:1 required). Acceptable for disabled states but should be clearly non-interactive",
+        "recommendation": "Use #6B6B6B or darker for disabled text to achieve 4.5:1 ratio"
+      }
+    ],
+    "semanticHierarchy": {
+      "heading": {
+        "level": "h2",
+        "text": "Create a new Space",
+        "role": "Modal title",
+        "importance": "primary"
+      },
+      "labels": {
+        "spaceName": {
+          "htmlFor": "space-name-input",
+          "required": true,
+          "text": "Space Name"
+        },
+        "spaceDescription": {
+          "htmlFor": "space-description-textarea",
+          "required": false,
+          "text": "Space Description"
+        }
+      },
+      "form": {
+        "role": "form",
+        "ariaLabel": "Create new space form",
+        "fields": [
+          {
+            "id": "space-name-input",
+            "type": "text",
+            "required": true,
+            "ariaRequired": "true",
+            "ariaLabel": "Space Name"
+          },
+          {
+            "id": "space-description-textarea",
+            "type": "textarea",
+            "required": false,
+            "ariaLabel": "Space Description"
+          }
+        ]
+      },
+      "actions": {
+        "primary": {
+          "type": "submit",
+          "text": "Save",
+          "ariaLabel": "Save new space"
+        },
+        "secondary": {
+          "type": "button",
+          "text": "Back",
+          "ariaLabel": "Go back, cancel creation"
+        }
+      },
+      "modal": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "ariaLabelledBy": "modal-title",
+        "ariaDescribedBy": "modal-description"
+      }
+    },
+    "touchTargets": {
+      "minimumSize": "44x44px",
+      "standard": "WCAG 2.1 Level AAA (2.5.5)",
+      "elements": [
+        {
+          "element": "Save button",
+          "estimatedSize": "80x40px",
+          "status": "REVIEW",
+          "note": "Height may be below 44px minimum. Recommend 44px minimum height or 12px padding top/bottom"
+        },
+        {
+          "element": "Back button",
+          "estimatedSize": "70x40px",
+          "status": "REVIEW",
+          "note": "Height may be below 44px minimum. Recommend 44px minimum height or 12px padding top/bottom"
+        },
+        {
+          "element": "Avatar edit badge",
+          "estimatedSize": "24x24px",
+          "status": "FAIL",
+          "note": "Likely too small for touch targets. Recommend 32x32px minimum or increase interactive area with padding",
+          "recommendation": "Increase badge size to 32x32px or add invisible touch target padding"
+        },
+        {
+          "element": "Text input",
+          "estimatedSize": "full-width x 40px",
+          "status": "REVIEW",
+          "note": "Height may be below 44px minimum. Recommend 44px minimum height"
+        },
+        {
+          "element": "Textarea",
+          "estimatedSize": "full-width x 80px+",
+          "status": "PASS",
+          "note": "Sufficient size for interaction"
+        }
+      ],
+      "spacing": {
+        "minimumSpacing": "8px",
+        "note": "Ensure adequate spacing between interactive elements to prevent accidental activation"
+      }
+    },
+    "interactiveElements": [
+      {
+        "element": "Space Name input",
+        "type": "text-input",
+        "label": "Space Name",
+        "required": true,
+        "keyboard": "full navigation and input support",
+        "screenReader": "Announced as 'Space Name, required, edit text'",
+        "focusIndicator": "2px solid black outline with 2px offset"
+      },
+      {
+        "element": "Space Description textarea",
+        "type": "textarea",
+        "label": "Space Description",
+        "required": false,
+        "keyboard": "full navigation and input support",
+        "screenReader": "Announced as 'Space Description, edit text, multiline'",
+        "focusIndicator": "2px solid black outline with 2px offset"
+      },
+      {
+        "element": "Save button",
+        "type": "button",
+        "role": "submit",
+        "keyboard": "Enter/Space to activate",
+        "screenReader": "Announced as 'Save, button' or 'Save new space, button'",
+        "focusIndicator": "2px solid black outline with 2px offset"
+      },
+      {
+        "element": "Back button",
+        "type": "button",
+        "role": "button",
+        "keyboard": "Enter/Space to activate",
+        "screenReader": "Announced as 'Back, button' or 'Go back, cancel creation, button'",
+        "focusIndicator": "2px solid black outline with 2px offset"
+      },
+      {
+        "element": "Avatar edit badge",
+        "type": "button",
+        "role": "button",
+        "keyboard": "Enter/Space to activate",
+        "screenReader": "Announced as 'Edit avatar, button' or 'Change space avatar, button'",
+        "focusIndicator": "2px solid black outline with 2px offset",
+        "ariaLabel": "Edit space avatar"
+      },
+      {
+        "element": "Modal overlay",
+        "type": "overlay",
+        "keyboard": "Escape to close",
+        "screenReader": "Modal dialog announced on open",
+        "focusTrap": true,
+        "note": "Should trap focus within modal and return focus to trigger element on close"
+      }
+    ],
+    "keyboardNavigation": {
+      "tabOrder": [
+        "Space Name input",
+        "Space Description textarea",
+        "Avatar edit badge",
+        "Back button",
+        "Save button"
+      ],
+      "shortcuts": {
+        "Escape": "Close modal and return focus",
+        "Tab": "Move to next interactive element",
+        "Shift+Tab": "Move to previous interactive element",
+        "Enter": "Submit form (when focused on input) or activate button"
+      },
+      "focusTrap": true,
+      "initialFocus": "Space Name input",
+      "returnFocus": "Element that triggered modal"
+    },
+    "screenReaderAnnouncements": {
+      "onOpen": "Dialog opened: Create a new Space",
+      "onClose": "Dialog closed",
+      "onError": "Error: [specific error message]",
+      "onSuccess": "Space created successfully"
+    },
+    "recommendations": [
+      {
+        "priority": "high",
+        "issue": "Touch target size for avatar edit badge",
+        "recommendation": "Increase badge size to 32x32px minimum or add invisible touch padding"
+      },
+      {
+        "priority": "high",
+        "issue": "Button heights may be below 44px minimum",
+        "recommendation": "Ensure all buttons have minimum 44px height or 12px vertical padding"
+      },
+      {
+        "priority": "medium",
+        "issue": "Disabled state contrast",
+        "recommendation": "Use darker text color (#6B6B6B) for disabled states to improve readability"
+      },
+      {
+        "priority": "medium",
+        "issue": "Focus indicators",
+        "recommendation": "Ensure 2px solid outline with 2px offset is consistently applied to all interactive elements"
+      },
+      {
+        "priority": "low",
+        "issue": "Error state feedback",
+        "recommendation": "Include aria-invalid and aria-describedby attributes for form validation errors"
+      },
+      {
+        "priority": "low",
+        "issue": "Loading states",
+        "recommendation": "Define loading state for Save button with aria-busy attribute and loading indicator"
+      }
+    ]
+  },
+  "additionalConsiderations": {
+    "motionSensitivity": {
+      "note": "Respect prefers-reduced-motion media query",
+      "implementation": "Disable transforms and reduce transition durations to 0ms when prefers-reduced-motion: reduce"
+    },
+    "darkMode": {
+      "note": "Consider dark mode variant with inverted colors",
+      "implementation": "Define alternative color palette maintaining contrast ratios"
+    },
+    "formValidation": {
+      "realTime": false,
+      "onSubmit": true,
+      "errorDisplay": "Below field with aria-live=polite announcement",
+      "requiredFields": ["Space Name"]
+    },
+    "loadingStates": {
+      "saveButton": {
+        "state": "loading",
+        "display": "Spinner icon + 'Saving...' text",
+        "disabled": true,
+        "ariaBusy": true,
+        "ariaLabel": "Saving space, please wait"
+      }
+    }
+  }
+}

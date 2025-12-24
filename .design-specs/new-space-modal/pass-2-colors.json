@@ -1,0 +1,283 @@
+{
+  "$schema": "pass-2-colors",
+  "$source": {
+    "screenshot": "/Users/alexander/Downloads/New_space_with_name.png",
+    "pass1": "/Users/alexander/Node/claude-stuff/.design-specs/new-space-modal/pass-1-layout.json",
+    "analysisDate": "2025-12-15",
+    "confidence": 0.90,
+    "notes": "Color values extracted from screenshot analysis. Some hex values approximated from visual inspection."
+  },
+  "palette": {
+    "primitives": [
+      {
+        "name": "white",
+        "hex": "#FFFFFF",
+        "usage": ["modal-background", "input-name-background", "button-secondary-background", "page-background"]
+      },
+      {
+        "name": "black",
+        "hex": "#000000",
+        "usage": ["modal-border", "heading-text", "button-primary-background", "input-text"]
+      },
+      {
+        "name": "gray-50",
+        "hex": "#F5F5F5",
+        "usage": ["description-textarea-background"]
+      },
+      {
+        "name": "gray-200",
+        "hex": "#E0E0E0",
+        "usage": ["input-border", "title-divider"]
+      },
+      {
+        "name": "gray-600",
+        "hex": "#757575",
+        "usage": ["label-text"]
+      },
+      {
+        "name": "green-600",
+        "hex": "#43A047",
+        "usage": ["avatar-background"]
+      },
+      {
+        "name": "green-700",
+        "hex": "#2E7D32",
+        "usage": ["edit-icon"]
+      }
+    ]
+  },
+  "tokens": {
+    "colors": {
+      "background": {
+        "page": {
+          "$value": "#FFFFFF",
+          "$type": "color",
+          "description": "Main page/overlay background"
+        },
+        "surface": {
+          "$value": "#FFFFFF",
+          "$type": "color",
+          "description": "Modal surface background"
+        },
+        "input": {
+          "$value": "#FFFFFF",
+          "$type": "color",
+          "description": "Text input field background (name field)"
+        },
+        "textarea": {
+          "$value": "#F5F5F5",
+          "$type": "color",
+          "description": "Textarea background (description field)"
+        }
+      },
+      "text": {
+        "primary": {
+          "$value": "#000000",
+          "$type": "color",
+          "description": "Heading and primary text color"
+        },
+        "body": {
+          "$value": "#000000",
+          "$type": "color",
+          "description": "Body text and input values"
+        },
+        "label": {
+          "$value": "#757575",
+          "$type": "color",
+          "description": "Form label text"
+        },
+        "onButton": {
+          "$value": "#FFFFFF",
+          "$type": "color",
+          "description": "Text color on primary button"
+        },
+        "onButtonSecondary": {
+          "$value": "#000000",
+          "$type": "color",
+          "description": "Text color on secondary button"
+        },
+        "onAvatar": {
+          "$value": "#FFFFFF",
+          "$type": "color",
+          "description": "Text/initials on avatar"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "#E0E0E0",
+          "$type": "color",
+          "description": "Default border color for inputs and dividers"
+        },
+        "strong": {
+          "$value": "#000000",
+          "$type": "color",
+          "description": "Strong border for modal frame and primary button"
+        }
+      },
+      "interactive": {
+        "primary": {
+          "$value": "#000000",
+          "$type": "color",
+          "description": "Primary button background"
+        },
+        "primaryText": {
+          "$value": "#FFFFFF",
+          "$type": "color",
+          "description": "Primary button text"
+        },
+        "secondary": {
+          "$value": "#FFFFFF",
+          "$type": "color",
+          "description": "Secondary button background"
+        },
+        "secondaryBorder": {
+          "$value": "#E0E0E0",
+          "$type": "color",
+          "description": "Secondary button border"
+        },
+        "secondaryText": {
+          "$value": "#000000",
+          "$type": "color",
+          "description": "Secondary button text"
+        }
+      },
+      "accent": {
+        "avatar": {
+          "$value": "#43A047",
+          "$type": "color",
+          "description": "Avatar background color (green)"
+        },
+        "avatarIcon": {
+          "$value": "#2E7D32",
+          "$type": "color",
+          "description": "Edit icon on avatar (darker green)"
+        }
+      },
+      "divider": {
+        "default": {
+          "$value": "#E0E0E0",
+          "$type": "color",
+          "description": "Divider line under title"
+        }
+      }
+    }
+  },
+  "surfaces": {
+    "modal": {
+      "background": "#FFFFFF",
+      "border": "#000000",
+      "borderWidth": "1px",
+      "borderRadius": "12px",
+      "shadow": "none",
+      "notes": "Clean modal with rounded corners and strong black border"
+    },
+    "inputText": {
+      "background": "#FFFFFF",
+      "border": "#E0E0E0",
+      "borderWidth": "1px",
+      "borderRadius": "4px",
+      "notes": "Name input field with subtle border and slight rounding"
+    },
+    "inputTextarea": {
+      "background": "#F5F5F5",
+      "border": "#E0E0E0",
+      "borderWidth": "1px",
+      "borderRadius": "4px",
+      "notes": "Description textarea with light gray background"
+    },
+    "buttonPrimary": {
+      "background": "#000000",
+      "border": "#000000",
+      "borderWidth": "1px",
+      "borderRadius": "4px",
+      "textColor": "#FFFFFF",
+      "notes": "Save button - solid black with white text"
+    },
+    "buttonSecondary": {
+      "background": "#FFFFFF",
+      "border": "#E0E0E0",
+      "borderWidth": "1px",
+      "borderRadius": "4px",
+      "textColor": "#000000",
+      "notes": "Back button - white background with subtle border"
+    },
+    "avatar": {
+      "background": "#43A047",
+      "border": "none",
+      "borderWidth": "0px",
+      "borderRadius": "50%",
+      "textColor": "#FFFFFF",
+      "notes": "Circular avatar with green background and white initials"
+    },
+    "avatarEditIcon": {
+      "background": "#2E7D32",
+      "border": "none",
+      "borderWidth": "0px",
+      "borderRadius": "50%",
+      "iconColor": "#FFFFFF",
+      "notes": "Small circular edit icon badge on avatar with darker green"
+    },
+    "divider": {
+      "background": "#E0E0E0",
+      "border": "none",
+      "borderWidth": "0px",
+      "height": "1px",
+      "notes": "Horizontal divider under title"
+    }
+  },
+  "effects": {
+    "shadows": [],
+    "gradients": [],
+    "opacity": {
+      "notes": "No visible opacity/transparency effects detected. All elements appear solid."
+    },
+    "notes": "Design uses a clean, flat style with no shadows or gradients. Relies on borders and solid colors for depth."
+  },
+  "visualCharacteristics": {
+    "style": "minimal-flat",
+    "borderStrategy": "mixed-radius",
+    "colorApproach": "high-contrast-monochrome-with-accent",
+    "notes": [
+      "Strong black borders on modal frame create clear visual boundary",
+      "Subtle gray borders on form elements for softer internal hierarchy",
+      "Green accent color used only for avatar to add visual interest",
+      "Black and white for primary actions creates strong CTA contrast",
+      "No shadows or effects - completely flat design aesthetic",
+      "Consistent but varied border radius: 12px modal, ~4px inputs/buttons, 50% circles"
+    ]
+  },
+  "colorRoles": {
+    "structural": {
+      "colors": ["#000000", "#E0E0E0"],
+      "purpose": "Borders and dividers that define structure"
+    },
+    "surface": {
+      "colors": ["#FFFFFF", "#F5F5F5"],
+      "purpose": "Backgrounds for modal and form elements"
+    },
+    "content": {
+      "colors": ["#000000", "#757575"],
+      "purpose": "Text hierarchy (primary and labels)"
+    },
+    "interactive": {
+      "colors": ["#000000", "#FFFFFF"],
+      "purpose": "Button states and actions"
+    },
+    "accent": {
+      "colors": ["#43A047", "#2E7D32"],
+      "purpose": "Avatar and edit icon for visual interest"
+    }
+  },
+  "designSystemInference": {
+    "likelySystem": "custom-minimal",
+    "colorPaletteSize": "small",
+    "colorStrategy": "monochrome-with-single-accent",
+    "notes": [
+      "Very limited color palette suggests intentional minimalism",
+      "Green may be brand color or simply used for avatar differentiation",
+      "Strong reliance on black/white contrast rather than color variety",
+      "Gray scale limited to ~3 values (white, light gray, medium gray)",
+      "No semantic status colors visible (no red, yellow, blue indicators)"
+    ]
+  }
+}

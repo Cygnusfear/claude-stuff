@@ -1,0 +1,366 @@
+{
+  "$schema": "pass-5-spacing",
+  "metadata": {
+    "pass": 5,
+    "focus": "spacing-and-dimensions",
+    "extractedFrom": "New_space_with_name.png",
+    "notes": "Comprehensive spacing, sizing, and dimensional specifications"
+  },
+  "spacingScale": {
+    "baseUnit": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Base unit for all spacing calculations"
+    },
+    "scale": {
+      "0": {
+        "$value": "0px",
+        "$type": "dimension"
+      },
+      "1": {
+        "$value": "4px",
+        "$type": "dimension",
+        "$description": "Label to input gap"
+      },
+      "2": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Button group gap, small internal spacing"
+      },
+      "3": {
+        "$value": "12px",
+        "$type": "dimension",
+        "$description": "Input/textarea internal padding"
+      },
+      "4": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "Form field vertical spacing, button horizontal padding"
+      },
+      "5": {
+        "$value": "20px",
+        "$type": "dimension",
+        "$description": "Modal bottom padding"
+      },
+      "6": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "Space between name field and description section"
+      },
+      "8": {
+        "$value": "32px",
+        "$type": "dimension",
+        "$description": "Space between form content and buttons"
+      },
+      "10": {
+        "$value": "40px",
+        "$type": "dimension",
+        "$description": "Modal top/side padding, avatar size"
+      },
+      "12": {
+        "$value": "48px",
+        "$type": "dimension"
+      },
+      "16": {
+        "$value": "64px",
+        "$type": "dimension"
+      }
+    }
+  },
+  "sizing": {
+    "avatar": {
+      "default": {
+        "$value": "40px",
+        "$type": "dimension",
+        "$description": "Avatar size in this modal (circle)"
+      },
+      "variants": {
+        "sm": {
+          "$value": "32px",
+          "$type": "dimension"
+        },
+        "md": {
+          "$value": "40px",
+          "$type": "dimension"
+        },
+        "lg": {
+          "$value": "48px",
+          "$type": "dimension"
+        }
+      }
+    },
+    "button": {
+      "height": {
+        "$value": "36px",
+        "$type": "dimension",
+        "$description": "Both Back and Save buttons"
+      },
+      "minWidth": {
+        "$value": "64px",
+        "$type": "dimension",
+        "$description": "Minimum width for buttons"
+      },
+      "paddingX": {
+        "$value": "20px",
+        "$type": "dimension",
+        "$description": "Horizontal padding inside buttons"
+      },
+      "paddingY": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Vertical padding inside buttons"
+      },
+      "gap": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Gap between Back and Save buttons"
+      }
+    },
+    "input": {
+      "name": {
+        "height": {
+          "$value": "40px",
+          "$type": "dimension",
+          "$description": "Name input field height"
+        },
+        "paddingX": {
+          "$value": "12px",
+          "$type": "dimension"
+        },
+        "paddingY": {
+          "$value": "8px",
+          "$type": "dimension"
+        }
+      }
+    },
+    "textarea": {
+      "description": {
+        "height": {
+          "$value": "96px",
+          "$type": "dimension",
+          "$description": "Description textarea height"
+        },
+        "minHeight": {
+          "$value": "80px",
+          "$type": "dimension"
+        },
+        "padding": {
+          "$value": "12px",
+          "$type": "dimension",
+          "$description": "Internal padding for textarea"
+        }
+      }
+    },
+    "modal": {
+      "width": {
+        "$value": "540px",
+        "$type": "dimension",
+        "$description": "Modal container width"
+      },
+      "minWidth": {
+        "$value": "480px",
+        "$type": "dimension"
+      },
+      "maxWidth": {
+        "$value": "600px",
+        "$type": "dimension"
+      }
+    },
+    "editIcon": {
+      "size": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "Edit pencil icon on avatar"
+      },
+      "containerSize": {
+        "$value": "20px",
+        "$type": "dimension",
+        "$description": "Circle container for edit icon"
+      }
+    }
+  },
+  "borderRadius": {
+    "none": {
+      "$value": "0px",
+      "$type": "dimension"
+    },
+    "sm": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Button border radius"
+    },
+    "md": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Input, textarea, and modal border radius"
+    },
+    "lg": {
+      "$value": "12px",
+      "$type": "dimension"
+    },
+    "full": {
+      "$value": "9999px",
+      "$type": "dimension",
+      "$description": "Avatar circle, edit icon badge"
+    }
+  },
+  "borderWidth": {
+    "none": {
+      "$value": "0px",
+      "$type": "dimension"
+    },
+    "default": {
+      "$value": "1px",
+      "$type": "dimension",
+      "$description": "Input, textarea, and button borders"
+    },
+    "thick": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "Used for focus states"
+    }
+  },
+  "containerPadding": {
+    "modal": {
+      "top": {
+        "$value": "40px",
+        "$type": "dimension",
+        "$description": "Space from modal top to title"
+      },
+      "right": {
+        "$value": "40px",
+        "$type": "dimension"
+      },
+      "bottom": {
+        "$value": "20px",
+        "$type": "dimension",
+        "$description": "Space from buttons to modal bottom"
+      },
+      "left": {
+        "$value": "40px",
+        "$type": "dimension"
+      },
+      "shorthand": {
+        "$value": "40px 40px 20px 40px",
+        "$type": "padding",
+        "$description": "Top Right Bottom Left"
+      }
+    },
+    "input": {
+      "horizontal": {
+        "$value": "12px",
+        "$type": "dimension"
+      },
+      "vertical": {
+        "$value": "8px",
+        "$type": "dimension"
+      }
+    },
+    "textarea": {
+      "all": {
+        "$value": "12px",
+        "$type": "dimension"
+      }
+    },
+    "button": {
+      "horizontal": {
+        "$value": "20px",
+        "$type": "dimension"
+      },
+      "vertical": {
+        "$value": "8px",
+        "$type": "dimension"
+      }
+    }
+  },
+  "gaps": {
+    "titleToContent": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Space between title and avatar/name section"
+    },
+    "avatarToNameInput": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "Horizontal gap between avatar and name input"
+    },
+    "nameToDescription": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "Vertical space between name input and description section"
+    },
+    "labelToInput": {
+      "$value": "4px",
+      "$type": "dimension",
+      "$description": "Space between label text and input field"
+    },
+    "descriptionToButtons": {
+      "$value": "32px",
+      "$type": "dimension",
+      "$description": "Space between description textarea and button group"
+    },
+    "buttonGroup": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "Gap between Back and Save buttons"
+    }
+  },
+  "measurements": {
+    "titleUnderline": {
+      "thickness": {
+        "$value": "1px",
+        "$type": "dimension"
+      },
+      "marginTop": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Space between title text and underline"
+      }
+    },
+    "avatarSection": {
+      "height": {
+        "$value": "40px",
+        "$type": "dimension",
+        "$description": "Combined height of avatar and name input row"
+      }
+    },
+    "formFieldStack": {
+      "gap": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "Vertical gap between major form sections"
+      }
+    }
+  },
+  "constraints": {
+    "modal": {
+      "minHeight": {
+        "$value": "400px",
+        "$type": "dimension"
+      },
+      "maxHeight": {
+        "$value": "90vh",
+        "$type": "dimension",
+        "$description": "Maximum height relative to viewport"
+      }
+    },
+    "nameInput": {
+      "maxWidth": {
+        "$value": "100%",
+        "$type": "dimension",
+        "$description": "Fluid width minus avatar and gap"
+      }
+    },
+    "textarea": {
+      "minHeight": {
+        "$value": "80px",
+        "$type": "dimension"
+      },
+      "maxHeight": {
+        "$value": "200px",
+        "$type": "dimension",
+        "$description": "Maximum height before scrolling"
+      }
+    }
+  }
+}

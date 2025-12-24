@@ -1,0 +1,774 @@
+{
+  "$schema": "https://design-tokens.org/schema.json",
+  "$version": "1.0.0",
+  "$source": {
+    "type": "visual-extraction",
+    "description": "Edit Profile Modal Dialog",
+    "dimensions": {
+      "width": 480,
+      "height": 600,
+      "unit": "px"
+    },
+    "extractionPasses": 7,
+    "extractionDate": "2025-12-15"
+  },
+  "tokens": {
+    "colors": {
+      "$type": "color",
+      "primitives": {
+        "green": {
+          "700": { "$value": "#1e5631", "$description": "Primary brand green" }
+        },
+        "gray": {
+          "50": { "$value": "#f5f5f5", "$description": "Lightest gray - backgrounds" },
+          "100": { "$value": "#e5e5e5", "$description": "Light gray - borders" },
+          "200": { "$value": "#d4d4d4", "$description": "Medium-light gray" },
+          "300": { "$value": "#a3a3a3", "$description": "Medium gray - placeholder text" },
+          "400": { "$value": "#737373", "$description": "Medium-dark gray" },
+          "500": { "$value": "#525252", "$description": "Dark gray - secondary text" },
+          "600": { "$value": "#404040", "$description": "Darker gray" },
+          "700": { "$value": "#262626", "$description": "Near black" },
+          "800": { "$value": "#171717", "$description": "Very dark" },
+          "900": { "$value": "#0a0a0a", "$description": "Almost black" }
+        },
+        "white": { "$value": "#ffffff", "$description": "Pure white" },
+        "black": { "$value": "#000000", "$description": "Pure black" },
+        "blue": {
+          "500": { "$value": "#3b82f6", "$description": "Focus ring color" }
+        },
+        "red": {
+          "500": { "$value": "#ef4444", "$description": "Error state color" }
+        }
+      },
+      "semantic": {
+        "background": {
+          "page": { "$value": "{colors.primitives.gray.50}", "$description": "Page background behind modal" },
+          "modal": { "$value": "{colors.primitives.white}", "$description": "Modal surface background" },
+          "input": { "$value": "{colors.primitives.white}", "$description": "Input field background" },
+          "avatar": { "$value": "{colors.primitives.green.700}", "$description": "Avatar background" }
+        },
+        "foreground": {
+          "primary": { "$value": "{colors.primitives.black}", "$description": "Primary text color" },
+          "secondary": { "$value": "{colors.primitives.gray.500}", "$description": "Secondary/muted text" },
+          "placeholder": { "$value": "{colors.primitives.gray.300}", "$description": "Input placeholder text" },
+          "disabled": { "$value": "{colors.primitives.gray.300}", "$description": "Disabled text" },
+          "onAvatar": { "$value": "{colors.primitives.white}", "$description": "Text on avatar background" },
+          "error": { "$value": "{colors.primitives.red.500}", "$description": "Error message text" }
+        },
+        "border": {
+          "default": { "$value": "{colors.primitives.gray.200}", "$description": "Default border color" },
+          "hover": { "$value": "{colors.primitives.gray.300}", "$description": "Hovered border color" },
+          "focus": { "$value": "{colors.primitives.blue.500}", "$description": "Focused border color" },
+          "error": { "$value": "{colors.primitives.red.500}", "$description": "Error border color" }
+        },
+        "interactive": {
+          "primaryBg": { "$value": "{colors.primitives.black}", "$description": "Primary button background" },
+          "primaryFg": { "$value": "{colors.primitives.white}", "$description": "Primary button text" },
+          "secondaryBg": { "$value": "{colors.primitives.white}", "$description": "Secondary button background" },
+          "secondaryFg": { "$value": "{colors.primitives.black}", "$description": "Secondary button text" },
+          "secondaryBorder": { "$value": "{colors.primitives.gray.200}", "$description": "Secondary button border" }
+        },
+        "overlay": {
+          "backdrop": { "$value": "rgba(0, 0, 0, 0.5)", "$description": "Modal backdrop overlay" }
+        }
+      }
+    },
+    "typography": {
+      "$type": "typography",
+      "fontFamilies": {
+        "sans": {
+          "$value": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+          "$description": "Primary font stack"
+        }
+      },
+      "fontWeights": {
+        "regular": { "$value": 400 },
+        "medium": { "$value": 500 },
+        "semibold": { "$value": 600 },
+        "bold": { "$value": 700 }
+      },
+      "fontSizes": {
+        "xs": { "$value": "12px", "$description": "Extra small - labels, captions" },
+        "sm": { "$value": "14px", "$description": "Small - buttons, secondary text" },
+        "base": { "$value": "16px", "$description": "Base - body text, inputs" },
+        "lg": { "$value": "18px", "$description": "Large - emphasis" },
+        "xl": { "$value": "20px", "$description": "Extra large" },
+        "2xl": { "$value": "24px", "$description": "2X large - modal titles" }
+      },
+      "lineHeights": {
+        "tight": { "$value": "1.25" },
+        "normal": { "$value": "1.5" },
+        "relaxed": { "$value": "1.75" }
+      },
+      "textStyles": {
+        "modalTitle": {
+          "$value": {
+            "fontFamily": "{typography.fontFamilies.sans}",
+            "fontSize": "{typography.fontSizes.2xl}",
+            "fontWeight": "{typography.fontWeights.semibold}",
+            "lineHeight": "{typography.lineHeights.tight}"
+          },
+          "$description": "Modal header title"
+        },
+        "label": {
+          "$value": {
+            "fontFamily": "{typography.fontFamilies.sans}",
+            "fontSize": "{typography.fontSizes.sm}",
+            "fontWeight": "{typography.fontWeights.medium}",
+            "lineHeight": "{typography.lineHeights.normal}"
+          },
+          "$description": "Form field labels"
+        },
+        "inputText": {
+          "$value": {
+            "fontFamily": "{typography.fontFamilies.sans}",
+            "fontSize": "{typography.fontSizes.base}",
+            "fontWeight": "{typography.fontWeights.regular}",
+            "lineHeight": "{typography.lineHeights.normal}"
+          },
+          "$description": "Input field text"
+        },
+        "buttonText": {
+          "$value": {
+            "fontFamily": "{typography.fontFamilies.sans}",
+            "fontSize": "{typography.fontSizes.sm}",
+            "fontWeight": "{typography.fontWeights.medium}",
+            "lineHeight": "{typography.lineHeights.normal}"
+          },
+          "$description": "Button text"
+        },
+        "avatarText": {
+          "$value": {
+            "fontFamily": "{typography.fontFamilies.sans}",
+            "fontSize": "{typography.fontSizes.2xl}",
+            "fontWeight": "{typography.fontWeights.semibold}",
+            "lineHeight": "{typography.lineHeights.tight}"
+          },
+          "$description": "Avatar initials"
+        },
+        "caption": {
+          "$value": {
+            "fontFamily": "{typography.fontFamilies.sans}",
+            "fontSize": "{typography.fontSizes.xs}",
+            "fontWeight": "{typography.fontWeights.regular}",
+            "lineHeight": "{typography.lineHeights.normal}"
+          },
+          "$description": "Helper text, captions"
+        }
+      }
+    },
+    "spacing": {
+      "$type": "dimension",
+      "scale": {
+        "0": { "$value": "0px" },
+        "1": { "$value": "4px", "$description": "Micro spacing" },
+        "2": { "$value": "8px", "$description": "Small spacing - label gaps" },
+        "3": { "$value": "12px", "$description": "Medium-small spacing" },
+        "4": { "$value": "16px", "$description": "Medium spacing - section gaps, button gaps" },
+        "5": { "$value": "20px", "$description": "Medium-large spacing" },
+        "6": { "$value": "24px", "$description": "Large spacing - modal padding, section gaps" },
+        "8": { "$value": "32px", "$description": "Extra large spacing - modal padding" }
+      },
+      "semantic": {
+        "modal": {
+          "padding": { "$value": "{spacing.scale.6}", "$description": "Modal internal padding" },
+          "paddingLarge": { "$value": "{spacing.scale.8}", "$description": "Modal internal padding - larger variant" }
+        },
+        "section": {
+          "gap": { "$value": "{spacing.scale.6}", "$description": "Gap between major sections" }
+        },
+        "form": {
+          "fieldGap": { "$value": "{spacing.scale.4}", "$description": "Gap between form fields" },
+          "labelGap": { "$value": "{spacing.scale.2}", "$description": "Gap between label and input" }
+        },
+        "button": {
+          "gap": { "$value": "{spacing.scale.4}", "$description": "Gap between buttons in a group" }
+        }
+      }
+    },
+    "sizing": {
+      "$type": "dimension",
+      "modal": {
+        "width": { "$value": "480px", "$description": "Modal container width" },
+        "height": { "$value": "600px", "$description": "Modal container height (approximate)" },
+        "maxHeight": { "$value": "90vh", "$description": "Modal maximum height" }
+      },
+      "avatar": {
+        "size": { "$value": "80px", "$description": "Avatar diameter" },
+        "badgeSize": { "$value": "28px", "$description": "Edit badge diameter" }
+      },
+      "input": {
+        "height": { "$value": "44px", "$description": "Standard input height" },
+        "minHeight": { "$value": "44px", "$description": "Minimum touch target" }
+      },
+      "textarea": {
+        "minHeight": { "$value": "100px", "$description": "Minimum textarea height" }
+      },
+      "button": {
+        "height": { "$value": "44px", "$description": "Button height" },
+        "minWidth": { "$value": "80px", "$description": "Minimum button width" }
+      },
+      "iconSize": {
+        "sm": { "$value": "16px", "$description": "Small icons" },
+        "md": { "$value": "20px", "$description": "Medium icons" },
+        "lg": { "$value": "24px", "$description": "Large icons" }
+      }
+    },
+    "radii": {
+      "$type": "dimension",
+      "none": { "$value": "0px" },
+      "sm": { "$value": "4px", "$description": "Small radius - buttons, inputs" },
+      "md": { "$value": "8px", "$description": "Medium radius - cards" },
+      "lg": { "$value": "12px", "$description": "Large radius - modal" },
+      "full": { "$value": "9999px", "$description": "Fully rounded - avatar, pills" }
+    },
+    "borders": {
+      "$type": "border",
+      "input": {
+        "default": {
+          "$value": {
+            "width": "1px",
+            "style": "solid",
+            "color": "{colors.semantic.border.default}"
+          }
+        },
+        "focus": {
+          "$value": {
+            "width": "2px",
+            "style": "solid",
+            "color": "{colors.semantic.border.focus}"
+          }
+        },
+        "error": {
+          "$value": {
+            "width": "1px",
+            "style": "solid",
+            "color": "{colors.semantic.border.error}"
+          }
+        }
+      },
+      "button": {
+        "secondary": {
+          "$value": {
+            "width": "1px",
+            "style": "solid",
+            "color": "{colors.semantic.interactive.secondaryBorder}"
+          }
+        }
+      }
+    },
+    "shadows": {
+      "$type": "shadow",
+      "modal": {
+        "$value": {
+          "offsetX": "0px",
+          "offsetY": "4px",
+          "blur": "24px",
+          "spread": "0px",
+          "color": "rgba(0, 0, 0, 0.1)"
+        },
+        "$description": "Modal elevation shadow"
+      },
+      "focus": {
+        "$value": {
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "blur": "0px",
+          "spread": "3px",
+          "color": "rgba(59, 130, 246, 0.5)"
+        },
+        "$description": "Focus ring shadow"
+      }
+    }
+  },
+  "components": {
+    "$root": {
+      "type": "ModalDialog",
+      "name": "EditProfileModal",
+      "description": "Modal dialog for editing user profile information",
+      "layout": {
+        "display": "flex",
+        "flexDirection": "column",
+        "width": "{sizing.modal.width}",
+        "maxHeight": "{sizing.modal.maxHeight}",
+        "padding": "{spacing.semantic.modal.padding}",
+        "gap": "{spacing.semantic.section.gap}",
+        "backgroundColor": "{colors.semantic.background.modal}",
+        "borderRadius": "{radii.lg}",
+        "boxShadow": "{shadows.modal}"
+      },
+      "children": [
+        { "$ref": "#/components/catalog/ModalHeader" },
+        { "$ref": "#/components/catalog/AvatarSection" },
+        { "$ref": "#/components/catalog/ProfileForm" },
+        { "$ref": "#/components/catalog/ModalFooter" }
+      ]
+    },
+    "catalog": {
+      "ModalHeader": {
+        "type": "molecule",
+        "name": "ModalHeader",
+        "description": "Modal header with title and close button",
+        "layout": {
+          "display": "flex",
+          "justifyContent": "space-between",
+          "alignItems": "center"
+        },
+        "children": [
+          {
+            "type": "atom",
+            "name": "Title",
+            "element": "h2",
+            "content": "Edit Profile",
+            "styles": {
+              "typography": "{typography.textStyles.modalTitle}",
+              "color": "{colors.semantic.foreground.primary}"
+            }
+          },
+          {
+            "type": "atom",
+            "name": "CloseButton",
+            "element": "button",
+            "styles": {
+              "width": "{sizing.iconSize.lg}",
+              "height": "{sizing.iconSize.lg}",
+              "backgroundColor": "transparent",
+              "border": "none",
+              "cursor": "pointer"
+            },
+            "states": {
+              "hover": { "opacity": 0.7 },
+              "focus": { "boxShadow": "{shadows.focus}" }
+            }
+          }
+        ]
+      },
+      "AvatarSection": {
+        "type": "molecule",
+        "name": "AvatarSection",
+        "description": "User avatar with edit capability",
+        "layout": {
+          "display": "flex",
+          "justifyContent": "center",
+          "paddingTop": "{spacing.scale.4}",
+          "paddingBottom": "{spacing.scale.4}"
+        },
+        "children": [
+          {
+            "type": "atom",
+            "name": "Avatar",
+            "element": "div",
+            "styles": {
+              "width": "{sizing.avatar.size}",
+              "height": "{sizing.avatar.size}",
+              "borderRadius": "{radii.full}",
+              "backgroundColor": "{colors.semantic.background.avatar}",
+              "display": "flex",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "position": "relative"
+            },
+            "children": [
+              {
+                "type": "atom",
+                "name": "AvatarInitials",
+                "element": "span",
+                "content": "JD",
+                "styles": {
+                  "typography": "{typography.textStyles.avatarText}",
+                  "color": "{colors.semantic.foreground.onAvatar}"
+                }
+              },
+              {
+                "type": "atom",
+                "name": "EditBadge",
+                "element": "button",
+                "styles": {
+                  "position": "absolute",
+                  "bottom": "0px",
+                  "right": "0px",
+                  "width": "{sizing.avatar.badgeSize}",
+                  "height": "{sizing.avatar.badgeSize}",
+                  "borderRadius": "{radii.full}",
+                  "backgroundColor": "{colors.primitives.white}",
+                  "border": "{borders.input.default}",
+                  "cursor": "pointer"
+                },
+                "accessibilityNote": "Badge size (28px) is below 44px minimum touch target"
+              }
+            ]
+          }
+        ]
+      },
+      "ProfileForm": {
+        "type": "molecule",
+        "name": "ProfileForm",
+        "description": "Form containing profile fields",
+        "layout": {
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": "{spacing.semantic.form.fieldGap}"
+        },
+        "children": [
+          { "$ref": "#/components/catalog/FormField", "props": { "label": "First Name", "type": "text" } },
+          { "$ref": "#/components/catalog/FormField", "props": { "label": "Last Name", "type": "text" } },
+          { "$ref": "#/components/catalog/FormField", "props": { "label": "Email", "type": "email" } },
+          { "$ref": "#/components/catalog/FormField", "props": { "label": "Bio", "type": "textarea" } }
+        ]
+      },
+      "FormField": {
+        "type": "molecule",
+        "name": "FormField",
+        "description": "Label + Input combination",
+        "props": {
+          "label": { "type": "string", "required": true },
+          "type": { "type": "string", "enum": ["text", "email", "textarea"], "default": "text" }
+        },
+        "layout": {
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": "{spacing.semantic.form.labelGap}"
+        },
+        "children": [
+          { "$ref": "#/components/catalog/Label" },
+          { "$ref": "#/components/catalog/TextInput" }
+        ]
+      },
+      "Label": {
+        "type": "atom",
+        "name": "Label",
+        "element": "label",
+        "styles": {
+          "typography": "{typography.textStyles.label}",
+          "color": "{colors.semantic.foreground.primary}"
+        }
+      },
+      "TextInput": {
+        "type": "atom",
+        "name": "TextInput",
+        "element": "input",
+        "styles": {
+          "height": "{sizing.input.height}",
+          "padding": "0 {spacing.scale.3}",
+          "typography": "{typography.textStyles.inputText}",
+          "color": "{colors.semantic.foreground.primary}",
+          "backgroundColor": "{colors.semantic.background.input}",
+          "border": "{borders.input.default}",
+          "borderRadius": "{radii.sm}",
+          "outline": "none"
+        },
+        "states": {
+          "default": {
+            "border": "{borders.input.default}"
+          },
+          "hover": {
+            "borderColor": "{colors.semantic.border.hover}"
+          },
+          "focus": {
+            "border": "{borders.input.focus}",
+            "boxShadow": "{shadows.focus}"
+          },
+          "error": {
+            "border": "{borders.input.error}"
+          },
+          "disabled": {
+            "backgroundColor": "{colors.primitives.gray.50}",
+            "color": "{colors.semantic.foreground.disabled}",
+            "cursor": "not-allowed"
+          }
+        }
+      },
+      "TextArea": {
+        "type": "atom",
+        "name": "TextArea",
+        "element": "textarea",
+        "styles": {
+          "minHeight": "{sizing.textarea.minHeight}",
+          "padding": "{spacing.scale.3}",
+          "typography": "{typography.textStyles.inputText}",
+          "color": "{colors.semantic.foreground.primary}",
+          "backgroundColor": "{colors.semantic.background.input}",
+          "border": "{borders.input.default}",
+          "borderRadius": "{radii.sm}",
+          "resize": "vertical",
+          "outline": "none"
+        },
+        "states": {
+          "default": { "border": "{borders.input.default}" },
+          "hover": { "borderColor": "{colors.semantic.border.hover}" },
+          "focus": { "border": "{borders.input.focus}", "boxShadow": "{shadows.focus}" },
+          "error": { "border": "{borders.input.error}" },
+          "disabled": {
+            "backgroundColor": "{colors.primitives.gray.50}",
+            "color": "{colors.semantic.foreground.disabled}",
+            "cursor": "not-allowed"
+          }
+        }
+      },
+      "ModalFooter": {
+        "type": "molecule",
+        "name": "ModalFooter",
+        "description": "Footer with action buttons",
+        "layout": {
+          "display": "flex",
+          "justifyContent": "flex-end",
+          "gap": "{spacing.semantic.button.gap}",
+          "paddingTop": "{spacing.scale.4}"
+        },
+        "children": [
+          { "$ref": "#/components/catalog/Button", "props": { "variant": "secondary", "label": "Cancel" } },
+          { "$ref": "#/components/catalog/Button", "props": { "variant": "primary", "label": "Save Changes" } }
+        ]
+      },
+      "Button": {
+        "type": "atom",
+        "name": "Button",
+        "element": "button",
+        "props": {
+          "variant": { "type": "string", "enum": ["primary", "secondary"], "default": "primary" },
+          "label": { "type": "string", "required": true }
+        },
+        "variants": {
+          "primary": {
+            "styles": {
+              "height": "{sizing.button.height}",
+              "minWidth": "{sizing.button.minWidth}",
+              "padding": "0 {spacing.scale.4}",
+              "typography": "{typography.textStyles.buttonText}",
+              "color": "{colors.semantic.interactive.primaryFg}",
+              "backgroundColor": "{colors.semantic.interactive.primaryBg}",
+              "border": "none",
+              "borderRadius": "{radii.sm}",
+              "cursor": "pointer"
+            },
+            "states": {
+              "default": {},
+              "hover": { "backgroundColor": "{colors.primitives.gray.800}" },
+              "active": { "backgroundColor": "{colors.primitives.gray.900}" },
+              "focus": { "boxShadow": "{shadows.focus}" },
+              "disabled": {
+                "backgroundColor": "{colors.primitives.gray.300}",
+                "color": "{colors.primitives.white}",
+                "cursor": "not-allowed"
+              }
+            }
+          },
+          "secondary": {
+            "styles": {
+              "height": "{sizing.button.height}",
+              "minWidth": "{sizing.button.minWidth}",
+              "padding": "0 {spacing.scale.4}",
+              "typography": "{typography.textStyles.buttonText}",
+              "color": "{colors.semantic.interactive.secondaryFg}",
+              "backgroundColor": "{colors.semantic.interactive.secondaryBg}",
+              "border": "{borders.button.secondary}",
+              "borderRadius": "{radii.sm}",
+              "cursor": "pointer"
+            },
+            "states": {
+              "default": {},
+              "hover": { "backgroundColor": "{colors.primitives.gray.50}" },
+              "active": { "backgroundColor": "{colors.primitives.gray.100}" },
+              "focus": { "boxShadow": "{shadows.focus}" },
+              "disabled": {
+                "backgroundColor": "{colors.primitives.gray.50}",
+                "color": "{colors.primitives.gray.300}",
+                "cursor": "not-allowed"
+              }
+            }
+          }
+        }
+      },
+      "Backdrop": {
+        "type": "atom",
+        "name": "Backdrop",
+        "element": "div",
+        "description": "Semi-transparent overlay behind modal",
+        "styles": {
+          "position": "fixed",
+          "inset": "0",
+          "backgroundColor": "{colors.semantic.overlay.backdrop}",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "center"
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "wcagLevel": "AA",
+    "colorContrast": {
+      "passes": [
+        {
+          "element": "Modal Title",
+          "foreground": "{colors.primitives.black}",
+          "background": "{colors.primitives.white}",
+          "ratio": "21:1",
+          "level": "AAA"
+        },
+        {
+          "element": "Body Text",
+          "foreground": "{colors.primitives.black}",
+          "background": "{colors.primitives.white}",
+          "ratio": "21:1",
+          "level": "AAA"
+        },
+        {
+          "element": "Label Text",
+          "foreground": "{colors.primitives.black}",
+          "background": "{colors.primitives.white}",
+          "ratio": "21:1",
+          "level": "AAA"
+        },
+        {
+          "element": "Avatar Text",
+          "foreground": "{colors.primitives.white}",
+          "background": "{colors.primitives.green.700}",
+          "ratio": "7.5:1",
+          "level": "AAA"
+        },
+        {
+          "element": "Primary Button",
+          "foreground": "{colors.primitives.white}",
+          "background": "{colors.primitives.black}",
+          "ratio": "21:1",
+          "level": "AAA"
+        },
+        {
+          "element": "Secondary Text",
+          "foreground": "{colors.primitives.gray.500}",
+          "background": "{colors.primitives.white}",
+          "ratio": "5.9:1",
+          "level": "AA"
+        }
+      ],
+      "issues": [
+        {
+          "element": "Disabled Input Text",
+          "foreground": "{colors.primitives.gray.300}",
+          "background": "{colors.primitives.gray.50}",
+          "ratio": "1.8:1",
+          "level": "FAIL",
+          "note": "Acceptable for disabled states per WCAG"
+        },
+        {
+          "element": "Placeholder Text",
+          "foreground": "{colors.primitives.gray.300}",
+          "background": "{colors.primitives.white}",
+          "ratio": "2.2:1",
+          "level": "FAIL",
+          "recommendation": "Consider using gray.400 for better placeholder visibility"
+        }
+      ]
+    },
+    "touchTargets": {
+      "passes": [
+        { "element": "TextInput", "size": "44px", "minimum": "44px" },
+        { "element": "Button", "size": "44px", "minimum": "44px" }
+      ],
+      "issues": [
+        {
+          "element": "Avatar Edit Badge",
+          "size": "28px",
+          "minimum": "44px",
+          "recommendation": "Increase badge size to 44px or add larger touch area"
+        },
+        {
+          "element": "Close Button",
+          "size": "24px",
+          "minimum": "44px",
+          "recommendation": "Add padding to create 44px touch target"
+        }
+      ]
+    },
+    "focusManagement": {
+      "trapFocus": true,
+      "initialFocus": "First form field",
+      "returnFocus": "Trigger element on close"
+    },
+    "semantics": {
+      "role": "dialog",
+      "ariaModal": true,
+      "ariaLabelledby": "modal-title"
+    }
+  },
+  "$extensions": {
+    "com.design-spec.extraction": {
+      "confidence": {
+        "overall": 0.92,
+        "breakdown": {
+          "layout": 0.95,
+          "colors": 0.94,
+          "typography": 0.93,
+          "components": 0.91,
+          "spacing": 0.92,
+          "states": 0.88
+        },
+        "notes": [
+          "High confidence on structural layout and color extraction",
+          "Typography stack inferred from common patterns",
+          "State definitions based on standard interaction patterns",
+          "Some spacing values estimated from visual proportions"
+        ]
+      },
+      "recommendations": [
+        {
+          "priority": "high",
+          "category": "accessibility",
+          "issue": "Avatar edit badge touch target too small",
+          "current": "28px",
+          "recommended": "44px minimum",
+          "fix": "Increase badge size or add transparent touch area overlay"
+        },
+        {
+          "priority": "high",
+          "category": "accessibility",
+          "issue": "Close button touch target too small",
+          "current": "24px",
+          "recommended": "44px minimum",
+          "fix": "Add padding to create adequate touch target"
+        },
+        {
+          "priority": "medium",
+          "category": "accessibility",
+          "issue": "Placeholder text contrast below AA",
+          "current": "gray.300 (2.2:1)",
+          "recommended": "gray.400 or darker",
+          "fix": "Use colors.primitives.gray.400 for placeholder text"
+        },
+        {
+          "priority": "low",
+          "category": "consistency",
+          "issue": "Modal padding uses two values",
+          "current": "24px and 32px both referenced",
+          "recommended": "Standardize on single value",
+          "fix": "Use 24px (spacing.scale.6) consistently or define explicit variants"
+        },
+        {
+          "priority": "low",
+          "category": "enhancement",
+          "issue": "No loading state defined",
+          "recommendation": "Add loading state for Save button during form submission"
+        },
+        {
+          "priority": "low",
+          "category": "enhancement",
+          "issue": "No animation tokens defined",
+          "recommendation": "Add transition tokens for hover/focus state changes"
+        }
+      ],
+      "tokenCoverage": {
+        "defined": 87,
+        "referenced": 82,
+        "unreferenced": ["sizing.iconSize.sm", "spacing.scale.0", "spacing.scale.5", "radii.none", "radii.md"],
+        "missingDefinitions": []
+      },
+      "componentSummary": {
+        "atoms": 8,
+        "molecules": 5,
+        "organisms": 1,
+        "total": 14
+      }
+    }
+  }
+}

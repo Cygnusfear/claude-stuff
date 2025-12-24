@@ -1,9 +1,9 @@
 ---
-name: create-gh-ticket
-description: Create comprehensive GitHub issues that capture ALL context, requirements, and implementation details. Use when creating tickets, issues, feature requests, or bug reports. Ensures no context is lost between ticket creation and implementation - the moment you ask for a ticket, there's maximum context available that will be lost if not captured now.
+name: gh-ticket
+description: Create or update comprehensive GitHub issues that capture ALL context, requirements, and implementation details. Use when creating or updating tickets, issues, feature requests, or bug reports. Ensures no context is lost between ticket creation and implementation - the moment you ask for a ticket, there's maximum context available that will be lost if not captured now.
 ---
 
-# Create GitHub Ticket
+# GitHub Ticket (Create or Update)
 
 ## Why This Skill Exists
 
@@ -30,7 +30,16 @@ description: Create comprehensive GitHub issues that capture ALL context, requir
 
 ---
 
-## Ticket Creation Process
+## When to Use This Skill
+
+- **Creating** a new GitHub issue
+- **Updating** an existing issue with new context/requirements
+- **Expanding** a vague issue into a comprehensive spec
+- **Adding** implementation details discovered during investigation
+
+---
+
+## Ticket Process (Create or Update)
 
 ### Phase 1: Context Capture (DO THIS FIRST)
 
@@ -269,7 +278,9 @@ Use this exact structure for every ticket:
 
 ---
 
-### Phase 5: Create the Ticket
+### Phase 5: Create or Update the Ticket
+
+#### Creating a New Issue
 
 ```bash
 # Create with full body using heredoc
@@ -285,6 +296,43 @@ gh issue create --title "[Type]: Brief description" --body-file /tmp/ticket.md
 # Add labels
 gh issue edit <number> --add-label "type:feature,priority:high"
 ```
+
+#### Updating an Existing Issue
+
+```bash
+# View current issue content
+gh issue view <number>
+
+# Update issue body (replaces entire body)
+gh issue edit <number> --body "$(cat <<'EOF'
+[Updated full ticket body]
+EOF
+)"
+
+# Update just the title
+gh issue edit <number> --title "[Type]: Updated description"
+
+# Add a comment with new context (preserves original body)
+gh issue comment <number> --body "$(cat <<'EOF'
+## Additional Context Discovered
+
+[New findings, updated requirements, implementation notes]
+EOF
+)"
+
+# Add labels
+gh issue edit <number> --add-label "type:feature,priority:high"
+```
+
+#### When to Update vs Comment
+
+| Situation | Action |
+|-----------|--------|
+| Issue was vague, now have full spec | **Update body** - replace with complete spec |
+| Found new requirements during investigation | **Update body** - add to requirements section |
+| Progress update or status change | **Comment** - preserve history |
+| Minor clarification | **Comment** - don't rewrite whole issue |
+| Issue scope changed significantly | **Update body** - rewrite with new scope |
 
 #### Title Format
 
