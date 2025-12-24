@@ -77,6 +77,20 @@ When delegating, you MUST:
 
 **IMPORTANT**: The agent **MUST ALWAYS** create PR for work, or update the existing PR with the work they've done.
 
+**CRITICAL: PR Must Link and Close Issues**
+
+When creating PR, agent MUST:
+1. Use `Closes #X` or `Fixes #X` in PR body for each issue being addressed
+2. Include "Related Issues" section listing all related issues
+3. Verify issue links with `gh pr view --json closingIssuesReferences`
+
+Example PR body must include:
+```markdown
+## Related Issues
+- Closes #45 - Auth token expiration bug
+- Related to #40 - Auth system improvements
+```
+
 ## Step 2: Agent Performs REVIEW (MUST POST TO GITHUB)
 
 The dockeragent MUST invoke the code-reviewer skill on their own work:

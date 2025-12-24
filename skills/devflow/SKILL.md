@@ -30,8 +30,13 @@ description: End-to-end agent development process. Use when coordinating work, d
 Dispatch Docker agents:
 - Clone repo, format locally (`cargo +nightly fmt`)
 - Branch as `feat/name` or `fix/name`
-- Open PR to correct base branch
+- Open PR to correct base branch with **`Closes #X` in body**
 - Never push to existing branches
+
+**PR MUST include issue links:**
+- `Closes #X` or `Fixes #X` for issues being addressed
+- "Related Issues" section in PR body
+- Verify: `gh pr view --json closingIssuesReferences`
 
 ## Phase 3: Ultra-Critical Review
 
@@ -95,7 +100,13 @@ gh issue view <number>
 
 ## Phase 5: Merge & Continue
 
-Merge PRs in dependency order. **Only after Final Coverage Gate passes.** Proceed to next phase.
+**Before merge, verify issue linking:**
+```bash
+gh pr view <NUMBER> --json closingIssuesReferences
+# Must show linked issues - if empty, send back to fix
+```
+
+Merge PRs in dependency order. **Only after Final Coverage Gate passes AND issues are linked.** Issues auto-close on merge.
 
 ---
 
@@ -104,9 +115,11 @@ Merge PRs in dependency order. **Only after Final Coverage Gate passes.** Procee
 | Wrong | Right |
 |-------|-------|
 | **Merge with incomplete coverage** | **100% of issue requirements implemented first** |
+| **PR without issue links** | **Every PR has `Closes #X` for related issues** |
 | Push to branch | Feature branch + PR |
 | Checkbox review | 6-pass analysis (starting with coverage check) |
 | Coordinator implements | Dispatch agents |
 | Pause every step | Pause for PR decisions |
 | Skip CI | Wait for CI |
 | **"Core requirements done"** | **ALL requirements done, no exceptions** |
+| **Merge then close issue manually** | **Use `Closes #X` for auto-close on merge** |

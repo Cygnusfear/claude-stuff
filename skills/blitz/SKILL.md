@@ -103,11 +103,16 @@ Issue: #<number> - <title>
 Use the 4-step-program skill to:
 1. Implement ALL the above requirements (100% coverage required)
 2. Run tests, verify passing
-3. Create PR with `gh pr create`
+3. Create PR with `gh pr create` - **MUST include `Closes #<issue-number>` in body**
 4. Self-review using code-reviewer skill (which will verify 100% coverage)
 5. POST review to GitHub with `gh api`
 
-Do not return until you achieve 10/10 review score WITH 100% of issue requirements implemented.
+**PR MUST include:**
+- `Closes #<issue-number>` to auto-close the issue on merge
+- "Related Issues" section in PR body
+- Verify with `gh pr view --json closingIssuesReferences`
+
+Do not return until you achieve 10/10 review score WITH 100% of issue requirements implemented AND issue properly linked.
 ```
 
 **CRITICAL:** Agents must POST reviews to GitHub, not just print them:
@@ -237,10 +242,19 @@ Do not return until 100% coverage."
 
 Merge PRs one at a time. Order by dependency (infrastructure first).
 
+**Before merging, verify issue linking:**
+
+```bash
+# Verify PR will close the issue
+gh pr view <NUMBER> --json closingIssuesReferences --jq '.closingIssuesReferences[].number'
+
+# If empty, PR is missing issue link - send agent back to fix!
+```
+
 **For each PR:**
 
 ```bash
-# 1. Squash merge (keeps history clean)
+# 1. Squash merge (keeps history clean) - issues auto-close on merge
 gh pr merge <NUMBER> --squash --delete-branch
 
 # 2. Update local main

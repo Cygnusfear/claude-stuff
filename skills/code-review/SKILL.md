@@ -366,6 +366,31 @@ Check for:
 - Commit messages
 - Any plan files in `.plans/`
 
+### Step 2.5: Verify Issue Linking
+
+**MANDATORY**: Check that PR properly links to related issues.
+
+```bash
+# Check for closing issue references
+gh pr view <number> --json closingIssuesReferences --jq '.closingIssuesReferences[].number'
+```
+
+**If no issues linked:**
+- Flag as CRITICAL issue in review
+- PR body MUST include `Closes #X` or `Fixes #X`
+- Without issue links, issues won't auto-close on merge
+
+Add to review if missing:
+```markdown
+## ❌ MISSING ISSUE LINKS
+
+PR does not link to any issues. Add closing keywords to PR body:
+- `Closes #X - [description]`
+- `Fixes #Y - [description]`
+
+Issues must be linked for proper tracking and auto-close on merge.
+```
+
 ### Step 3: Create File List
 
 Document all changed files for systematic review.
