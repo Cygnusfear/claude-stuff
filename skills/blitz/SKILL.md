@@ -309,6 +309,55 @@ git branch         # Should show only main
 See `references/commands.md` for complete command reference.
 See `references/pitfalls.md` for common issues and solutions.
 
+## Mermaid Diagrams in Blitz PRs
+
+**Each agent's PR SHOULD include Mermaid diagrams when the change warrants visualization.**
+
+### When Agents Should Add Diagrams
+
+| Change Type | Diagram |
+|-------------|---------|
+| Flow change | `flowchart` before/after |
+| API modification | `sequenceDiagram` |
+| State handling | `stateDiagram-v2` |
+| Architecture change | `flowchart` with subgraphs |
+
+### Agent Delegation Should Include
+
+When delegating to agents, add to the prompt:
+```
+If your changes involve flow modifications, state changes, or API interactions,
+include a Mermaid diagram in the PR body showing the new behavior.
+```
+
+### Example PR with Diagram
+
+````markdown
+## Summary
+
+Fixed race condition in WebSocket reconnection.
+
+### Before/After
+
+```mermaid
+flowchart LR
+    subgraph Before
+        A1[Disconnect] --> B1[Reconnect]
+        B1 --> C1[Duplicate handlers]
+    end
+    subgraph After
+        A2[Disconnect] --> B2[Cleanup handlers]
+        B2 --> C2[Reconnect]
+        C2 --> D2[Single handler]
+    end
+```
+
+## Related Issues
+- Closes #45 - WebSocket reconnection bug
+````
+
+---
+
 ## Checklist Summary
 
 1. [ ] Triage issues (use `delphi` if ambiguous)
@@ -319,3 +368,4 @@ See `references/pitfalls.md` for common issues and solutions.
 6. [ ] **FINAL COVERAGE GATE**: Re-verify 100% coverage before each merge
 7. [ ] Sequential squash-merge with rebase between (only after gate passes)
 8. [ ] Cleanup worktrees and branches
+9. [ ] PRs include Mermaid diagrams where helpful

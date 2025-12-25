@@ -110,6 +110,30 @@ Merge PRs in dependency order. **Only after Final Coverage Gate passes AND issue
 
 ---
 
+## Mermaid Diagrams in Reviews and PRs
+
+**Reviews and PRs SHOULD include Mermaid diagrams when changes involve flows, states, or architecture.**
+
+| Change Type | Diagram |
+|-------------|---------|
+| Flow change | `flowchart` before/after |
+| API modification | `sequenceDiagram` |
+| State handling | `stateDiagram-v2` |
+| Architecture change | `flowchart` with subgraphs |
+
+Example in review:
+````markdown
+### New Token Flow
+```mermaid
+sequenceDiagram
+    Client->>Server: Request (expired token)
+    Server-->>Client: 401 + refresh
+    Client->>Server: New request
+```
+````
+
+---
+
 ## Anti-Patterns
 
 | Wrong | Right |
@@ -123,3 +147,4 @@ Merge PRs in dependency order. **Only after Final Coverage Gate passes AND issue
 | Skip CI | Wait for CI |
 | **"Core requirements done"** | **ALL requirements done, no exceptions** |
 | **Merge then close issue manually** | **Use `Closes #X` for auto-close on merge** |
+| **Text-only complex changes** | **Mermaid diagrams for flows/states** |

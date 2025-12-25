@@ -608,6 +608,106 @@ across sessions. Theme applies immediately without page reload.
 
 ---
 
+## Mermaid Diagrams for Visual Clarity
+
+**Use Mermaid diagrams to visualize complex relationships, flows, and architectures.**
+
+GitHub renders Mermaid diagrams natively in issue bodies and comments. Use them when:
+- Showing data/control flow
+- Illustrating state machines
+- Depicting component relationships
+- Mapping user journeys
+- Visualizing before/after states
+
+### When to Include Diagrams
+
+| Scenario | Diagram Type |
+|----------|--------------|
+| API request flow | `flowchart` or `sequenceDiagram` |
+| State changes | `stateDiagram-v2` |
+| Component dependencies | `flowchart` with subgraphs |
+| Data model relationships | `erDiagram` |
+| Process workflow | `flowchart TD` |
+| Timeline of events | `sequenceDiagram` |
+
+### Diagram Examples
+
+#### Flow Diagram
+
+````markdown
+```mermaid
+flowchart TD
+    A[User clicks upload] --> B{File size check}
+    B -->|> 10MB| C[Show error message]
+    B -->|≤ 10MB| D[Upload to server]
+    D --> E{Server validation}
+    E -->|Valid| F[Store file]
+    E -->|Invalid| G[Return 400]
+```
+````
+
+#### Sequence Diagram
+
+````markdown
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant C as Client
+    participant S as Server
+    participant D as Database
+
+    U->>C: Click login
+    C->>S: POST /auth/login
+    S->>D: Verify credentials
+    D-->>S: User found
+    S-->>C: JWT token
+    C-->>U: Redirect to dashboard
+```
+````
+
+#### State Diagram
+
+````markdown
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Uploading: file selected
+    Uploading --> Processing: upload complete
+    Uploading --> Error: upload failed
+    Processing --> Complete: validation passed
+    Processing --> Error: validation failed
+    Error --> Idle: retry
+    Complete --> [*]
+```
+````
+
+### Integration with Ticket Template
+
+Add diagrams in the **Context** or **Implementation Notes** sections:
+
+```markdown
+## Context
+
+### Current Flow
+[Mermaid diagram showing current broken flow]
+
+### Desired Flow
+[Mermaid diagram showing fixed flow]
+
+## Implementation Notes
+
+### Component Architecture
+[Mermaid diagram showing how components interact]
+```
+
+**Tips:**
+- Keep diagrams focused (5-10 nodes max)
+- Use clear labels, not abbreviations
+- Show before/after when fixing bugs
+- Include diagrams in the ticket, not as external links
+
+---
+
 ## Critical Principles
 
 - **CAPTURE EVERYTHING NOW** - Context fades fast, write it all down
@@ -617,3 +717,4 @@ across sessions. Theme applies immediately without page reload.
 - **DEFINE DONE** - Testable acceptance criteria
 - **EXPLICIT SCOPE** - What's in AND what's out
 - **ASSUME FRESH EYES** - Write for someone who knows nothing about this
+- **VISUALIZE WITH MERMAID** - A diagram is worth 1000 words

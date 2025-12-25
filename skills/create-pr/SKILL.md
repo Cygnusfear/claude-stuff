@@ -159,9 +159,75 @@ Fixes session timeout by implementing token refresh.
 
 ---
 
+## Mermaid Diagrams in PRs
+
+**Use Mermaid diagrams to visualize changes, flows, and architectural impacts.**
+
+GitHub renders Mermaid natively. Include diagrams when:
+- Showing before/after state changes
+- Illustrating new data flows
+- Explaining component interactions
+- Depicting architectural changes
+
+### When to Include Diagrams
+
+| PR Type | Diagram Use |
+|---------|-------------|
+| Bug fix | Before/after flow showing fix |
+| New feature | User journey or data flow |
+| Refactor | Component dependency changes |
+| API changes | Request/response sequence |
+
+### Example: PR with Diagram
+
+````markdown
+## Key Changes
+
+Added token refresh flow when session expires.
+
+### New Authentication Flow
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant A as Auth Service
+    participant D as Database
+
+    C->>A: Request with expired token
+    A-->>C: 401 Token Expired
+    C->>A: POST /refresh with refresh_token
+    A->>D: Validate refresh token
+    D-->>A: Token valid
+    A-->>C: New access token
+    C->>A: Retry original request
+    A-->>C: 200 Success
+```
+
+## Related Issues
+- Closes #123 - Token expiration handling
+````
+
+### Diagram Types for PRs
+
+```markdown
+## Flow changes: flowchart
+## API interactions: sequenceDiagram
+## State machines: stateDiagram-v2
+## Data models: erDiagram
+```
+
+**Tips:**
+- Keep diagrams focused (5-10 nodes)
+- Show the change, not entire system
+- Before/after pairs are powerful
+- Embed in PR body, not as links
+
+---
+
 ## Quick Reference
 
 1. **Find issues**: `gh issue list --search "keywords"`
 2. **Create PR with closing keywords**: `Closes #X`, `Fixes #X`
 3. **Always include**: Related Issues section in PR body
 4. **Verify**: `gh pr view --json closingIssuesReferences`
+5. **Add Mermaid diagrams** for complex changes

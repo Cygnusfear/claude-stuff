@@ -283,6 +283,7 @@ Report to the human with:
 - **Confirmation of 100% issue coverage** (list all requirements met)
 - PR number with **FULL URL link**
 - Related issue links
+- **Mermaid diagrams** for complex changes (optional but recommended)
 
 ---
 
@@ -437,6 +438,49 @@ Related: [Issue #50](https://github.com/owner/repo/issues/50)"
 
 ---
 
+## Mermaid Diagrams in Reviews and PRs
+
+**Agents posting reviews to GitHub SHOULD include Mermaid diagrams when helpful.**
+
+Reviews and PRs benefit from visual representation:
+- Before/after flow changes
+- Architecture modifications
+- State machine changes
+- API interaction sequences
+
+### When Agents Should Include Diagrams
+
+| Change Type | Diagram Recommendation |
+|-------------|------------------------|
+| Bug fix with flow change | `flowchart` showing before/after |
+| New API endpoint | `sequenceDiagram` of request flow |
+| State handling change | `stateDiagram-v2` |
+| Component refactor | `flowchart` with component relationships |
+
+### Example Review with Diagram
+
+````markdown
+## Review Summary
+
+The token refresh implementation correctly handles expiration.
+
+### New Flow
+
+```mermaid
+sequenceDiagram
+    Client->>Server: Request (expired token)
+    Server-->>Client: 401
+    Client->>Server: POST /refresh
+    Server-->>Client: New token
+    Client->>Server: Retry request
+    Server-->>Client: 200 Success
+```
+
+**Score: 10/10** - All requirements met, clean implementation.
+````
+
+---
+
 ## Quick Reference
 
 ```
@@ -451,7 +495,7 @@ Related: [Issue #50](https://github.com/owner/repo/issues/50)"
 3.5 FINAL GATE → Re-verify 100% coverage one last time before presenting
                  NO (< 100%)  → send_message_to_agent, go to 1
                  YES (100%)   → go to 4
-4. PRESENT    → Tell human + CONFIRM 100% coverage + LINK the PR URL
+4. PRESENT    → Tell human + CONFIRM 100% coverage + LINK the PR URL + Mermaid diagrams (if complex)
 ```
 
 **Remember: You don't implement. You orchestrate the loop until 100% coverage AND 10/10. Final gate catches any missed requirements.**

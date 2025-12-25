@@ -298,6 +298,49 @@ Is EVERY item in the plan implemented?
 └─ Plan is superseded or irrelevant → Rename to .obsolete.md
 ```
 
+## Mermaid Diagrams in Documentation
+
+**When updating documentation, add or update Mermaid diagrams to visualize complex concepts.**
+
+### When to Add Diagrams
+
+| Document Type | Diagram Use |
+|---------------|-------------|
+| Architecture docs | Component relationships, data flow |
+| API documentation | Request/response sequences |
+| Process guides | Workflow flowcharts |
+| Decision records | Before/after state diagrams |
+
+### Diagram Maintenance
+
+When updating docs:
+1. **Check existing diagrams** - Are they still accurate?
+2. **Update outdated diagrams** - Reflect current architecture
+3. **Add missing diagrams** - Where text alone is insufficient
+4. **Remove obsolete diagrams** - If they show removed features
+
+### Example: Architecture Update
+
+````markdown
+## Current Architecture
+
+```mermaid
+flowchart TD
+    subgraph Frontend
+        A[React App] --> B[API Client]
+    end
+    subgraph Backend
+        B --> C[Express Server]
+        C --> D[PostgreSQL]
+        C --> E[Redis Cache]
+    end
+```
+````
+
+**Note:** Diagrams in documentation should be verified against actual code, just like text.
+
+---
+
 ## Supporting Tools Integration
 
 - Use **Task (Oracle)** to analyze docs before modification
