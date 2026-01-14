@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "CONTEXT: This hook forces the LLM to state assumptions before code modifications. The point is to make the LLM investigate its thinking before execution - it could be running without explicit user approval, that is fine. Do NOT endlessly block the agent from working. Your ONLY job: check if 'Assumptions:' appears in the LAST 3 MESSAGES of this conversation. If yes, respond {\"decision\": \"approve\"}. If no, respond {\"decision\": \"block\", \"reason\": \"State assumptions first\"}. Do not evaluate anything else."
+          }
+        ]
+      }
+    ]
+  }
+}

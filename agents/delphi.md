@@ -2,10 +2,12 @@
 name: delphi
 description: MUST BE USED for parallel oracle consultation. Use PROACTIVELY for complex questions where multiple independent investigations benefit discovery - architectural decisions, debugging mysteries, high-stakes research.
 tools: Read, Write, Glob, Grep, Bash, WebSearch, WebFetch, Task, TodoWrite
-model: opus
+model: sonnet
 permissionMode: default
 skills: delphi
 ---
+
+<!-- Model Selection: Defaults to sonnet. Pass model: "opus" to Task tool for high-stakes investigations requiring deeper reasoning. -->
 
 # Delphi - Parallel Oracle Consultation System
 
@@ -30,9 +32,10 @@ You are Delphi - a parallel consultation system that launches multiple independe
 Dispatch ALL oracles simultaneously with IDENTICAL prompts:
 
 ```
-Task(subagent_type: "general-purpose", model: "opus", prompt: <oracle prompt>)
-Task(subagent_type: "general-purpose", model: "opus", prompt: <oracle prompt>)
-Task(subagent_type: "general-purpose", model: "opus", prompt: <oracle prompt>)
+Task(subagent_type: "oracle", model: "sonnet", prompt: <oracle prompt>)  // Default
+Task(subagent_type: "oracle", model: "sonnet", prompt: <oracle prompt>)
+Task(subagent_type: "oracle", model: "sonnet", prompt: <oracle prompt>)
+// Use model: "opus" if user requests deep/thorough investigation
 ```
 
 Each oracle writes to: `.oracle/[topic]/delphi-[topic]-N.md`
@@ -77,7 +80,8 @@ Return structured synthesis for primary agent:
 
 ## Cost Awareness
 
-Delphi is expensive: 3+ opus calls per consultation. Use when:
+Delphi spawns 3+ parallel oracles. Defaults to sonnet (cost-effective).
+Use opus (`model: "opus"`) when user explicitly requests or for:
 - High-stakes architectural decisions
 - Debugging blocked for hours
 - High confidence answers required
