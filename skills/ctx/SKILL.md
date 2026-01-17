@@ -1,20 +1,20 @@
 ---
 name: ctx
-description: Use when starting a session on a project, returning after time away, or before making significant changes. Essential for building comprehensive understanding of project state through episodic memory and oracle-driven exploration.
+description: Use when starting a session on a project, returning after time away, or before making significant changes. Essential for building comprehensive understanding of project state through total recall and oracle-driven exploration.
 ---
 
 # Contextualize
 
 You need to fully contextualize yourself in this repository before doing any work.
 
-## Step 1: Search Episodic Memory
+## Step 1: Search Total Recall
 
-First, search your episodic memory for relevant context about this project:
+First, search Total Recall for relevant context about this project:
 
 ```
-mcp__plugin_episodic-memory_episodic-memory__search({
-  query: ["project name/key terms", "recent work", "decisions made"],
-  limit: 15
+mcp__plugin_totalrecall_memory-total-recall__synthesis_search({
+  query: "project name/key terms recent work decisions made",
+  max_results: 15
 })
 ```
 
