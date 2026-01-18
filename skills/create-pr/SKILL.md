@@ -48,6 +48,8 @@ git log main..HEAD --format="%s%n%b"
 
 Use the `writing-clearly-and-concisely` skill for clear writing, then follow [pr_guide](pr_guide.md).
 
+**IMPORTANT: Do NOT include "Generated with Claude Code" or similar tool attribution footers in PR descriptions.**
+
 ```bash
 gh pr create --title "[type]: [emoji] [description]" --body "$(cat <<'EOF'
 [Two-sentence summary of what and why]
