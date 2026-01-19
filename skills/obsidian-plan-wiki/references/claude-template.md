@@ -1,9 +1,19 @@
-# CLAUDE.md Template
+# CLAUDE.md and AGENTS.md Templates
 
-Copy and customize this template for each plan wiki.
+## CLAUDE.md (Pointer File)
+
+CLAUDE.md should contain ONLY this:
 
 ```markdown
-# [Plan Name] - Claude Instructions
+@AGENTS.md
+```
+
+## AGENTS.md (Actual Instructions)
+
+Copy and customize this template for each plan wiki:
+
+```markdown
+# [Plan Name] - Agent Instructions
 
 ## Plan Structure
 
@@ -12,7 +22,8 @@ This is an Obsidian-compatible modular plan.
 \`\`\`
 plan-name/
 ├── README.md           # Index - start here
-├── CLAUDE.md           # This file - rules for Claude
+├── CLAUDE.md           # Pointer: contains @AGENTS.md
+├── AGENTS.md           # This file - rules for agents
 ├── changelog.md        # Amendment history
 ├── deferred.md         # Preserved deferred work
 ├── phases/             # High-level phase overviews
@@ -36,26 +47,50 @@ User asks for overview → Read README.md only
 
 ### 2. Open Task Tracking
 
-Tasks are tracked with Obsidian comment checkboxes:
+Tasks are tracked with Obsidian comment checkboxes using emoji prefixes and block references:
 
 \`\`\`markdown
-%% [ ] this is an open question/task %%
-%% [x] this was completed → see [[research/result]] %%
+%% [ ] 🙋‍♂️: human task or instruction %% ^q-scope-descriptor
+
+%% [ ] 🤖: agent question needing human input %% ^q-scope-question
+
+%% [x] 🤖: resolved → answer here %% ^q-scope-resolved
 \`\`\`
+
+**CRITICAL: Blank lines required.** Each question MUST be separated by a blank line. Obsidian treats consecutive lines as a single block—only the LAST block ID works.
+
+**WHO ANSWERS WHAT:**
+| Emoji | Who wrote it | Who should answer/action |
+|-------|--------------|--------------------------|
+| 🙋‍♂️ | Human | **Agent** (this is work for you!) |
+| 🤖 | Agent | **Human** (skip this, you asked it) |
+
+**Conversation threading:** Questions can have inline replies. The **LAST emoji** determines whose turn:
+\`\`\`
+%% [ ] 🤖: Should we cache? 🙋‍♂️ yes 🤖: what limit? %% ^q-cache
+\`\`\`
+Last emoji is 🤖 → Human's turn. When \`[x]\` → Done.
+
+- \`^q-{scope}-{descriptor}\` = block ID for Obsidian navigation
 
 **Finding open tasks:**
 \`\`\`bash
-grep -r '%% \[ \]' path/to/plan/
+grep -rn '%% \[ \]' path/to/plan/      # all open
+grep -rn '🤖:' path/to/plan/           # agent questions
+grep -rn '🙋‍♂️:' path/to/plan/          # human tasks
+grep -rn '%% \[ \].*%%$' path/to/plan/ # missing block IDs
 \`\`\`
 
 **When completing a task:**
-1. Mark \`[x]\` in the comment
-2. Add arrow \`→\` with link to result
+1. Mark \`[x]\` in the comment (or convert \`🤖:\` to \`🙋‍♂️:\` if now actionable)
+2. Add answer after \`→\`
 3. Add entry to changelog.md
+
+**Agent responsibility:** When encountering questions missing block IDs, agents MUST add them immediately. Generate an ID based on the file's scope and the question topic.
 
 ### 3. Research Workflow
 
-When a \`%% [ ]\` comment needs research:
+When a \`%% [ ] 🙋‍♂️:\` or \`%% [ ] 🤖:\` comment needs research:
 
 1. **Simple question:** Use single oracle
 2. **Complex/uncertain:** Use Delphi (3 parallel oracles + synthesis)
@@ -124,7 +159,7 @@ Each task file should have:
 **Phase:** N - Phase Name
 **Commit:** \`type(scope): description\`
 
-%% [x] or [ ] any open questions %%
+%% [ ] 🤖: any open questions for human %%
 
 > **Research:** See [[../research/topic]] if applicable
 

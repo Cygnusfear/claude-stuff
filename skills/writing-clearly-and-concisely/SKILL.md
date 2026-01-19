@@ -23,6 +23,34 @@ Use this skill whenever you write prose for humans:
 
 **If you're writing sentences for a human to read, use this skill.**
 
+## Structure Principles
+
+### BLUF (Bottom Line Up Front)
+
+U.S. military communication standard: put your conclusion first, then explain.
+
+**The rule:** Your first sentence answers what you need and by when. The reader can act without reading further.
+
+**Structure:**
+1. BLUF statement (1-2 sentences): the decision, action, or key point
+2. Supporting context: only what's needed to understand or act
+
+**Test:** Can someone act on your message after reading only the first sentence?
+
+**Before:** "I've been working on the marketing materials for the conference. The design team worked hard on the layout. Could you take a look when you get a chance?"
+
+**After:** "I need you to approve the attached flyer by noon Friday. It's for the August conference."
+
+**Skip BLUF when:**
+- Delivering bad news (empathy first)
+- Skeptical audience (persuade before concluding)
+- Technical topics requiring foundation (explain concepts first—see below)
+
+See: https://en.wikipedia.org/wiki/BLUF_(communication)
+
+### Explain Concepts Before Using Them
+Information must be disclosed in the correct order. Never reference a term, concept, or acronym before you've defined it. If you use it, the reader must already understand it.
+
 ## Limited Context Strategy
 
 When context is tight:
