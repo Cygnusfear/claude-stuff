@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any EXTENDED creative work (not simple execution) - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "You MUST use this, UNLESS the human says otherwise, before any EXTENDED creative work (not simple execution) - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
 ---
 
 # Brainstorming Ideas Into Designs

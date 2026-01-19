@@ -1,16 +1,38 @@
 ---
 name: obsidian-plan-wiki
-description: Create and manage behavior specification wikis in Obsidian format. Use when creating specs, documenting features, or when user mentions "wiki", "spec", or "workstream". Specs are the source of truth - point an agent at a spec to update code.
+description: Create and manage behavior specification wikis in Obsidian format. Use when creating specs, documenting features, or when user mentions "wiki", "spec", or "workstream". Uses Last-Writer-Wins model - specs and code flip source-of-truth based on which changed last.
 ---
 
 # Obsidian Spec Wiki
 
-Create and manage behavior specification wikis as Obsidian-compatible markdown. Specs capture what the system does (not how to build it) so code can be rebuilt from specs alone.
+Create and manage behavior specification wikis as Obsidian-compatible markdown. Specs capture what the system does (not how to build it) so you can rebuild code from specs alone.
+
+## Last-Writer-Wins Source of Truth
+
+Specs and code are **bidirectional**. The most recent authoritative change wins:
+
+| Situation | Action |
+|-----------|--------|
+| **Docs newer** (DOCS-ahead) | Code must be rewritten to match spec |
+| **Code newer** (CODE-ahead) | Spec must be updated to match code |
+
+**Authoritative changes** = behavior decisions (not typos/refactors).
+
+**Per-feature, not global** - different features can have different directions.
+
+**Decision procedure:**
+1. Identify the feature/spec
+2. Find docs location and code location
+3. Check git history for most recent behavior change
+4. Tag as DOCS-ahead or CODE-ahead
+5. Apply the appropriate action
+
+See [[references/last-writer-wins]] for full model details.
 
 ## When to Use
 
 - Creating new project specs or documentation
-- Working with existing wikis using `%% [ ] %%` task format
+- Working with existing wikis using `%% [ ] 🙋‍♂️/🤖: %%` task format
 - User mentions "wiki", "spec", "workstream", or "Obsidian"
 - Need to document behavior for agent-driven code updates
 
@@ -29,16 +51,21 @@ First match wins. **Always use `docs/` for new wikis.**
 ```
 docs/
 ├── README.md              # Index with workstream table
-├── CLAUDE.md              # Global agent rules
+├── CLAUDE.md              # Pointer: contains `@AGENTS.md`
+├── AGENTS.md              # Actual agent instructions
 ├── changelog.md           # Keep a Changelog format
 ├── workstreams/
 │   └── NN-name/
 │       ├── README.md      # Executive summary + spec table
-│       ├── CLAUDE.md      # Optional: workstream-specific rules
+│       ├── AGENTS.md      # Optional: workstream-specific agent rules
 │       └── N.N-spec.md    # Behavior specs
 ├── reference/             # Shared architecture docs
 └── research/              # Oracle outputs (frozen)
 ```
+
+**CLAUDE.md vs AGENTS.md convention:**
+- `CLAUDE.md` = pointer file, contains only `@AGENTS.md`
+- `AGENTS.md` = actual agent instructions and wiki operations
 
 **Key concepts:**
 - **Workstreams** = logical functional areas (not temporal phases)
@@ -57,7 +84,7 @@ User asks about login → Read workstreams/01-auth/1.1-login.md
 User asks for overview → Read README.md only
 ```
 
-Never load the entire wiki into context at once.
+Load only what each task requires.
 
 ### 2. Wiki Links Everywhere
 
@@ -70,16 +97,64 @@ All references use `[[wiki-links]]`. Broken links = sync signal.
 
 ### 3. Task Tracking with Obsidian Comments
 
-Track open questions using hidden comments:
+Track open questions using hidden comments with emoji prefixes and block references:
 
 ```markdown
-%% [ ] open question or task %%
-%% [x] completed → see [[research/result]] %%
+%% [ ] 🙋‍♂️: human task or instruction %% ^q-scope-descriptor
+
+%% [ ] 🤖: agent question needing human input %% ^q-scope-question
+
+%% [x] 🤖: resolved → answer here %% ^q-scope-resolved
 ```
 
-Find all open tasks:
+**CRITICAL: Separate each question with a blank line.** Obsidian treats consecutive lines as a single block; only the last block ID works.
+
+**Format components:**
+- `🙋‍♂️:` = **human wrote this** → AGENTS SHOULD ACTION/ANSWER
+- `🤖:` = **agent wrote this** → AGENTS MUST SKIP (waiting for human)
+- `^q-{scope}-{descriptor}` = block ID for Obsidian navigation
+
+**WHO ANSWERS WHAT:**
+| Emoji | Who wrote it | Who should answer/action |
+|-------|--------------|--------------------------|
+| 🙋‍♂️ | Human | **Agent** (this is work for you!) |
+| 🤖 | Agent | **Human** (skip this, you asked it) |
+
+**Conversation threading:** Questions can have inline replies. The **LAST emoji** determines whose turn:
+```
+%% [ ] 🤖: Should we cache? 🙋‍♂️ yes 🤖: what limit? %% ^q-cache
+```
+Last emoji is 🤖 → Human's turn. When `[x]` → Done.
+
+**Block ID convention:** `^q-{scope}-{descriptor}`
+- `^q-auth-oauth` (auth workstream, OAuth question)
+- `^q-tabs-persist` (tabs workstream, persistence question)
+
+**Workflow:**
+- Agent adds `🤖:` question → human answers (agent skips these)
+- Human answers → convert to `🙋‍♂️:` (now actionable by agent) or `[x]` (resolved)
+- Human adds `🙋‍♂️:` task → agent should action this
+- Resolved format: `%% [x] 🤖: question → answer %% ^q-id`
+
+**Linking to questions:**
+```markdown
+[[workstreams/01-auth/1.1-login#^q-auth-oauth|OAuth question]]
+```
+
+**Search in Obsidian:** Search for the emoji, or create a Dataview index (see references).
+
+**Find via terminal:**
 ```bash
-grep -r '%% \[ \]' docs/
+grep -rn '%% \[ \]' docs/              # all open
+grep -rn '🤖:' docs/                   # agent questions
+grep -rn '🙋‍♂️:' docs/                  # human tasks
+grep -rn '%% \[ \].*%%$' docs/         # missing block IDs
+```
+
+**Agent responsibility:** Add block IDs to any question missing one. Generate the ID from the file's workstream/spec and the question topic:
+```
+%% [ ] 🤖: how to handle OAuth? %%           → missing block ID
+%% [ ] 🤖: how to handle OAuth? %% ^q-auth-oauth   → fixed
 ```
 
 ### 4. Changelog Protocol
@@ -136,7 +211,8 @@ Log every change in `changelog.md`:
 - **Alternatives:** What we considered and rejected
 
 ### Open Questions
-%% [ ] Question needing resolution %%
+
+%% [ ] 🤖: Question needing resolution? %% ^q-specname-topic
 
 ## Integration
 
@@ -182,12 +258,22 @@ This workstream connects to:
 - [[../other-workstream/README|Other Workstream]] - how
 ```
 
-### CLAUDE.md Template
+### CLAUDE.md Template (Pointer)
 
-The project CLAUDE.md should include wiki operations guidance:
+CLAUDE.md points to AGENTS.md:
 
 ```markdown
-# Rules for Claude: [Project Name]
+@AGENTS.md
+```
+
+That's it. All actual instructions go in AGENTS.md.
+
+### AGENTS.md Template
+
+Agent instructions belong here:
+
+```markdown
+# Agent Instructions: [Project Name]
 
 [Project-specific rules here...]
 
@@ -195,7 +281,17 @@ The project CLAUDE.md should include wiki operations guidance:
 
 ## Wiki Operations
 
-This documentation lives in an Obsidian vault. Follow these patterns.
+**IMPORTANT:** When working with this wiki, use the `obsidian-plan-wiki` skill if available. It provides the full spec format, LWW source-of-truth model, and workflow patterns.
+
+This documentation uses Obsidian vault format. Follow these patterns.
+
+### Last-Writer-Wins Source of Truth
+
+Specs and code flip source-of-truth based on which changed last:
+- **DOCS-ahead** (spec newer) → update code to match spec
+- **CODE-ahead** (code newer) → update spec to match code
+
+Check git history to determine direction. Per-feature, not global.
 
 ### Progressive Disclosure
 
@@ -213,10 +309,20 @@ This documentation lives in an Obsidian vault. Follow these patterns.
 
 4. **Check research for background** - `research/topic/`
 
+### Open Questions System
+
+See [[reference/obsidian-open-questions-system]] for full spec.
+
+**WHO ANSWERS WHAT:**
+| Emoji | Who wrote it | Who should answer/action |
+|-------|--------------|--------------------------|
+| 🙋‍♂️ | Human | **Agent** (this is work for you!) |
+| 🤖 | Agent | **Human** (skip this, you asked it) |
+
 ### Updating Specs
 
 **Before:** Read Assumptions and Failure Modes
-**During:** Mark open questions resolved, note discoveries
+**During:** Mark `🙋‍♂️:` questions resolved, note discoveries
 **After:** Update Success Criteria checkboxes, update README status
 
 ### Link Format
@@ -243,7 +349,7 @@ This documentation lives in an Obsidian vault. Follow these patterns.
 
 ## Quick Links
 
-- [[CLAUDE]] - Rules for agents
+- [[AGENTS]] - Rules for agents
 - [[changelog]] - What changed and when
 - [[reference/architecture]] - System overview
 
@@ -259,10 +365,11 @@ Oracle/Delphi outputs (frozen snapshots):
 
 1. Create `docs/` directory structure
 2. Write README.md with workstream table
-3. Create CLAUDE.md with project-specific rules
-4. Initialize changelog.md
-5. Create workstream folders with README.md
-6. Add specs as needed
+3. Create CLAUDE.md containing only `@AGENTS.md`
+4. Create AGENTS.md with actual agent instructions
+5. Initialize changelog.md
+6. Create workstream folders with README.md
+7. Add specs as needed
 
 ### Adding a Spec
 
@@ -275,7 +382,7 @@ Oracle/Delphi outputs (frozen snapshots):
 
 ### Research Workflow
 
-When a `%% [ ] %%` needs research:
+When a `%% [ ] 🙋‍♂️/🤖: %%` needs research:
 
 **Simple question:** Launch oracle agent
 **Complex/uncertain:** Use Delphi (3 parallel oracles + synthesis)
@@ -285,17 +392,33 @@ Store results in `research/`, link from spec:
 %% [x] question → see [[research/topic]] %%
 ```
 
-### Pointing an Agent at a Spec
+### Syncing Specs and Code (LWW in Practice)
 
-To update code based on a spec:
+**DOCS-ahead: Update code from spec**
 1. Agent reads the spec's Behavior section (contract + scenarios)
 2. Agent reads the Integration section (what it touches)
 3. Agent implements/updates code to match spec
-4. Agent updates spec status if needed
+4. Agent marks spec as implemented, updates changelog
+
+**CODE-ahead: Update spec from code**
+1. Agent reads the implementation code
+2. Agent identifies behavior that differs from spec (or isn't documented)
+3. Agent updates spec to match actual code behavior
+4. Agent updates changelog with spec sync
+
+**Determining direction:**
+```bash
+# Find last behavior change in spec
+git log -1 --format='%ci' -- docs/workstreams/NN-feature/
+
+# Find last behavior change in code
+git log -1 --format='%ci' -- src/feature/
+```
+Compare dates. Newer wins.
 
 ### Updating Specs During Implementation
 
-**Before starting:** Read the spec's Assumptions and Failure Modes.
+**Before:** Read the spec's Assumptions and Failure Modes.
 
 **During implementation:**
 - Add implementation notes to the spec
@@ -327,7 +450,7 @@ Use relative markdown links (Obsidian-compatible):
 | New task within workstream | Create numbered spec file |
 | Deep technical topic | Add to `reference/` subdirectory |
 | Research question | Use Oracle, save to `research/` |
-| Workstream-specific rules | Create `CLAUDE.md` in workstream |
+| Workstream-specific rules | Create `AGENTS.md` in workstream |
 
 ## Best Practices
 
@@ -336,4 +459,5 @@ Use relative markdown links (Obsidian-compatible):
 3. **Update changelog immediately** - Don't batch changes
 4. **One spec per feature/component** - Keep focused
 5. **Research before deciding** - Use oracles for uncertain questions
-6. **Optional CLAUDE.md per workstream** - For scoped agent rules
+6. **Optional AGENTS.md per workstream** - For scoped agent rules
+7. **CLAUDE.md is just a pointer** - Contains only `@AGENTS.md`
