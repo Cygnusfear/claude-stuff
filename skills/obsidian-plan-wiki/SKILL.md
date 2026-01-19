@@ -5,7 +5,7 @@ description: Create and manage behavior specification wikis in Obsidian format. 
 
 # Obsidian Spec Wiki
 
-Create and manage behavior specification wikis as Obsidian-compatible markdown. Specs capture what the system does (not how to build it) so you can rebuild code from specs alone.
+Create and manage specification wikis as Obsidian-compatible markdown. Workstreams capture both **what** the system does (specs) and **how** to build it (plans).
 
 ## Last-Writer-Wins Source of Truth
 
@@ -56,9 +56,10 @@ docs/
 ├── changelog.md           # Keep a Changelog format
 ├── workstreams/
 │   └── NN-name/
-│       ├── README.md      # Executive summary + spec table
+│       ├── README.md      # Executive summary + spec/plan tables
 │       ├── AGENTS.md      # Optional: workstream-specific agent rules
-│       └── N.N-spec.md    # Behavior specs
+│       ├── N.N-spec.md    # Behavior specs (what)
+│       └── N.N-plan.md    # Implementation plans (how)
 ├── reference/             # Shared architecture docs
 └── research/              # Oracle outputs (frozen)
 ```
@@ -70,6 +71,7 @@ docs/
 **Key concepts:**
 - **Workstreams** = logical functional areas (not temporal phases)
 - **Specs** = behavior documents (what the system does)
+- **Plans** = implementation documents (how to build it)
 - **Research** = Oracle/Delphi outputs (frozen snapshots)
 
 ## Core Principles
@@ -230,6 +232,49 @@ graph LR
 ```
 ```
 
+### Plan File Template
+
+```markdown
+# N.N Plan Name
+
+> **Workstream:** [[../README|NN-Workstream-Name]]
+> **Related Spec:** [[N.N-spec-name]] (optional)
+
+## Goal
+What this plan achieves.
+
+## Prerequisites
+- [ ] Dependency 1
+- [ ] Dependency 2
+
+## Implementation Steps
+
+### Phase 1: [Name]
+- [ ] Step 1
+- [ ] Step 2
+
+### Phase 2: [Name]
+- [ ] Step 3
+- [ ] Step 4
+
+## Files to Modify
+| File | Changes |
+|------|---------|
+| `path/to/file` | Description of changes |
+
+## Testing Strategy
+How to verify the implementation works.
+
+## Risks & Mitigations
+| Risk | Mitigation |
+|------|------------|
+| [What could go wrong] | [How to prevent/handle] |
+
+## Open Questions
+
+%% [ ] 🤖: Implementation question? %% ^q-planname-topic
+```
+
 ### Workstream README Template
 
 ```markdown
@@ -246,6 +291,12 @@ What this workstream achieves.
 |------|-------------|--------|
 | [[N.1-spec-name]] | Brief description | Status |
 | [[N.2-spec-name]] | Brief description | Status |
+
+## Plans
+
+| Plan | Description | Status |
+|------|-------------|--------|
+| [[N.1-plan-name]] | Implementation approach | Status |
 
 ## Shared Decisions
 
@@ -380,6 +431,16 @@ Oracle/Delphi outputs (frozen snapshots):
 5. Update workstream README table
 6. Add to changelog
 
+### Adding a Plan
+
+1. Create `N.N-plan-name.md` in workstream folder
+2. Link to related spec if one exists
+3. Fill in Implementation Steps with checkboxes
+4. List Files to Modify
+5. Document Risks & Mitigations
+6. Update workstream README plans table
+7. Add to changelog
+
 ### Research Workflow
 
 When a `%% [ ] 🙋‍♂️/🤖: %%` needs research:
@@ -447,17 +508,19 @@ Use relative markdown links (Obsidian-compatible):
 | Situation | Action |
 |-----------|--------|
 | New feature area | Create new workstream directory |
-| New task within workstream | Create numbered spec file |
+| New behavior to document | Create numbered spec file (`N.N-spec.md`) |
+| New implementation approach | Create numbered plan file (`N.N-plan.md`) |
 | Deep technical topic | Add to `reference/` subdirectory |
 | Research question | Use Oracle, save to `research/` |
 | Workstream-specific rules | Create `AGENTS.md` in workstream |
 
 ## Best Practices
 
-1. **Specs describe behavior, not implementation** - What it does, not how
-2. **All references are wiki links** - Broken links signal sync issues
-3. **Update changelog immediately** - Don't batch changes
-4. **One spec per feature/component** - Keep focused
-5. **Research before deciding** - Use oracles for uncertain questions
-6. **Optional AGENTS.md per workstream** - For scoped agent rules
-7. **CLAUDE.md is just a pointer** - Contains only `@AGENTS.md`
+1. **Specs describe behavior** - What it does (contract, scenarios)
+2. **Plans describe implementation** - How to build it (steps, files, risks)
+3. **All references are wiki links** - Broken links signal sync issues
+4. **Update changelog immediately** - Don't batch changes
+5. **One spec per feature/component** - Keep focused
+6. **Research before deciding** - Use oracles for uncertain questions
+7. **Optional AGENTS.md per workstream** - For scoped agent rules
+8. **CLAUDE.md is just a pointer** - Contains only `@AGENTS.md`
