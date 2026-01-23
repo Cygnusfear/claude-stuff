@@ -51,7 +51,7 @@ First match wins. **Always use `docs/` for new wikis.**
 ```
 docs/
 ├── README.md              # Index with workstream table
-├── CLAUDE.md              # Pointer: contains `@AGENTS.md`
+├── CLAUDE.md              # Symlink → AGENTS.md
 ├── AGENTS.md              # Actual agent instructions
 ├── changelog.md           # Keep a Changelog format
 ├── workstreams/
@@ -65,8 +65,10 @@ docs/
 ```
 
 **CLAUDE.md vs AGENTS.md convention:**
-- `CLAUDE.md` = pointer file, contains only `@AGENTS.md`
+- `CLAUDE.md` = **symlink** to `AGENTS.md` (NOT a file containing `@AGENTS.md`)
 - `AGENTS.md` = actual agent instructions and wiki operations
+
+**Why symlink?** The `@filename` convention in file contents causes some tools to ignore the file entirely. A symlink ensures CLAUDE.md is always read as the actual AGENTS.md content.
 
 **Key concepts:**
 - **Workstreams** = logical functional areas (not temporal phases)
@@ -309,15 +311,16 @@ This workstream connects to:
 - [[../other-workstream/README|Other Workstream]] - how
 ```
 
-### CLAUDE.md Template (Pointer)
+### CLAUDE.md Setup (Symlink)
 
-CLAUDE.md points to AGENTS.md:
+CLAUDE.md should be a **symlink** to AGENTS.md, not a file with content:
 
-```markdown
-@AGENTS.md
+```bash
+# From within docs/ directory
+ln -s AGENTS.md CLAUDE.md
 ```
 
-That's it. All actual instructions go in AGENTS.md.
+This ensures CLAUDE.md and AGENTS.md always have identical content. All actual instructions go in AGENTS.md.
 
 ### AGENTS.md Template
 
@@ -416,8 +419,8 @@ Oracle/Delphi outputs (frozen snapshots):
 
 1. Create `docs/` directory structure
 2. Write README.md with workstream table
-3. Create CLAUDE.md containing only `@AGENTS.md`
-4. Create AGENTS.md with actual agent instructions
+3. Create AGENTS.md with actual agent instructions
+4. Create CLAUDE.md as a symlink: `ln -s AGENTS.md CLAUDE.md`
 5. Initialize changelog.md
 6. Create workstream folders with README.md
 7. Add specs as needed
@@ -523,4 +526,4 @@ Use relative markdown links (Obsidian-compatible):
 5. **One spec per feature/component** - Keep focused
 6. **Research before deciding** - Use oracles for uncertain questions
 7. **Optional AGENTS.md per workstream** - For scoped agent rules
-8. **CLAUDE.md is just a pointer** - Contains only `@AGENTS.md`
+8. **CLAUDE.md is a symlink** - Points to AGENTS.md via symlink

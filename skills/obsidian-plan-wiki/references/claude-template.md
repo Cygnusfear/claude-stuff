@@ -1,12 +1,15 @@
 # CLAUDE.md and AGENTS.md Templates
 
-## CLAUDE.md (Pointer File)
+## CLAUDE.md (Symlink)
 
-CLAUDE.md should contain ONLY this:
+CLAUDE.md should be a **symlink** to AGENTS.md, not a file with content:
 
-```markdown
-@AGENTS.md
+```bash
+# From within the wiki directory
+ln -s AGENTS.md CLAUDE.md
 ```
+
+**Why symlink?** The `@filename` convention in file contents causes some tools to ignore the file entirely. A symlink ensures CLAUDE.md is always read as the actual AGENTS.md content.
 
 ## AGENTS.md (Actual Instructions)
 
@@ -22,7 +25,7 @@ This is an Obsidian-compatible modular plan.
 \`\`\`
 plan-name/
 ├── README.md           # Index - start here
-├── CLAUDE.md           # Pointer: contains @AGENTS.md
+├── CLAUDE.md           # Symlink → AGENTS.md
 ├── AGENTS.md           # This file - rules for agents
 ├── changelog.md        # Amendment history
 ├── deferred.md         # Preserved deferred work
