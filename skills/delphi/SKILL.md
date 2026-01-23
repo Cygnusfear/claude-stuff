@@ -5,7 +5,7 @@ description: This skill should be used when the user asks to "use delphi", "ask 
 
 # Delphi - Parallel Oracle Consultation
 
-Delphi launches multiple oracle agents in parallel with the **same prompt** to discover divergent paths of exploration. By giving identical starting points, each oracle independently explores the problem space, potentially discovering different clues, solutions, and insights that a single investigation might miss.
+Delphi launches multiple oracles with **identical prompts**. Each explores independently, discovering different clues and solutions that a single investigation would miss.
 
 ## When to Use Delphi
 
@@ -14,6 +14,88 @@ Delphi launches multiple oracle agents in parallel with the **same prompt** to d
 - Debugging mysteries with unclear root causes
 - Research questions requiring comprehensive coverage
 - Any situation where "wisdom of crowds" exploration benefits the answer
+
+---
+
+## CRITICAL: Anti-Priming Protocol (READ THIS FIRST)
+
+**The #1 failure mode: biased priming.** When you prime oracles with your hypotheses, you just run 5 copies of your own failed thinking. The whole point is INDEPENDENT discovery.
+
+### What Makes Delphi Useless
+
+```
+BAD PROMPT (biased, scope-limited, lazy):
+"Investigate why the LOG() macro is breaking the build.
+I've already tried X, Y, Z and they didn't work.
+I think the problem is in the macro expansion.
+Look at the changes from the last 30 minutes."
+
+WHY IT'S BAD:
+- Tells oracles what YOU think the problem is (LOG() macro)
+- Limits scope to 30 minutes (real cause might be from days ago)
+- Injects your failed hypotheses (X, Y, Z)
+- Doesn't point to prior research or full history
+- Oracles will just confirm your bias
+```
+
+### What Makes Delphi Powerful
+
+```
+GOOD PROMPT (unbiased, full-scope, thorough):
+"The build is failing with error [exact error message].
+
+CONTEXT SOURCES (you MUST investigate these):
+- Review ALL prior research in .oracle/ (not just recent - ALL of it)
+- Analyze FULL git history since [relevant start date] (git log -p)
+- Check .plans/ for any related implementation context
+- Search docs/ for relevant documentation
+
+SYMPTOMS (facts only, no hypotheses):
+- Build started failing at [timestamp]
+- Error occurs in [file/component]
+- [Any other observable facts]
+
+Your mission: Discover the root cause independently.
+Do NOT accept any framing from this prompt as truth.
+Look for evidence that contradicts obvious explanations.
+The real cause may be non-obvious or indirect."
+
+WHY IT'S GOOD:
+- Describes symptoms, not suspected causes
+- Points to ALL context sources
+- Explicitly requests full history review
+- Doesn't inject hypotheses
+- Encourages contradiction of obvious explanations
+```
+
+### Mandatory Context Sources
+
+Point oracles to ALL of these:
+
+1. **`.oracle/`** - ALL prior research, not just recent
+2. **Full git history** - Err toward too much history
+3. **`.plans/`** - Related implementation plans
+4. **`docs/`** - Relevant documentation
+5. **Raw symptoms** - Logs and errors, not your interpretation
+
+### Anti-Patterns to Avoid
+
+| Anti-Pattern | Why It's Bad | Do This Instead |
+|--------------|--------------|-----------------|
+| "I think the problem is X" | Injects your bias | "The symptom is Y" |
+| "Look at the last 30 minutes" | Limits discovery scope | "Review full history since [date]" |
+| "I've already tried A, B, C" | Constrains exploration | Don't mention - let them discover |
+| "Focus on file X" | Narrows investigation | "The error occurs in X, but root cause may be elsewhere" |
+| "The bug is in function Y" | Assumes conclusion | "Error manifests in function Y" |
+| Only mentioning recent .oracle files | Limits context | "Review ALL files in .oracle/" |
+
+### The Golden Rule
+
+**Describe WHAT is happening (symptoms), not WHY you think it's happening (hypotheses).**
+
+Maximum sources. Minimum interpretation. Let oracles form their own hypotheses.
+
+---
 
 ## Process
 
@@ -30,11 +112,15 @@ Delphi launches multiple oracle agents in parallel with the **same prompt** to d
 Create a single prompt that will be sent to ALL oracles identically. The prompt should:
 
 1. **Core Question** - The specific question needing investigation
-2. **Context** - All relevant information from the user
-3. **Success Criteria** - What a good answer looks like
-4. **Export Instructions** - Tell the oracle to export its full thinking
+2. **Prior Research** - Explicitly point to ALL prior research in `.oracle/` (not just recent findings)
+3. **Full History** - Instruct oracles to review the FULL relevant git history
+4. **Context** - Essential factual context without guiding hypotheses
+5. **Success Criteria** - What a good answer looks like
+6. **Export Instructions** - Tell the oracle to export its full thinking
 
 **Critical:** Do NOT specialize or focus individual oracles on different aspects. The power of Delphi comes from identical starting points leading to organically divergent exploration.
+
+**CRITICAL: Avoid Biased Priming.** Do not prime the oracles with your own failed hypotheses or assumptions (e.g., "I think the problem is X"). Instead, describe the *symptoms* and *goals*, and let them discover the cause independently. Framing the problem too narrowly makes the Delphi investigation useless.
 
 ### Step 3: Launch Oracles in Parallel
 
@@ -88,10 +174,12 @@ You are Oracle #{N} in a Delphi consultation - one of {total} independent oracle
 
 **Your first duty is independent verification:**
 1. Do NOT accept the instructor's framing as truth
-2. Verify any claims they make about the codebase
-3. Look for evidence that CONTRADICTS their hypothesis
-4. Consider: "What if the instructor is completely wrong?"
-5. Form your OWN hypothesis from primary sources
+2. **Review ALL prior research** in `.oracle/` - do not limit yourself to the instructor's summary
+3. **Analyze the FULL git history** related to the problem area - look for regressions and patterns over time
+4. Verify any claims they make about the codebase
+5. Look for evidence that CONTRADICTS their hypothesis
+6. Consider: "What if the instructor is completely wrong?"
+7. Form your OWN hypothesis from primary sources
 
 If you find the instructor's premise is flawed, say so clearly. Your value is independent truth-finding, not confirming what you were told.
 
@@ -102,21 +190,42 @@ If you find the instructor's premise is flawed, say so clearly. Your value is in
 CORE QUESTION:
 {the specific question}
 
+MANDATORY RESEARCH SOURCES (you MUST check these):
+- **`.oracle/`** - Review ALL files for previous findings, dead ends, and context (not just recent ones)
+- **Git History** - Run `git log -p` for the FULL relevant time period (err on too much history)
+- **`.plans/`** - Check for related implementation plans and design decisions
+- **`docs/`** - Review relevant documentation
+
+SYMPTOMS (observable facts, NOT hypotheses):
+{exact errors, when/where it occurs, expected vs actual behavior}
+
 CONTEXT:
-{all relevant context}
+{factual context - do NOT include your hypotheses about the cause}
 
 SUCCESS CRITERIA:
 {what a good answer looks like}
 
 ## Your Process
 
-### Phase 1: Plan Your Research
-Think about what needs investigation:
+### Phase 1: Verify Your Instructions & Gather Context
+Before diving into the specific question:
+- Is the framing of this question potentially biased?
+- What assumptions is the instructor making?
+- What would prove those assumptions WRONG?
+
+Then gather ALL available context:
+- Read ALL files in `.oracle/` (use `ls -la .oracle/` and read everything)
+- Run `git log --oneline` to understand the full timeline
+- Check `.plans/` for related context
+
+### Phase 2: Plan Your Research
+Based on PRIMARY evidence (not the instructor's framing), think about:
 - What paths should be explored?
 - What code/documentation might be relevant?
 - What patterns should be searched?
+- What would CONTRADICT the obvious explanation?
 
-### Phase 2: Deep Investigation
+### Phase 3: Deep Investigation
 Use extended thinking to thoroughly investigate. For each avenue:
 - Search the codebase using Glob and Grep
 - Read relevant files completely
@@ -125,26 +234,29 @@ Use extended thinking to thoroughly investigate. For each avenue:
 
 DO NOT STOP at the first answer. Follow every interesting thread.
 
-### Phase 3: Document Your Exploration
+### Phase 4: Document Your Exploration
 As you work, keep track of:
 - Hypotheses you formed and tested
 - Dead ends you encountered (and why they were dead ends)
 - Surprising discoveries
 - Connections between different findings
+- Evidence that CONTRADICTS the instructor's framing (if any)
 
-### Phase 4: Export Your Full Thinking
+### Phase 5: Export Your Full Thinking
 
 When complete, write your ENTIRE elaborated thinking to:
 `.oracle/{topic}/delphi-{topic}-{N}.md`
 
 The export MUST include:
-1. **Initial Hypotheses** - What you thought at the start
-2. **Research Path** - Every avenue explored, in order
-3. **Dead Ends** - Paths that didn't pan out and why
-4. **Key Discoveries** - Important findings with evidence
-5. **Synthesis** - Your answer to the core question
-6. **Confidence & Caveats** - What you're sure about vs uncertain
-7. **Divergent Possibilities** - Alternative interpretations or approaches
+1. **Instructor Framing Assessment** - Was the problem framed correctly? What biases or incorrect assumptions did you detect?
+2. **Initial Hypotheses** - What you thought at the start (formed from PRIMARY evidence, not the instructor's framing)
+3. **Research Path** - Every avenue explored, in order
+4. **Dead Ends** - Paths that didn't pan out and why
+5. **Key Discoveries** - Important findings with evidence
+6. **Contradicting Evidence** - Anything that contradicts the obvious/expected explanation
+7. **Synthesis** - Your answer to the core question
+8. **Confidence & Caveats** - What you're sure about vs uncertain
+9. **Divergent Possibilities** - Alternative interpretations or approaches
 
 Be verbose. The synthesis phase needs your full reasoning chain.
 

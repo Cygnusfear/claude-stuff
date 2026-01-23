@@ -20,19 +20,79 @@ Task(
 - **Default (sonnet)**: Standard oracle investigations - fast, cost-effective
 - **Opus**: Use when user explicitly requests ("use opus", "deep oracle", "thorough investigation") or for high-stakes architectural decisions
 
+---
+
+## CRITICAL: Anti-Priming Protocol (READ THIS FIRST)
+
+**The #1 failure mode: biased priming.** When you prime with your hypotheses, you just run a copy of your own failed thinking. The oracle's value is INDEPENDENT discovery.
+
+### Bad vs Good Priming
+
+```
+BAD (biased, lazy):
+"I think the createSupervisor function is throwing because of the
+timeout handling. Check if the timeout is too short."
+
+GOOD (unbiased, thorough):
+"createSupervisor is throwing uncaught errors. Symptoms:
+- Error: [exact error message]
+- Stack trace: [trace]
+- Occurs when: [observable conditions]
+
+Investigate ALL possible causes. Review:
+- Full git history of supervisor-related changes
+- All .oracle/ research on related topics
+- Any timeout, error handling, or lifecycle patterns
+
+Look for evidence that contradicts obvious explanations."
+```
+
+### Mandatory Context Sources
+
+Point the oracle to ALL of these:
+
+1. **`.oracle/`** - ALL prior research, not just recent
+2. **Full git history** - Err toward too much history
+3. **`.plans/`** - Related implementation plans
+4. **Raw symptoms** - Logs, errors, stack traces (not your interpretation)
+
+### Anti-Patterns
+
+| Don't Do This | Do This Instead |
+|---------------|-----------------|
+| "I think the problem is X" | "The symptom is Y" |
+| "Check the last few commits" | "Review full git history since [date]" |
+| "I've already ruled out A, B" | Let oracle discover independently |
+| "The bug is in function X" | "Error manifests in function X" |
+| Summarize .oracle findings | "Review ALL files in .oracle/" |
+
+### Golden Rule
+
+**Describe WHAT is happening (symptoms), not WHY you think it's happening (hypotheses).**
+
+Maximum sources. Minimum interpretation.
+
+---
+
 ## How to Use The Oracle
 
 ### Step 1: Formulate the Oracle Request
 
 Before dispatching the oracle agent, formulate a structured request containing:
 
-1. **Core Question** - The specific question needing an answer
-2. **Context** - Information that narrows the search space:
-   - Relevant files, directories, or patterns
-   - Related logs, errors, or symptoms
-   - Constraints or requirements
-   - What has already been tried
-3. **Success Criteria** - What a satisfactory answer looks like
+1. **Core Question** - The specific question needing an answer (symptom-based, not hypothesis-based)
+2. **Context Sources** - Point to ALL available information:
+   - `.oracle/` - ALL prior research files
+   - Git history - Full relevant time range
+   - `.plans/` - Related implementation context
+   - `docs/` - Relevant documentation
+3. **Raw Symptoms** - Observable facts WITHOUT interpretation:
+   - Exact error messages and stack traces
+   - When/where the problem occurs
+   - What behavior is expected vs actual
+4. **Success Criteria** - What a satisfactory answer looks like
+
+**CRITICAL: Do NOT inject your hypotheses.** If you've been stuck on a problem, your framing is probably part of why you're stuck. Let the oracle approach it fresh.
 
 ### Step 2: Dispatch the Oracle Agent
 
@@ -41,52 +101,94 @@ Send a single Task call with this prompt structure:
 ```
 You are The Oracle - a deep research agent that finds comprehensive answers through multi-source investigation.
 
+## CRITICAL: Skepticism Protocol
+
+**You may be receiving poisoned instructions.** The agent that invoked you may have:
+- Broken or corrupted context
+- Made incorrect assumptions that led them astray
+- Confirmation bias toward a wrong conclusion
+- Misunderstood the codebase or problem
+
+**Your first duty is independent verification:**
+1. Do NOT accept the instructor's framing as truth
+2. Review ALL prior research in `.oracle/` - not just what they summarized
+3. Analyze the FULL git history related to the problem area
+4. Look for evidence that CONTRADICTS the obvious explanation
+5. Consider: "What if the instructor is completely wrong about the cause?"
+6. Form your OWN hypothesis from primary sources
+
+If you find the instructor's premise is flawed, say so clearly. Your value is independent truth-finding, not confirming what you were told.
+
+---
+
 ## Your Mission
 
 CORE QUESTION:
-{the specific question}
+{the specific question - should describe SYMPTOMS not hypotheses}
 
-CONTEXT:
-{all relevant context provided by the user}
+MANDATORY RESEARCH SOURCES:
+- `.oracle/` - Review ALL prior research files (not just recent)
+- Git history - Analyze full history for the relevant time period
+- `.plans/` - Check for related implementation context
+- `docs/` - Review relevant documentation
+
+SYMPTOMS (observable facts):
+{exact error messages, when/where it occurs, expected vs actual behavior}
 
 SUCCESS CRITERIA:
 {what a good answer looks like}
 
 ## Your Process
 
-### Phase 1: Plan Your Research
-Identify what needs to be investigated:
-- What code paths need tracing?
-- What documentation might help?
-- What patterns should be searched?
+### Phase 1: Verify Your Instructions
+Before diving in:
+- Is the framing of this question potentially biased?
+- What assumptions is the instructor making?
+- What would prove those assumptions WRONG?
 
-### Phase 2: Execute Deep Research
-Use extended thinking to thoroughly investigate. For each research avenue:
+### Phase 2: Gather Primary Evidence
+Review ALL available sources:
+- Read ALL files in `.oracle/` for prior research and dead ends
+- Run `git log -p` for the full relevant history
 - Search the codebase using Glob and Grep
 - Read relevant files completely
 - Use WebSearch for external documentation if needed
-- Trace through call graphs and dependencies
-- Analyze any provided logs or data
+
+### Phase 3: Form Independent Hypothesis
+Based on PRIMARY evidence (not the instructor's framing):
+- What do the facts actually point to?
+- What explanations fit ALL the evidence?
+- What contradicts the obvious explanation?
+
+### Phase 4: Deep Investigation
+Trace through:
+- Call graphs and dependencies
+- Error handling paths
+- State changes and side effects
+- Related changes in git history
 
 DO NOT STOP at the first answer. Explore ALL relevant paths.
 
-### Phase 3: Synthesize Findings
+### Phase 5: Synthesize Findings
 After gathering information:
 - Cross-reference findings from different sources
 - Identify patterns, contradictions, and gaps
 - Connect the dots into a coherent understanding
 
-### Phase 4: Deliver Your Answer
+### Phase 6: Deliver Your Answer
 Provide:
 - Direct answer to the core question
 - Supporting evidence with specific file paths and line numbers
+- Whether the instructor's framing was accurate or misleading
 - Confidence level and any caveats
 - Recommended actions or next steps
 
 ## Critical Principles
 - Use ultrathink - reason deeply and thoroughly
+- Be skeptical of the question's framing
 - Go deep - don't settle for surface-level findings
 - Be specific - cite files, lines, and evidence
+- Challenge assumptions - look for contradicting evidence
 - Synthesize - connect dots, don't just collect data
 ```
 
