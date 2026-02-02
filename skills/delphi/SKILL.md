@@ -72,7 +72,7 @@ WHY IT'S GOOD:
 
 Point oracles to ALL of these:
 
-1. **`.oracle/`** - ALL prior research, not just recent
+1. **`.oracle/`** - ALL prior research, not just recent (always at repo root)
 2. **Full git history** - Err toward too much history
 3. **`.plans/`** - Related implementation plans
 4. **`docs/`** - Relevant documentation
@@ -124,11 +124,17 @@ Create a single prompt that will be sent to ALL oracles identically. The prompt 
 
 ### Step 3: Launch Oracles in Parallel
 
-First, create the output directory:
+First, create the output directory with a timestamp prefix:
 
 ```bash
-mkdir -p .oracle/[topic]
+# Generate timestamp: YYYY-MM-DD_HH-MM
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M")
+mkdir -p .oracle/${TIMESTAMP}-[topic]
 ```
+
+**CRITICAL:**
+- **`.oracle/` is ALWAYS at repository root** - never nested in subdirectories
+- **ALL output files MUST be prefixed with `[DATE]_[TIME]-`** using format `YYYY-MM-DD_HH-MM-`. This enables chronological sorting and prevents collisions across investigations.
 
 Then dispatch ALL oracles simultaneously in a **single message with multiple Task calls**:
 
@@ -245,7 +251,10 @@ As you work, keep track of:
 ### Phase 5: Export Your Full Thinking
 
 When complete, write your ENTIRE elaborated thinking to:
-`.oracle/{topic}/delphi-{topic}-{N}.md`
+`.oracle/{timestamp}-{topic}/{timestamp}-delphi-{topic}-{N}.md`
+
+**File naming format:** `YYYY-MM-DD_HH-MM-delphi-{topic}-{N}.md`
+Example: `2026-02-02_14-30-delphi-api-latency-1.md`
 
 The export MUST include:
 1. **Instructor Framing Assessment** - Was the problem framed correctly? What biases or incorrect assumptions did you detect?
@@ -312,7 +321,10 @@ Read each oracle's full report completely. Note:
 
 ### Phase 3: Create Synthesis
 
-Write to `.oracle/{topic}/{topic}-synthesis.md`:
+Write to `.oracle/{timestamp}-{topic}/{timestamp}-{topic}-synthesis.md`:
+
+**File naming format:** `YYYY-MM-DD_HH-MM-{topic}-synthesis.md`
+Example: `2026-02-02_14-30-api-latency-synthesis.md`
 
 # Delphi Synthesis: {topic}
 
@@ -352,11 +364,11 @@ After synthesis completes:
 
 User: "Use delphi to investigate why our API response times spiked last week"
 
-1. Create `.oracle/api-latency/`
+1. Create `.oracle/2026-02-02_14-30-api-latency/`
 2. Launch 3 oracles in parallel with identical prompts about API latency investigation
 3. Each oracle independently explores: logs, code changes, dependencies, infrastructure
-4. Each exports to `delphi-api-latency-1.md`, `delphi-api-latency-2.md`, `delphi-api-latency-3.md`
-5. Synthesis oracle reads all three and creates `api-latency-synthesis.md`
+4. Each exports to `2026-02-02_14-30-delphi-api-latency-1.md`, `2026-02-02_14-30-delphi-api-latency-2.md`, `2026-02-02_14-30-delphi-api-latency-3.md`
+5. Synthesis oracle reads all three and creates `2026-02-02_14-30-api-latency-synthesis.md`
 6. Present findings to user
 
 ## Key Principle
