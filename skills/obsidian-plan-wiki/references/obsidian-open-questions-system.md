@@ -57,5 +57,5 @@ Obsidian search:
 ## Linking to a Question
 
 ```
-[[features/10-core/10.6-client-prediction-spec#^q-prediction-fixed-tick|Prediction tick question]]
+[[features/10-core/10.06-client-prediction-spec#^q-prediction-fixed-tick|Prediction tick question]]
 ```

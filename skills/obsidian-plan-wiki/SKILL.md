@@ -5,7 +5,7 @@ description: Create and manage behavior specification wikis in Obsidian format. 
 
 # Obsidian Spec Wiki
 
-Create and manage specification wikis as Obsidian-compatible markdown. Features capture both **what** the system does (specs) and **how** to build it (plans).
+Create and manage specification wikis as Obsidian-compatible markdown. Feature areas capture both **what** the system does (specs) and **how** to build it (plans).
 
 ## Change Tracking (No LWW)
 
@@ -27,6 +27,15 @@ There is no LWW model. Specs, plans, and code are updated intentionally and toge
 - User mentions "wiki", "spec", "feature", or "Obsidian"
 - Need to document behavior for agent-driven code updates
 
+## One-Shot Usage (LLM Quickstart)
+
+When asked to use this skill, follow this sequence in a single pass:
+1. Read `docs/AGENTS.md` (and `docs/handbook/README.md` if present).
+2. Identify the structure: `features/` or `workstreams/` (treat workstreams as feature areas).
+3. Use Johnny Decimal with two-digit decimals (`NN.NN`).
+4. Apply the open-questions format with `🙋‍♂️/🤖/✅` and block IDs.
+5. Record changes via `tk` and `tinychange` (merge to `docs/changelog.md`).
+
 ## Wiki Discovery
 
 Check for existing wiki in order:
@@ -45,14 +54,15 @@ docs/
 ├── CLAUDE.md              # Symlink → AGENTS.md
 ├── AGENTS.md              # Actual agent instructions
 ├── changelog.md           # Keep a Changelog format (generated via tinychange)
-├── features/
+├── handbook/              # Process/tooling docs (Johnny Decimal)
+├── reference/             # Architecture + research (Johnny Decimal)
+│   └── decisions/         # ADRs (Johnny Decimal IDs)
+├── features/              # OR workstreams/ (treat as feature areas)
 │   └── NN-name/           # Johnny Decimal area (10-19, 20-29, ...)
 │       ├── README.md      # Area summary + feature tables
 │       ├── AGENTS.md      # Optional: area-specific agent rules
-│       ├── NN.N-spec.md   # Feature specs (what)
-│       └── NN.N-plan.md   # Implementation plans (how)
-├── reference/             # Shared architecture docs
-│   └── decisions/         # ADRs (Johnny Decimal IDs)
+│       ├── NN.NN-spec.md  # Feature specs (what)
+│       └── NN.NN-plan.md  # Implementation plans (how)
 └── research/              # Oracle outputs (frozen)
 ```
 
@@ -63,7 +73,7 @@ docs/
 **Why symlink?** The `@filename` convention in file contents causes some tools to ignore the file entirely. A symlink ensures CLAUDE.md is always read as the actual AGENTS.md content.
 
 **Key concepts:**
-- **Features** = Johnny Decimal functional areas (not temporal phases). Treat everything as a feature (product, infra, tooling, docs)
+- **Feature areas** = Johnny Decimal functional areas (not temporal phases). Treat everything as a feature (product, infra, tooling, docs)
 - **Specs** = behavior documents (what the system does)
 - **Plans** = implementation documents (how to build it)
 - **Research** = Oracle/Delphi outputs (frozen snapshots)
@@ -84,7 +94,7 @@ Load only what's needed:
 
 ```
 User asks about auth → Read features/10-core/README.md
-User asks about login → Read features/10-core/10.1-auth-spec.md
+User asks about login → Read features/10-core/10.01-auth-spec.md
 User asks for overview → Read README.md only
 ```
 
@@ -92,14 +102,14 @@ Load only what each task requires.
 
 ### 2. Johnny Decimal Structure
 
-Organize all features using Johnny Decimal (johnnydecimal.com). Use ranges like 10-19, 20-29, ... Each feature has an ID `NN.N` and uses that prefix in filenames.
+Organize all feature areas using Johnny Decimal (johnnydecimal.com). Use ranges like 10-19, 20-29, ... Each feature has an ID `NN.NN` and uses that prefix in filenames.
 
 Example:
 ```
 docs/features/10-core/
 ├── README.md
-├── 10.1-auth-spec.md
-└── 10.1-auth-plan.md
+├── 10.01-auth-spec.md
+└── 10.01-auth-plan.md
 ```
 
 ### 3. Wiki Links Everywhere
@@ -107,7 +117,7 @@ docs/features/10-core/
 All references use `[[wiki-links]]`. Broken links = sync signal.
 
 ```markdown
-[[features/10-core/10.1-auth-spec|Login Flow]]
+[[features/10-core/10.01-auth-spec|Login Flow]]
 [[reference/architecture#auth-middleware|Auth Middleware]]
 ```
 
@@ -156,7 +166,7 @@ Last emoji is 🤖 → Human's turn. When `✅` → Done.
 
 **Linking to questions:**
 ```markdown
-[[features/10-core/10.1-auth-spec#^q-auth-oauth|OAuth question]]
+[[features/10-core/10.01-auth-spec#^q-auth-oauth|OAuth question]]
 ```
 
 **Search in Obsidian:** Search for the emoji.
@@ -208,10 +218,10 @@ Ensure `tinychange.toml` points to `docs/changelog.md` and uses Keep a Changelog
 ### Spec File Template
 
 ```markdown
-# NN.N Spec Name
+# NN.NN Spec Name
 
 > **Feature Area:** [[../README|NN-Feature-Area-Name]]
-> **Feature ID:** NN.N
+> **Feature ID:** NN.NN
 > **Ticket:** tk-000 (optional)
 
 ## Behavior
@@ -267,10 +277,10 @@ graph LR
 ### Plan File Template
 
 ```markdown
-# NN.N Plan Name
+# NN.NN Plan Name
 
 > **Feature Area:** [[../README|NN-Feature-Area-Name]]
-> **Related Spec:** [[NN.N-spec-name]] (optional)
+> **Related Spec:** [[NN.NN-spec-name]] (optional)
 > **Ticket:** tk-000 (optional)
 
 ## Goal
@@ -322,14 +332,14 @@ What this feature area achieves.
 
 | Spec | Description | Status |
 |------|-------------|--------|
-| [[NN.N-spec-name]] | Brief description | Status |
-| [[NN.N-spec-name]] | Brief description | Status |
+| [[NN.NN-spec-name]] | Brief description | Status |
+| [[NN.NN-spec-name]] | Brief description | Status |
 
 ## Plans
 
 | Plan | Description | Status |
 |------|-------------|--------|
-| [[NN.N-plan-name]] | Implementation approach | Status |
+| [[NN.NN-plan-name]] | Implementation approach | Status |
 
 ## Shared Decisions
 
@@ -386,7 +396,7 @@ All work is tracked via `tk` (https://github.com/wedow/ticket). Include ticket I
    - Understand scope and current status
    - See which specs exist
 
-2. **Read specific specs as needed** - `features/NN-name/NN.N-*-spec.md`
+2. **Read specific specs as needed** - `features/NN-name/NN.NN-*-spec.md`
    - Load only the spec you're implementing
    - Check "Integration" section for related specs
 
@@ -396,11 +406,11 @@ All work is tracked via `tk` (https://github.com/wedow/ticket). Include ticket I
 
 ### Johnny Decimal Features
 
-Features use Johnny Decimal IDs. Feature areas live at `features/NN-name/` and specs/plans use `NN.N-` prefixes.
+Feature areas use Johnny Decimal IDs with two-digit decimals. Specs/plans use `NN.NN-` prefixes.
 
 ### Open Questions System
 
-See [[reference/obsidian-open-questions-system]] for full spec.
+See [[handbook/10-docs/10.01-open-questions-system]] for full spec.
 
 **WHO ANSWERS WHAT:**
 | Emoji | Who wrote it | Who should answer/action |
@@ -472,7 +482,7 @@ Oracle/Delphi outputs (frozen snapshots):
 
 ### Adding a Spec
 
-1. Create `NN.N-spec-name.md` in feature area folder
+1. Create `NN.NN-spec-name.md` in feature area folder
 2. Add `tk` ticket in the header if applicable
 3. Fill in Behavior (contract + scenarios)
 4. Document Decisions (ADRs)
@@ -482,7 +492,7 @@ Oracle/Delphi outputs (frozen snapshots):
 
 ### Adding a Plan
 
-1. Create `NN.N-plan-name.md` in feature area folder
+1. Create `NN.NN-plan-name.md` in feature area folder
 2. Link to related spec if one exists
 3. Add `tk` ticket in the header if applicable
 4. Fill in Implementation Steps with checkboxes
@@ -542,8 +552,8 @@ Use relative markdown links (Obsidian-compatible):
 | Situation | Action |
 |-----------|--------|
 | New feature area | Create new feature area directory |
-| New behavior to document | Create numbered spec file (`NN.N-spec.md`) |
-| New implementation approach | Create numbered plan file (`NN.N-plan.md`) |
+| New behavior to document | Create numbered spec file (`NN.NN-spec.md`) |
+| New implementation approach | Create numbered plan file (`NN.NN-plan.md`) |
 | Deep technical topic | Add to `reference/` subdirectory |
 | Research question | Use Oracle, save to `research/` |
 | Feature-area-specific rules | Create `AGENTS.md` in feature area |

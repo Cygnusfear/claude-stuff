@@ -142,9 +142,9 @@ Before major amendments:
 Use Obsidian wiki-links for all internal references:
 
 \`\`\`markdown
-[[tasks/1.1-project-structure]]           # Same directory
+[[tasks/01.01-project-structure]]         # Same directory
 [[../research/topic]]                     # Relative path
-[[tasks/4.1-name|Display Name]]           # With display text
+[[tasks/04.01-name|Display Name]]         # With display text
 \`\`\`
 
 ### 7. Key Decisions Made

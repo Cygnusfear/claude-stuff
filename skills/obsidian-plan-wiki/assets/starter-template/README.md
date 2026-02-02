@@ -27,7 +27,7 @@
 ## Task Index
 
 ### Phase 1: Phase Name
-- [[tasks/1.1-task-slug|1.1 Task Title]]
+- [[tasks/01.01-task-slug|01.01 Task Title]]
 
 ## Reference
 
