@@ -1,80 +1,76 @@
 ---
 name: using-superpowers
-description: Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions
+description: Guidelines for using skills effectively - load relevant skills before complex tasks, not every message
 ---
-
-<EXTREMELY-IMPORTANT>
-If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST read the skill.
-
-IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
-
-This is not negotiable. This is not optional. You cannot rationalize your way out of this.
-</EXTREMELY-IMPORTANT>
 
 # Using Skills
 
-## The Rule
+Skills are specialized workflows that improve quality for specific task types. Use them when they apply - don't skip them by rationalizing, but also don't invoke them ritualistically.
 
-**Check for skills BEFORE ANY RESPONSE.** This includes clarifying questions. Even 1% chance means invoke the Skill tool first.
+## When to Load a Skill
 
-```dot
-digraph skill_flow {
-    "User message received" [shape=doublecircle];
-    "Might any skill apply?" [shape=diamond];
-    "Invoke Skill tool" [shape=box];
-    "Announce: 'Using [skill] to [purpose]'" [shape=box];
-    "Has checklist?" [shape=diamond];
-    "Create TodoWrite todo per item" [shape=box];
-    "Follow skill exactly" [shape=box];
-    "Respond (including clarifications)" [shape=doublecircle];
+**DO load skills when:**
+- Starting a complex or multi-step task
+- The task clearly matches a skill's description (code review, debugging, planning, etc.)
+- You're unsure how to approach something and a skill might help
+- The user explicitly requests a skill-based workflow
 
-    "User message received" -> "Might any skill apply?";
-    "Might any skill apply?" -> "Invoke Skill tool" [label="yes, even 1%"];
-    "Might any skill apply?" -> "Respond (including clarifications)" [label="definitely not"];
-    "Invoke Skill tool" -> "Announce: 'Using [skill] to [purpose]'";
-    "Announce: 'Using [skill] to [purpose]'" -> "Has checklist?";
-    "Has checklist?" -> "Create TodoWrite todo per item" [label="yes"];
-    "Has checklist?" -> "Follow skill exactly" [label="no"];
-    "Create TodoWrite todo per item" -> "Follow skill exactly";
-}
-```
+**DON'T load skills when:**
+- Answering simple questions or having conversation
+- Doing trivial file reads or small edits
+- The task is straightforward and no skill adds value
+- You already know the skill's content from this session
 
-## Red Flags
+## How to Use Skills
 
-These thoughts mean STOP—you're rationalizing:
+When a skill applies:
+
+1. Load it with the Skill tool
+2. Announce briefly: "Using [skill] for [purpose]"
+3. If it has a checklist, create todos
+4. Follow the skill's workflow
+
+## Avoiding Common Mistakes
+
+**Under-using skills (rationalizing):**
+
+| Thought | Consider |
+|---------|----------|
+| "I'll just do this quickly" | Would a skill improve quality? |
+| "This doesn't need a formal process" | Is there a skill that applies? |
+| "I remember how this works" | Skills evolve - reload if unsure |
+| "Let me explore first" | Some skills guide exploration |
+
+**Over-using skills (ritual compliance):**
 
 | Thought | Reality |
 |---------|---------|
-| "This is just a simple question" | Questions are tasks. Check for skills. |
-| "I need more context first" | Skill check comes BEFORE clarifying questions. |
-| "Let me explore the codebase first" | Skills tell you HOW to explore. Check first. |
-| "I can check git/files quickly" | Files lack conversation context. Check for skills. |
-| "Let me gather information first" | Skills tell you HOW to gather information. |
-| "This doesn't need a formal skill" | If a skill exists, use it. |
-| "I remember this skill" | Skills evolve. Read current version. |
-| "This doesn't count as a task" | Action = task. Check for skills. |
-| "The skill is overkill" | Simple things become complex. Use it. |
-| "I'll just do this one thing first" | Check BEFORE doing anything. |
-| "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
+| "I must invoke skills on every message" | Only when they add value |
+| "Let me check for mandatory skills" | Skills aren't rituals |
+| "Confirming skill protocol compliance" | Just do the work |
 
 ## Skill Priority
 
-When multiple skills could apply, use this order:
+When multiple skills could apply:
 
-1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
-2. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution
+1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach
+2. **Implementation skills second** - these guide execution
 
-"Let's build X" → (open ended, extended) brainstorming first, then implementation skills.
-"Fix this bug" → debugging first, then domain-specific skills.
+Examples:
+- "Let's build X" → brainstorming first, then implementation
+- "Fix this bug" → debugging first, then domain-specific skills
 
 ## Skill Types
 
-**Rigid** (TDD, debugging): Follow exactly. Don't adapt away discipline.
+**Rigid** (TDD, debugging): Follow the process exactly.
 
 **Flexible** (patterns): Adapt principles to context.
 
-The skill itself tells you which.
+The skill itself indicates which type it is.
 
-## User Instructions
+## Remember
 
-Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
+- Skills improve quality for complex tasks
+- Simple tasks don't need skill overhead
+- If you're announcing "checking mandatory protocols" you've gone too far
+- Just use skills naturally when they help
