@@ -97,7 +97,7 @@ Detailed rules for classifying old-format comments into human (`🙋‍♂️:`)
 
 **Already upgraded (skip):**
 ```regex
-%% \[[ x]\] [🙋🤖]:
+%% (🙋‍♂️|🤖|✅)
 ```
 
 **Question indicators:**

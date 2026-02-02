@@ -50,14 +50,14 @@ User asks for overview → Read README.md only
 
 ### 2. Open Task Tracking
 
-Tasks are tracked with Obsidian comment checkboxes using emoji prefixes and block references:
+Tasks are tracked with Obsidian comments using emoji prefixes and block references:
 
 \`\`\`markdown
-%% [ ] 🙋‍♂️: human task or instruction %% ^q-scope-descriptor
+%% 🙋‍♂️ Human task or instruction %% ^q-scope-descriptor
 
-%% [ ] 🤖: agent question needing human input %% ^q-scope-question
+%% 🤖 Agent question needing human input %% ^q-scope-question
 
-%% [x] 🤖: resolved → answer here %% ^q-scope-resolved
+%% ✅ Resolved → answer here %% ^q-scope-resolved
 \`\`\`
 
 **CRITICAL: Blank lines required.** Each question MUST be separated by a blank line. Obsidian treats consecutive lines as a single block—only the LAST block ID works.
@@ -67,33 +67,38 @@ Tasks are tracked with Obsidian comment checkboxes using emoji prefixes and bloc
 |-------|--------------|--------------------------|
 | 🙋‍♂️ | Human | **Agent** (this is work for you!) |
 | 🤖 | Agent | **Human** (skip this, you asked it) |
+| ✅ | Resolved | **No one** |
 
 **Conversation threading:** Questions can have inline replies. The **LAST emoji** determines whose turn:
 \`\`\`
-%% [ ] 🤖: Should we cache? 🙋‍♂️ yes 🤖: what limit? %% ^q-cache
+%% 🤖 Should we cache? 🙋‍♂️ yes 🤖 what limit? %% ^q-cache
 \`\`\`
-Last emoji is 🤖 → Human's turn. When \`[x]\` → Done.
+Last emoji is 🤖 → Human's turn. When \`✅\` → Done.
 
 - \`^q-{scope}-{descriptor}\` = block ID for Obsidian navigation
 
 **Finding open tasks:**
 \`\`\`bash
-grep -rn '%% \[ \]' path/to/plan/      # all open
-grep -rn '🤖:' path/to/plan/           # agent questions
-grep -rn '🙋‍♂️:' path/to/plan/          # human tasks
-grep -rn '%% \[ \].*%%$' path/to/plan/ # missing block IDs
+rg "🙋‍♂️" path/to/plan/           # human tasks
+rg "🤖" path/to/plan/              # agent questions
+rg "✅" path/to/plan/              # resolved
+rg "%% .*%%$" path/to/plan/        # missing block IDs (lines ending with %%)
 \`\`\`
 
 **When completing a task:**
-1. Mark \`[x]\` in the comment (or convert \`🤖:\` to \`🙋‍♂️:\` if now actionable)
+1. Mark \`✅\` in the comment (or convert \`🤖\` to \`🙋‍♂️\` if now actionable)
 2. Add answer after \`→\`
-3. Add entry to changelog.md
+3. Update changelog via CLI
 
 **Agent responsibility:** When encountering questions missing block IDs, agents MUST add them immediately. Generate an ID based on the file's scope and the question topic.
 
+### Ticketing (tk)
+
+All work is tracked via `tk` (https://github.com/wedow/ticket). Reference ticket IDs in specs/plans/tasks and include them in changelog messages.
+
 ### 3. Research Workflow
 
-When a \`%% [ ] 🙋‍♂️:\` or \`%% [ ] 🤖:\` comment needs research:
+When a \`%% 🙋‍♂️ ... %%\` or \`%% 🤖 ... %%\` comment needs research:
 
 1. **Simple question:** Use single oracle
 2. **Complex/uncertain:** Use Delphi (3 parallel oracles + synthesis)
@@ -102,26 +107,27 @@ When a \`%% [ ] 🙋‍♂️:\` or \`%% [ ] 🤖:\` comment needs research:
 
 **Link format after research:**
 \`\`\`markdown
-%% [x] question → Delphi complete: [[research/topic-delphi]] %%
+%% ✅ question → Delphi complete: [[research/topic-delphi]] %% ^q-scope-topic
 > **Research:** See [[research/topic]] for details
 \`\`\`
 
 ### 4. Changelog Protocol
 
-**Every change to the plan must be logged in changelog.md.**
+**Every change to the plan must be logged in changelog.md via `tinychange`.**
 
-Format:
-\`\`\`markdown
-## YYYY-MM-DD
+Setup (once):
+\`\`\`bash
+tinychange init
+\`\`\`
 
-### Added
-- [[path/to/file]] - Description
+Add entry:
+\`\`\`bash
+tinychange
+\`\`\`
 
-### Changed
-- [[path/to/file]] - What changed and why
-
-### Research
-- [[research/topic]] - Summary of findings
+Merge into changelog:
+\`\`\`bash
+tinychange merge
 \`\`\`
 
 ### 5. Version Preservation
@@ -161,8 +167,9 @@ Each task file should have:
 
 **Phase:** N - Phase Name
 **Commit:** \`type(scope): description\`
+**Ticket:** tk-000 (optional)
 
-%% [ ] 🤖: any open questions for human %%
+%% 🤖 any open questions for human %% ^q-task-questions
 
 > **Research:** See [[../research/topic]] if applicable
 
@@ -177,5 +184,5 @@ Each task file should have:
 1. Create file in \`tasks/\` with format \`{phase}.{task}-{slug}.md\`
 2. Add to phase file's task table
 3. Add to README.md task index
-4. Add changelog entry
+4. Update changelog via CLI
 ```
