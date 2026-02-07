@@ -1,6 +1,6 @@
 ---
 name: axiom-audit
-description: Audit Axiom logs to identify and prioritize errors and warnings, research probable causes, and flag log smells. Use when user asks to check Axiom logs, analyze production errors, investigate log issues, or audit logging patterns.
+description: ONLY USE WHEN REPO IS USING AXIOM LOGGING. Audit Axiom logs to identify and prioritize errors and warnings, research probable causes, and flag log smells. Use when user asks to check Axiom logs, analyze production errors, investigate log issues, or audit logging patterns.
 allowed-tools: Bash, Read, Grep, Write
 ---
 
@@ -11,11 +11,13 @@ Systematically audit Axiom logs to identify, prioritize, and research errors and
 ## Setup
 
 **Install axiom-mcp:**
+
 ```bash
 go install github.com/axiomhq/axiom-mcp@latest
 ```
 
 **Install mcptools:**
+
 ```bash
 # macOS
 brew tap f/mcptools
@@ -26,12 +28,14 @@ go install github.com/f/mcptools/cmd/mcptools@latest
 ```
 
 **Set credentials:**
+
 ```bash
 export AXIOM_TOKEN="xaat-your-token"
 export AXIOM_ORG_ID="your-org-id"  # Optional
 ```
 
 Find credentials in repo:
+
 ```bash
 grep -r "AXIOM" . --include="*.env*" --include="*.config.*"
 ```
@@ -39,11 +43,13 @@ grep -r "AXIOM" . --include="*.env*" --include="*.config.*"
 ## Usage
 
 **List datasets:**
+
 ```bash
 mcp call listDatasets --params '{"arguments":{}}' ~/go/bin/axiom-mcp
 ```
 
 **Query APL:**
+
 ```bash
 # Query errors
 mcp call queryApl --params '{"arguments":{"dataset":"logs","apl":"['\''now-24h'\'':now] | where level == \"error\" | summarize count() by message"}}' ~/go/bin/axiom-mcp
@@ -53,6 +59,7 @@ mcp call queryApl --params '{"arguments":{"dataset":"logs","apl":"['\''now-24h'\
 ```
 
 **Interactive shell (recommended for multiple queries):**
+
 ```bash
 mcp shell ~/go/bin/axiom-mcp
 ```
@@ -60,11 +67,13 @@ mcp shell ~/go/bin/axiom-mcp
 ## Audit Process
 
 ### 1. Identify Dataset
+
 ```bash
 mcp call listDatasets --params '{"arguments":{}}' ~/go/bin/axiom-mcp
 ```
 
 Or search codebase for dataset names:
+
 ```bash
 grep -r "axiom.*dataset" . --include="*.ts" --include="*.js"
 ```
@@ -72,6 +81,7 @@ grep -r "axiom.*dataset" . --include="*.ts" --include="*.js"
 ### 2. Query Errors & Warnings
 
 **Errors:**
+
 ```apl
 ['now-24h':now]
 | where level in ("error", "ERROR", "fatal", "FATAL")
@@ -80,6 +90,7 @@ grep -r "axiom.*dataset" . --include="*.ts" --include="*.js"
 ```
 
 **Warnings:**
+
 ```apl
 ['now-24h':now]
 | where level in ("warn", "WARNING", "WARN")
@@ -88,6 +99,7 @@ grep -r "axiom.*dataset" . --include="*.ts" --include="*.js"
 ```
 
 **Error trends:**
+
 ```apl
 ['now-7d':now]
 | where level in ("error", "ERROR", "fatal", "FATAL")
@@ -97,6 +109,7 @@ grep -r "axiom.*dataset" . --include="*.ts" --include="*.js"
 ### 3. Prioritize Errors
 
 **Priority scoring:**
+
 - **P0**: CRITICAL + High Frequency (>100/hour)
 - **P1**: CRITICAL + Low Frequency OR HIGH + High Frequency
 - **P2**: HIGH + Low Frequency OR MEDIUM + High Frequency
@@ -104,6 +117,7 @@ grep -r "axiom.*dataset" . --include="*.ts" --include="*.js"
 - **P4**: LOW
 
 **Severity levels:**
+
 - **CRITICAL**: Data loss, security issues, service down
 - **HIGH**: Feature broken, user-facing errors
 - **MEDIUM**: Degraded functionality, intermittent issues
@@ -112,6 +126,7 @@ grep -r "axiom.*dataset" . --include="*.ts" --include="*.js"
 ### 4. Research Each Error
 
 For each unique error:
+
 1. Find source in codebase using Grep
 2. Read surrounding code to understand context
 3. Identify probable cause (code bug, infrastructure, data, integration, config)
@@ -135,11 +150,13 @@ Create `.audits/axiom-audit-[timestamp].md` with:
 
 ```markdown
 # Axiom Logs Audit Report
+
 **Date**: [timestamp]
 **Time Range**: [start] to [end]
 **Total Errors**: X | **Total Warnings**: Y
 
 ## Executive Summary
+
 - **P0 Issues**: X (immediate action required)
 - **P1 Issues**: Y (urgent)
 - **P2 Issues**: Z
@@ -148,12 +165,15 @@ Create `.audits/axiom-audit-[timestamp].md` with:
 ## Prioritized Error List
 
 ### P0: [Error Type]
+
 **Occurrences**: X times | **Trend**: [↑/→/↓]
 **First Seen**: [timestamp] | **Last Seen**: [timestamp]
 
 **Error Message**:
 ```
+
 [Actual error message]
+
 ```
 
 **Source**: `path/to/file.ts:line`
@@ -198,6 +218,7 @@ Create `.audits/axiom-audit-[timestamp].md` with:
 ### 7. Provide Summary
 
 Brief summary for user highlighting:
+
 - P0/P1 count and top issues
 - Critical log smells
 - Category breakdown

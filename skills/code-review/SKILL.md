@@ -18,6 +18,8 @@ Ultra-critical, multi-pass code review that identifies issues, suggests improvem
 - The human needs to see the review on the PR page to evaluate quality before merging
 - Local-only reviews are useless - always post to GitHub
 
+NOTE: The only way to BYPASS review is when this is EXPLICITLY requested up front by the Hooman.
+
 ## When to Use This Skill
 
 - Reviewing pull requests before merge
@@ -39,14 +41,14 @@ When invoked with a multiplier, launch multiple independent reviewers that analy
 
 Recognize these invocation patterns:
 
-| Pattern | Meaning |
-|---------|---------|
-| `code-review-3` | 3 parallel reviewers |
-| `code-review-6` | 6 parallel reviewers |
-| `code-review 3X` | 3 parallel reviewers |
-| `code-review 6X` | 6 parallel reviewers |
+| Pattern                   | Meaning              |
+| ------------------------- | -------------------- |
+| `code-review-3`           | 3 parallel reviewers |
+| `code-review-6`           | 6 parallel reviewers |
+| `code-review 3X`          | 3 parallel reviewers |
+| `code-review 6X`          | 6 parallel reviewers |
 | `review with 4 reviewers` | 4 parallel reviewers |
-| `parallel review N` | N parallel reviewers |
+| `parallel review N`       | N parallel reviewers |
 
 Default (no multiplier): Single reviewer, standard mode.
 
@@ -191,7 +193,7 @@ Task(
 
 #### Step 6: Synthesis Prompt Template
 
-```
+````
 You are the Synthesis Reviewer for a parallel code review. {N} independent reviewers analyzed the same changes. Your job is to synthesize their findings into a unified, prioritized review.
 
 ## Your Mission
@@ -233,16 +235,16 @@ Write to `.reviews/{timestamp}/review-merged.md`:
 pie title Finding Distribution
     "Convergent (High Confidence)" : X
     "Divergent (Single Reviewer)" : Y
-```
+````
 
 ## Convergent Findings (Highest Priority)
 
 Issues identified by multiple independent reviewers:
 
 | Issue | Reviewers | Priority | Files Affected |
-|-------|-----------|----------|----------------|
-| ... | 3/3 | Critical | ... |
-| ... | 2/3 | High | ... |
+| ----- | --------- | -------- | -------------- |
+| ...   | 3/3       | Critical | ...            |
+| ...   | 2/3       | High     | ...            |
 
 ### Details
 
@@ -253,9 +255,11 @@ Issues identified by multiple independent reviewers:
 Unique perspectives from individual reviewers:
 
 ### From Reviewer #1
+
 [Unique findings]
 
 ### From Reviewer #2
+
 [Unique findings]
 
 ## Unified Action Items
@@ -275,24 +279,28 @@ Prioritized by consensus:
 ## Reviewer Contribution Summary
 
 | Reviewer | Critical | High | Medium | Unique Findings |
-|----------|----------|------|--------|-----------------|
-| #1 | X | Y | Z | W |
-| #2 | ... | ... | ... | ... |
+| -------- | -------- | ---- | ------ | --------------- |
+| #1       | X        | Y    | Z      | W               |
+| #2       | ...      | ...  | ...    | ...             |
 
 ---
-*Parallel review synthesis of {N} independent reviewers*
+
+_Parallel review synthesis of {N} independent reviewers_
+
 ```
 
 ### Directory Structure
 
 ```
+
 .reviews/
-  2025-12-09-143022/
-    1-review.md          # Reviewer 1's independent review
-    2-review.md          # Reviewer 2's independent review
-    3-review.md          # Reviewer 3's independent review
-    review-merged.md     # Synthesized review
-```
+2025-12-09-143022/
+1-review.md # Reviewer 1's independent review
+2-review.md # Reviewer 2's independent review
+3-review.md # Reviewer 3's independent review
+review-merged.md # Synthesized review
+
+````
 
 ### Example Parallel Invocation
 
@@ -351,16 +359,18 @@ git diff HEAD
 git diff --cached
 git status
 git diff --name-only HEAD
-```
+````
 
 ### Step 2: Understand Context
 
 Gather information about:
+
 - What problem was being solved?
 - What was the original issue/request?
 - What architecture is involved?
 
 Check for:
+
 - PR description and title
 - Related issues or tickets
 - Commit messages
@@ -376,15 +386,18 @@ gh pr view <number> --json closingIssuesReferences --jq '.closingIssuesReference
 ```
 
 **If no issues linked:**
+
 - Flag as CRITICAL issue in review
 - PR body MUST include `Closes #X` or `Fixes #X`
 - Without issue links, issues won't auto-close on merge
 
 Add to review if missing:
+
 ```markdown
 ## ❌ MISSING ISSUE LINKS
 
 PR does not link to any issues. Add closing keywords to PR body:
+
 - `Closes #X - [description]`
 - `Fixes #Y - [description]`
 
@@ -404,6 +417,7 @@ Document all changed files for systematic review.
 ### What Changed
 
 For each changed file, document:
+
 - File name and path
 - Nature of modification (added, modified, deleted)
 - Brief description of the change in plain language
@@ -411,11 +425,11 @@ For each changed file, document:
 ```markdown
 ### Changed Files
 
-| File | Change Type | Description |
-|------|-------------|-------------|
-| `src/api/handler.ts` | Modified | Added retry logic to API calls |
-| `src/utils/retry.ts` | Added | New utility for exponential backoff |
-| `src/config/defaults.ts` | Modified | Added retry configuration options |
+| File                     | Change Type | Description                         |
+| ------------------------ | ----------- | ----------------------------------- |
+| `src/api/handler.ts`     | Modified    | Added retry logic to API calls      |
+| `src/utils/retry.ts`     | Added       | New utility for exponential backoff |
+| `src/config/defaults.ts` | Modified    | Added retry configuration options   |
 ```
 
 ### Consequences of Changes
@@ -485,19 +499,20 @@ stateDiagram-v2
 
 ### When to Use Diagrams
 
-| Situation | Diagram Type |
-|-----------|--------------|
-| Explaining data flow | `flowchart` |
-| Showing component relationships | `graph` |
-| Illustrating state changes | `stateDiagram-v2` |
-| Describing sequences/interactions | `sequenceDiagram` |
-| Comparing before/after | Side-by-side `stateDiagram` |
-| Showing dependencies | `graph TD` or `graph LR` |
-| Distribution/proportions | `pie` (for parallel review summaries) |
+| Situation                         | Diagram Type                          |
+| --------------------------------- | ------------------------------------- |
+| Explaining data flow              | `flowchart`                           |
+| Showing component relationships   | `graph`                               |
+| Illustrating state changes        | `stateDiagram-v2`                     |
+| Describing sequences/interactions | `sequenceDiagram`                     |
+| Comparing before/after            | Side-by-side `stateDiagram`           |
+| Showing dependencies              | `graph TD` or `graph LR`              |
+| Distribution/proportions          | `pie` (for parallel review summaries) |
 
 ### Diagram Examples
 
 #### Data Flow Diagram
+
 ```mermaid
 flowchart LR
     Input[User Input] --> Validate{Validation}
@@ -508,6 +523,7 @@ flowchart LR
 ```
 
 #### Component Relationship
+
 ```mermaid
 graph TD
     subgraph Frontend
@@ -524,6 +540,7 @@ graph TD
 ```
 
 #### Sequence Diagram
+
 ```mermaid
 sequenceDiagram
     participant C as Client
@@ -536,6 +553,7 @@ sequenceDiagram
 ```
 
 #### Dependency Graph
+
 ```mermaid
 graph TD
     A[Changed Module] --> B[Module B]
@@ -566,6 +584,7 @@ graph TD
 ### Step 1: Identify the Source Requirements
 
 Locate the original requirements from:
+
 - GitHub issue (use `gh issue view <number>`)
 - PR description referencing issues
 - Task ticket or spec document
@@ -575,6 +594,7 @@ Locate the original requirements from:
 ### Step 2: Extract All Requirements
 
 Create exhaustive checklist of EVERY requirement:
+
 - Functional requirements (what it should do)
 - Acceptance criteria (how to verify it works)
 - Edge cases mentioned
@@ -586,6 +606,7 @@ Create exhaustive checklist of EVERY requirement:
 ### Step 3: Verify Each Requirement
 
 For EACH requirement extracted:
+
 - ✅ **IMPLEMENTED**: Code exists that fulfills this requirement
 - ❌ **NOT IMPLEMENTED**: Requirement is missing from implementation
 - ⚠️ **PARTIALLY IMPLEMENTED**: Requirement only partially addressed
@@ -610,11 +631,11 @@ Requirements Coverage = (Implemented / Total Requirements) × 100%
 
 ### Requirements Checklist
 
-| # | Requirement | Status | Evidence |
-|---|-------------|--------|----------|
-| 1 | [requirement text] | ✅ Implemented | `file.ts:45` |
-| 2 | [requirement text] | ❌ NOT IMPLEMENTED | Missing |
-| 3 | [requirement text] | ⚠️ Partial | `file.ts:80` - missing error case |
+| #   | Requirement        | Status             | Evidence                          |
+| --- | ------------------ | ------------------ | --------------------------------- |
+| 1   | [requirement text] | ✅ Implemented     | `file.ts:45`                      |
+| 2   | [requirement text] | ❌ NOT IMPLEMENTED | Missing                           |
+| 3   | [requirement text] | ⚠️ Partial         | `file.ts:80` - missing error case |
 
 ### Coverage Verdict
 
@@ -644,6 +665,7 @@ Implementation cannot be approved until 100% complete."
 Scan for issues that will cause runtime or compile-time failures.
 
 ### Check For:
+
 - Import/export errors that break at runtime
 - Missing required configurations or declarations
 - Schema mismatches and type errors
@@ -654,11 +676,13 @@ Scan for issues that will cause runtime or compile-time failures.
 - Exception handling issues
 
 ### Priority Levels:
+
 - **Critical**: Causes immediate crash, data loss, or security vulnerability
 - **High**: Breaks feature functionality, causes incorrect behavior
 - **Medium**: Edge case failures, non-critical path issues
 
 ### Output Format:
+
 ```
 - [Specific Issue]: [Clear explanation of why it fails]
 - Suggest [specific action] to fix [exact problem]
@@ -682,6 +706,7 @@ flowchart TD
 Compare similar files for implementation patterns.
 
 ### Check For:
+
 - Similar files using different implementation patterns
 - Inconsistent import paths or naming conventions
 - Unused imports, variables, or dead code
@@ -691,6 +716,7 @@ Compare similar files for implementation patterns.
 - Type consistency across files
 
 ### Output Format:
+
 ```
 [File/Pattern] uses [approach A] while [other files] use [approach B].
 - Either standardize on [recommended approach] or [explain why different]
@@ -713,6 +739,7 @@ graph LR
 ```
 
 ### Search Commands:
+
 ```bash
 # Find similar patterns
 grep -r "pattern" src/ --include="*.ts"
@@ -731,6 +758,7 @@ grep -r "export.*functionName" src/
 Identify opportunities for better code structure.
 
 ### Check For:
+
 - Repeated code blocks that could be abstracted
 - Hard-coded values that should be configurable
 - Common patterns needing helper functions
@@ -741,6 +769,7 @@ Identify opportunities for better code structure.
 - Missing abstractions
 
 ### Output Format:
+
 ```
 You duplicate [specific pattern] in [locations].
 - Consider creating [specific helper/abstraction] to [benefit]
@@ -764,6 +793,7 @@ graph TD
 ```
 
 ### Questions to Ask:
+
 - Is there existing code that does this already?
 - Should this be in a utility file?
 - Is this the right layer for this logic?
@@ -776,6 +806,7 @@ graph TD
 Check for platform-specific code or dependencies.
 
 ### Check For:
+
 - Platform-specific code or dependencies
 - Version compatibility issues
 - Runtime environment assumptions
@@ -786,6 +817,7 @@ Check for platform-specific code or dependencies.
 - Migration risks
 
 ### Output Format:
+
 ```
 The change from [old approach] to [new approach] [compatibility concern].
 - If [specific environment] is used, confirm [specific compatibility question]
@@ -806,6 +838,7 @@ graph TD
 ```
 
 ### Considerations:
+
 - Development vs production differences
 - CI/CD environment constraints
 - User environment variations
@@ -818,18 +851,21 @@ graph TD
 Generate grep/search commands to verify fixes.
 
 ### Generate:
+
 - Grep/search commands to verify fixes are complete
 - Build commands to validate compilation
 - Test commands for specific scenarios
 - Integration testing approaches
 
 ### Rules:
+
 - Only suggest checks NOT already performed
 - Be specific about what each check validates
 - Include expected output/behavior
 - Order by priority
 
 ### Output Format:
+
 ```bash
 grep -R "[pattern]" [location]  # Verify [what you're verifying]
 [command]  # [what it validates]
@@ -842,26 +878,31 @@ grep -R "[pattern]" [location]  # Verify [what you're verifying]
 Compile the Task Summary with full context.
 
 ### Auto Reviewer Summary
+
 Brief overview of what the review covered.
 
 ### Summary of User's Request
+
 - Original problem reported
 - Business/technical context
 - Specific error messages or failures
 - System architecture involved
 
 ### Important Findings
+
 - Root cause analysis of issues
 - Key discoveries made during investigation
 - Testing/validation performed
 - Critical insights about the codebase
 
 ### Previous Auto Reviews (if applicable)
+
 - Changes made since last review
 - Decisions made against previous recommendations
 - Rationale for approach taken
 
 ### Double Checks Completed
+
 - Verification commands already run
 - Testing already performed
 - Validation steps completed
@@ -874,34 +915,38 @@ Brief overview of what the review covered.
 
 **CRITICAL RULE**: Reviews must NEVER use percentages. Always use absolute counts, concrete numbers, or qualitative assessments.
 
-| DO NOT USE | USE INSTEAD |
-|------------|-------------|
-| "40% performance improvement" | "Response time dropped from 200ms to 120ms" |
-| "80% of tests pass" | "18 of 22 tests pass (4 failing)" |
-| "Reduces complexity by 25%" | "Cyclomatic complexity reduced from 12 to 9" |
-| "50% less code" | "Reduced from 120 lines to 60 lines" |
-| "90% code coverage" | "847 of 940 lines covered (93 uncovered)" |
+| DO NOT USE                    | USE INSTEAD                                  |
+| ----------------------------- | -------------------------------------------- |
+| "40% performance improvement" | "Response time dropped from 200ms to 120ms"  |
+| "80% of tests pass"           | "18 of 22 tests pass (4 failing)"            |
+| "Reduces complexity by 25%"   | "Cyclomatic complexity reduced from 12 to 9" |
+| "50% less code"               | "Reduced from 120 lines to 60 lines"         |
+| "90% code coverage"           | "847 of 940 lines covered (93 uncovered)"    |
 
 **Rationale**: Percentages obscure actual impact. "50% faster" could mean 100ms to 50ms (trivial) or 10s to 5s (significant). Concrete numbers enable informed decisions.
 
 ### Be Specific and Actionable
+
 - Reference exact file paths, function names, line numbers
 - Provide concrete code examples where helpful
 - Give step-by-step fix instructions
 - Suggest specific commands to run
 
 ### Prioritize by Impact
+
 - Lead with issues that cause immediate failures
 - Separate critical fixes from nice-to-have improvements
 - Consider user's immediate needs vs long-term code health
 
 ### Maintain Professional Tone
+
 - Be direct but respectful
 - Focus on technical merit, not coding style preferences
 - Acknowledge good practices when present
 - Frame suggestions as improvements, not criticisms
 
 ### Avoid Over-Engineering
+
 - Don't suggest complex solutions for simple problems
 - Consider development team's skill level and time constraints
 - Balance perfect code with shipping working software
@@ -926,6 +971,7 @@ When analyzing code changes, follow this sequence:
 ## Example Analysis Patterns
 
 ### Runtime Error Pattern
+
 ```
 Error: "[specific error message]"
 -> Root cause: [technical explanation]
@@ -935,6 +981,7 @@ Error: "[specific error message]"
 ```
 
 ### Inconsistency Pattern
+
 ```
 Files A, B, C use [pattern X]
 File D uses [pattern Y]
@@ -943,6 +990,7 @@ File D uses [pattern Y]
 ```
 
 ### Architecture Pattern
+
 ```
 Code duplicated in [locations] for [functionality]
 -> Abstract to [helper/utility] because [benefits]
@@ -952,11 +1000,13 @@ Code duplicated in [locations] for [functionality]
 
 ### Change Explanation Pattern
 
-```markdown
+````markdown
 ## Change Explanation
 
 ### What Changed
+
 The PR modifies 3 files to add retry logic to API calls:
+
 - `src/api/handler.ts`: Added try/catch with retry loop (lines 45-72)
 - `src/utils/retry.ts`: New file with exponential backoff utility
 - `src/config/defaults.ts`: Added retry configuration constants
@@ -972,19 +1022,24 @@ flowchart TD
     D -->|No| F[Final Failure]
     F --> G[Error Propagation]
 ```
+````
 
 **Direct Effects:**
+
 - API calls now retry up to 3 times on failure
 - Delays between retries: 100ms, 200ms, 400ms
 
 **Side Effects:**
+
 - Maximum latency increased from 30s to 30.7s (30s + 700ms retry delays)
 - Memory usage slightly increased (retry state tracking)
 
 ### System Impact
+
 Components affected: API Gateway, all downstream services
 Blast radius: Any code calling `apiHandler.request()`
-```
+
+````
 
 ---
 
@@ -1001,9 +1056,10 @@ gh pr diff <number> --name-only
 
 # Get full diff
 gh pr diff <number>
-```
+````
 
 If no PR exists, use git diff:
+
 ```bash
 git diff main...HEAD
 git diff --name-only main...HEAD
@@ -1012,6 +1068,7 @@ git diff --name-only main...HEAD
 ### Step 2: Read Changed Files
 
 For each changed file:
+
 1. Read the current file content
 2. Understand the change context
 3. Check related files for consistency
@@ -1019,11 +1076,13 @@ For each changed file:
 ### Step 3: Execute Analysis
 
 **For Standard Mode (single reviewer):**
+
 - Execute Pass 0 (Change Explanation)
 - Execute Pass 1-6 systematically
 - Build the 6 output sections incrementally
 
 **For Parallel Mode (with multiplier):**
+
 - Follow the Parallel Review Process above
 - Launch N reviewers simultaneously
 - Run synthesis after all complete
@@ -1031,6 +1090,7 @@ For each changed file:
 ### Step 4: Compile Review
 
 Format findings into the 6-section structure:
+
 1. Change Explanation (with Mermaid diagrams)
 2. Suggest Fixing
 3. Possible Simplifications
@@ -1072,6 +1132,7 @@ EOF
 ```
 
 For formal PR review actions:
+
 ```bash
 # Request changes (blocking)
 gh pr review <PR_NUMBER> --request-changes --body "[summary of required changes]"
@@ -1088,11 +1149,13 @@ gh pr review <PR_NUMBER> --comment --body "[review comments]"
 Write review to `.reviews/` directory:
 
 **Standard Mode:**
+
 ```
 .reviews/pr-<number>-review-[timestamp].md
 ```
 
 **Parallel Mode:**
+
 ```
 .reviews/[YYYY-MM-DD-HHMMSS]/
   1-review.md
@@ -1109,15 +1172,15 @@ Write review to `.reviews/` directory:
 
 This review is Phase 3 of the devflow process:
 
-| Pass | Focus |
-|------|-------|
-| 0 | Change Explanation |
-| 1 | Runtime/compile failures |
-| 2 | Patterns, imports, dead code |
-| 3 | Abstractions, hard-coded values |
-| 4 | Environment compatibility |
-| 5 | Verification commands |
-| 6 | Context synthesis |
+| Pass | Focus                           |
+| ---- | ------------------------------- |
+| 0    | Change Explanation              |
+| 1    | Runtime/compile failures        |
+| 2    | Patterns, imports, dead code    |
+| 3    | Abstractions, hard-coded values |
+| 4    | Environment compatibility       |
+| 5    | Verification commands           |
+| 6    | Context synthesis               |
 
 ### Review Escalation Protocol
 
@@ -1162,15 +1225,16 @@ Extract EVERY requirement - don't rely on memory, actually parse the issue.
 ```markdown
 ## Issue #X - Full Requirements Check
 
-| Requirement | PR Status | Evidence |
-|-------------|-----------|----------|
-| [exact text from issue] | ✅ | `file.ts:line` - [what implements it] |
-| [exact text from issue] | ❌ MISSING | Not found in PR |
-| [exact text from issue] | ⚠️ PARTIAL | `file.ts:line` - [what's missing] |
-| [exact text from issue] | ⚠️ MANUAL | Requires [runtime/editor/external tool] |
+| Requirement             | PR Status  | Evidence                                |
+| ----------------------- | ---------- | --------------------------------------- |
+| [exact text from issue] | ✅         | `file.ts:line` - [what implements it]   |
+| [exact text from issue] | ❌ MISSING | Not found in PR                         |
+| [exact text from issue] | ⚠️ PARTIAL | `file.ts:line` - [what's missing]       |
+| [exact text from issue] | ⚠️ MANUAL  | Requires [runtime/editor/external tool] |
 ```
 
 Status meanings:
+
 - ✅ = Fully implemented, can cite exact code
 - ❌ MISSING = Not implemented at all
 - ⚠️ PARTIAL = Partially implemented, specify what's missing
@@ -1184,6 +1248,7 @@ Implemented (✅ only) / Total Requirements = Coverage %
 ```
 
 **Be honest**:
+
 - ⚠️ PARTIAL counts as NOT implemented
 - ⚠️ MANUAL items that can be automated MUST be automated
 - Only truly optional items (marked in issue) can be excluded
@@ -1191,8 +1256,10 @@ Implemented (✅ only) / Total Requirements = Coverage %
 #### Step 4: State Your Confidence
 
 After the table, explicitly state:
+
 ```markdown
 **Honest Assessment**:
+
 - Coverage: X% (Y of Z requirements fully implemented)
 - Missing: [list specific missing items]
 - Partial: [list partial items and what's missing]
@@ -1201,9 +1268,9 @@ After the table, explicitly state:
 
 ### Final Gate Decision
 
-| Coverage | Verdict |
-|----------|---------|
-| **100%** | ✅ May approve (if also 10/10 quality) |
+| Coverage   | Verdict                                                   |
+| ---------- | --------------------------------------------------------- |
+| **100%**   | ✅ May approve (if also 10/10 quality)                    |
 | **< 100%** | ❌ **MUST REQUEST CHANGES** - send back to implementation |
 
 ### If Final Coverage < 100%:
@@ -1220,10 +1287,10 @@ After the table, explicitly state:
 
 ### Line-by-Line Verification
 
-| Requirement | Status | Evidence |
-|-------------|--------|----------|
-| [requirement 1] | ✅ | `file.ts:45` |
-| [requirement 2] | ❌ MISSING | Not in PR |
+| Requirement     | Status     | Evidence               |
+| --------------- | ---------- | ---------------------- |
+| [requirement 1] | ✅         | `file.ts:45`           |
+| [requirement 2] | ❌ MISSING | Not in PR              |
 | [requirement 3] | ⚠️ PARTIAL | Missing error handling |
 
 ### Missing/Incomplete Items
@@ -1379,19 +1446,20 @@ This is non-negotiable - 100% coverage required."
 
 ### Summary: The 10/10 Standard
 
-| Review State | Action Required |
-|--------------|-----------------|
-| Issues found, any severity | REQUEST CHANGES |
-| Suggestions for improvement | REQUEST IMPLEMENTATION |
-| "Minor" concerns | REQUEST FIXES |
-| "Could be better" | REQUIRE IT TO BE BETTER |
-| Everything perfect | APPROVE |
+| Review State                | Action Required         |
+| --------------------------- | ----------------------- |
+| Issues found, any severity  | REQUEST CHANGES         |
+| Suggestions for improvement | REQUEST IMPLEMENTATION  |
+| "Minor" concerns            | REQUEST FIXES           |
+| "Could be better"           | REQUIRE IT TO BE BETTER |
+| Everything perfect          | APPROVE                 |
 
 **The only valid approval is 10/10.** Anything less means REQUESTING CHANGES.
 
 ---
 
 ## Critical Principles
+
 - **BE EXTREMELY CRITICAL** - Do not let things slip, desire only perfection
 - **NEVER EDIT FILES** - This is review only, not implementation
 - **NEVER USE PERCENTAGES** - Always use absolute counts and concrete numbers
