@@ -1,9 +1,10 @@
 ## Open Questions System
 
-This project tracks open questions in Obsidian comments using a consistent format so questions can be searched, referenced, and resolved in context.
-- Reply in-line until the conversation is resolved.
-- Multi-line is allowed if it improves readability.
-- The same system is applicable to code however syntax might vary i.e. `// 🙋‍♂️` depending on the languages.
+Track open questions in Obsidian comments so they are searchable, linkable, and resolved in context.
+
+- Reply inline until resolved.
+- Multi-line is OK when it improves clarity.
+- You can use the same markers in code comments (syntax varies by language).
 
 ## Comment Format
 
@@ -17,7 +18,7 @@ This project tracks open questions in Obsidian comments using a consistent forma
 %% 🤖 Agent question waiting on human 🙋‍♂️ human answers 🤖 asks more 🙋‍♂️ sure why not %% ^q-scope-topic
 ```
 
-**completed** -> mark as done in-place (and optionally copy to [[research/question-archive]])
+When done, mark it resolved in place (optionally copy it to a question archive note such as `docs/handbook/10-docs/10.02-question-archive.md`).
 
 ```
 %% ✅ Question here → Answer here %% ^q-scope-topic
@@ -29,14 +30,14 @@ This project tracks open questions in Obsidian comments using a consistent forma
 | ------ | ---------------- | -------------- |
 | 🙋‍♂️  | Human wrote this | Agent acts     |
 | 🤖     | Agent wrote this | Human responds |
-| ✅      | Done             | -              |
+| ✅      | Resolved         | -              |
 
 ## Rules
 
-1. **Blank line between questions.** (Obsidian merges adjacent comments.)
-2. **Every question needs a block id.** Use `^q-{scope}-{descriptor}`.
-3. **Last emoji decides whose turn it is.**
-4. **`✅` means done**
+1. Blank line between questions (Obsidian merges adjacent comments).
+2. Every question needs a block ID (`^q-scope-topic`).
+3. Last emoji decides whose turn it is.
+4. `✅` means resolved.
 
 ## Finding Questions
 
@@ -62,10 +63,10 @@ Obsidian search:
 
 ## Open Questions Index (Dataview)
 
-Use this in `docs/open-questions.md` to group human responses by day (last 7 days) and then by week:
+Use this in `docs/open-questions.md` to group open questions by who responds next.
 
 ```dataviewjs
-const pages = dv.pages('"workstreams" or "reference" or "handbook"');
+const pages = dv.pages('"features" or "reference" or "handbook"');
 const results = [];
 
 function getLastResponder(text) {

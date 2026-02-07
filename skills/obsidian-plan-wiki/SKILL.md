@@ -138,6 +138,14 @@ docs/features/10-core/
 
 **Example handbook/reference naming:**
 
+```text
+docs/handbook/20-git/
+├── 20.01-methodic-rebase-merge.md
+└── 20.04-post-merge-hygiene.md
+
+docs/reference/01-design/
+├── 01.07-game-design.md
+└── 01.16-ticket-metadata-audit.md
 ```
 
 **Johnny decimal drift to watch for:**

@@ -1,14 +1,17 @@
 # Research Index
 
-Research files that inform implementation decisions.
+Research that informs decisions.
 
 ## Active Research
 
-[Add research links as they are created]
+Add links as you create research files.
 
 ## Archive Policy
 
-Research files are kept in this directory for reference. When a research file is fully integrated into task documentation:
-1. The task file should have `%% [x] %%` marking the research as applied
-2. A `> **Research:** See [[../research/file]]` link should exist
-3. The research file remains here for future reference
+Keep research files here for reference. When you apply research to a spec/plan:
+
+1. Link the research from the spec/plan:
+   `> **Research:** See [[research/topic]]`
+2. Resolve the open question in place:
+   `%% ✅ question → see [[research/topic]] %% ^q-scope-topic`
+3. Do not delete the research file.
